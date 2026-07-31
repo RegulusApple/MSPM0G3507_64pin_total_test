@@ -2,10 +2,6 @@
     "folders": [
         {
             "path": "."
-        },
-        {
-            "name": "MSPM0G3507_48pin_total_test",
-            "path": ".."
         }
     ],
     "settings": {},

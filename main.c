@@ -4,6 +4,7 @@
 
 #define APP_OLED_MIN_SECONDS 5U
 #define APP_OLED_HOLD_TICKS  (APP_OLED_MIN_SECONDS + 1U)
+#define APP_TIMER_SEND_DIVIDER 1U
 
 static void App_ShowLatestMeasurement(void)
 {
@@ -86,6 +87,7 @@ int main(void)
 {
     bool oledActive = false;
     uint32_t oledTicksLeft = 0U;
+    uint32_t timerSendDivider = 0U;
 
     SYSCFG_DL_initPower();
     SYSCFG_DL_GPIO_init();
@@ -105,7 +107,12 @@ int main(void)
         LowPower_EnterStandby1();
 
         if (LowPower_GetWakeReason() == WAKE_REASON_TIMER) {
-            LowPower_RunTimerWakeFlow();
+            LowPower_ClearWakeReason();
+            timerSendDivider++;
+            if (timerSendDivider >= APP_TIMER_SEND_DIVIDER) {
+                timerSendDivider = 0U;
+                LowPower_RunTimerWakeFlow();
+            }
             App_ServiceOledTimerTick(&oledActive, &oledTicksLeft);
         } else if (LowPower_GetWakeReason() == WAKE_REASON_EXTERNAL) {
             LowPower_ClearWakeReason();

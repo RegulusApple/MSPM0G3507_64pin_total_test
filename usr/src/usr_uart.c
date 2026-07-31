@@ -2,6 +2,8 @@
 
 #include <stdarg.h>
 
+#define USR_UART_TX_TIMEOUT_CYCLES (CPUCLK_FREQ / 10U)
+
 static volatile uint8_t gRxBuffer[USR_UART_RX_BUFFER_SIZE];
 static volatile uint16_t gRxWriteIndex;
 static volatile uint16_t gRxReadIndex;
@@ -113,8 +115,8 @@ static int USR_UART_printFloat(double value, uint8_t precision)
     uint32_t fractionPart;
     uint32_t i;
 
-    /* 闂勬劕鍩楃亸蹇旀殶娴ｅ稄绱濇穱婵婄槈 10^precision 閸欘垯浜掔€瑰鍙忛弨鎯у弳 uint32_t閵嗭拷
-     * 6 娴ｅ秴鐨弫鏉垮嚒缂佸繗鍐绘径鐔烘暏娴滃海鏁搁崢瀣ㄢ偓渚€顣堕悳鍥╃搼鐠嬪啳鐦潏鎾冲毉閵嗭拷
+    /* 闂傚嫭鍔曢崺妤冧焊韫囨梹娈跺ù锝呯▌缁辨繃绌卞┑濠勬 10^precision 闁告瑯鍨禍鎺斺偓鐟邦槸閸欏繘寮ㄩ幆褍寮� uint32_t闁靛棴鎷�
+     * 6 濞达絽绉撮惃顒勫极閺夊灝鍤掔紓浣哥箺閸愮粯寰勯悢鐑樻殢濞存粌娴烽弫鎼佸储鐎ｃ劉鍋撴笟鈧。鍫曟偝閸モ晝鎼奸悹瀣暢閻︻垱娼忛幘鍐叉瘔闁靛棴鎷�
      */
     if (precision > 6U) {
         precision = 6U;
@@ -180,6 +182,15 @@ static void USR_UART_storeLine(void)
     gLineLength = 0U;
 }
 
+static void USR_UART_waitTxDone(void)
+{
+    uint32_t timeout = USR_UART_TX_TIMEOUT_CYCLES;
+
+    while ((DL_UART_Main_isBusy(UART_0_INST) == true) && (timeout > 0U)) {
+        timeout--;
+    }
+}
+
 void USR_UART_init(void)
 {
     gRxWriteIndex = 0U;
@@ -211,6 +222,7 @@ void USR_UART_sendBytes(const uint8_t *data, uint16_t length)
 
     for (i = 0U; i < length; i++) {
         USR_UART_sendByte(data[i]);
+        USR_UART_waitTxDone();
     }
 }
 
@@ -235,8 +247,8 @@ int USR_UART_printf(const char *format, ...)
         return 0;
     }
 
-    /* 閺堫剝袙閺嬫劕娅掗崣顏呮暜閹镐礁浼愮粙瀣╄厬鐢摜鏁ら惃鍕壐瀵繈鈧拷
-     * 娑撳秷鐨熼悽銊︾垼閸戯拷 printf/vsnprintf閿涘矂浼╅崗宥呯穿閸忋儴绻嶇悰灞界氨鐎佃壈鍤ф稉瀣祰閹存牞鐨熺拠鏇氱瑝缁嬪啿鐣鹃妴锟�
+    /* 闁哄牜鍓濊闁哄鍔曞▍鎺楀矗椤忓懏鏆滈柟闀愮娴兼劗绮欑€ｂ晞鍘悽顖氭憸閺併倝鎯冮崟顒傚鐎殿喖绻堥埀顒婃嫹
+     * 濞戞挸绉烽惃鐔兼偨閵婏妇鍨奸柛鎴嫹 printf/vsnprintf闁挎稑鐭傛导鈺呭礂瀹ュ懐绌块柛蹇嬪劥缁诲秶鎮扮仦鐣屾皑閻庝絻澹堥崵褎绋夌€ｎ厽绁伴柟瀛樼墳閻ㄧ喓鎷犻弴姘辩憹缂佸鍟块悾楣冨Υ閿燂拷
      */
     va_start(args, format);
 
@@ -434,4 +446,3 @@ void UART_0_INST_IRQHandler(void)
 {
     USR_UART_IRQHandler();
 }
-

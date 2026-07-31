@@ -19,9 +19,9 @@ Section Cross References
     main.o(.text.main) refers to main.o(.text.App_PrepareForStandby) for App_PrepareForStandby
     main.o(.text.main) refers to low_power.o(.text.LowPower_EnterStandby1) for LowPower_EnterStandby1
     main.o(.text.main) refers to low_power.o(.text.LowPower_GetWakeReason) for LowPower_GetWakeReason
+    main.o(.text.main) refers to low_power.o(.text.LowPower_ClearWakeReason) for LowPower_ClearWakeReason
     main.o(.text.main) refers to low_power.o(.text.LowPower_RunTimerWakeFlow) for LowPower_RunTimerWakeFlow
     main.o(.text.main) refers to main.o(.text.App_ServiceOledTimerTick) for App_ServiceOledTimerTick
-    main.o(.text.main) refers to low_power.o(.text.LowPower_ClearWakeReason) for LowPower_ClearWakeReason
     main.o(.text.main) refers to main.o(.text.App_ShowLatestMeasurement) for App_ShowLatestMeasurement
     main.o(.text.main) refers to main.o(.rodata.str1.1) for [Anonymous Symbol]
     main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
@@ -1847,7 +1847,10 @@ Section Cross References
     usr_uart.o(.text.USR_UART_sendByte) refers to dl_uart.o(.text.DL_UART_transmitDataBlocking) for DL_UART_transmitDataBlocking
     usr_uart.o(.ARM.exidx.text.USR_UART_sendByte) refers to usr_uart.o(.text.USR_UART_sendByte) for [Anonymous Symbol]
     usr_uart.o(.text.USR_UART_sendBytes) refers to usr_uart.o(.text.USR_UART_sendByte) for USR_UART_sendByte
+    usr_uart.o(.text.USR_UART_sendBytes) refers to usr_uart.o(.text.USR_UART_waitTxDone) for USR_UART_waitTxDone
     usr_uart.o(.ARM.exidx.text.USR_UART_sendBytes) refers to usr_uart.o(.text.USR_UART_sendBytes) for [Anonymous Symbol]
+    usr_uart.o(.text.USR_UART_waitTxDone) refers to usr_uart.o(.text.DL_UART_isBusy) for DL_UART_isBusy
+    usr_uart.o(.ARM.exidx.text.USR_UART_waitTxDone) refers to usr_uart.o(.text.USR_UART_waitTxDone) for [Anonymous Symbol]
     usr_uart.o(.text.USR_UART_sendString) refers to usr_uart.o(.text.USR_UART_sendByte) for USR_UART_sendByte
     usr_uart.o(.ARM.exidx.text.USR_UART_sendString) refers to usr_uart.o(.text.USR_UART_sendString) for [Anonymous Symbol]
     usr_uart.o(.text.USR_UART_printf) refers to usr_uart.o(.text.USR_UART_sendByte) for USR_UART_sendByte
@@ -1914,6 +1917,7 @@ Section Cross References
     usr_uart.o(.ARM.exidx.text.DL_UART_getPendingInterrupt) refers to usr_uart.o(.text.DL_UART_getPendingInterrupt) for [Anonymous Symbol]
     usr_uart.o(.text.UART0_IRQHandler) refers to usr_uart.o(.text.USR_UART_IRQHandler) for USR_UART_IRQHandler
     usr_uart.o(.ARM.exidx.text.UART0_IRQHandler) refers to usr_uart.o(.text.UART0_IRQHandler) for [Anonymous Symbol]
+    usr_uart.o(.ARM.exidx.text.DL_UART_isBusy) refers to usr_uart.o(.text.DL_UART_isBusy) for [Anonymous Symbol]
     usr_uart.o(.text.USR_UART_printUnsigned) refers to usr_uart.o(.text.USR_UART_sendByte) for USR_UART_sendByte
     usr_uart.o(.text.USR_UART_printUnsigned) refers to aeabi_sdiv.o(.text) for __aeabi_uidivmod
     usr_uart.o(.ARM.exidx.text.USR_UART_printUnsigned) refers to usr_uart.o(.text.USR_UART_printUnsigned) for [Anonymous Symbol]
@@ -2206,10 +2210,15 @@ Section Cross References
     low_power.o(.ARM.exidx.text.LowPower_DoMeasurement) refers to low_power.o(.text.LowPower_DoMeasurement) for [Anonymous Symbol]
     low_power.o(.text.LowPower_WirelessWake) refers to low_power.o(.text.LowPower_EnableUart) for LowPower_EnableUart
     low_power.o(.text.LowPower_WirelessWake) refers to dl_common.o(.text.DL_Common_delayCycles) for DL_Common_delayCycles
+    low_power.o(.text.LowPower_WirelessWake) refers to usr_uart.o(.text.USR_UART_sendByte) for USR_UART_sendByte
+    low_power.o(.text.LowPower_WirelessWake) refers to low_power.o(.text.LowPower_WaitUartTxDone) for LowPower_WaitUartTxDone
     low_power.o(.ARM.exidx.text.LowPower_WirelessWake) refers to low_power.o(.text.LowPower_WirelessWake) for [Anonymous Symbol]
     low_power.o(.text.LowPower_SendMeasurement) refers to serial_protocol.o(.text.SerialProtocol_SendCurrentFrame) for SerialProtocol_SendCurrentFrame
     low_power.o(.ARM.exidx.text.LowPower_SendMeasurement) refers to low_power.o(.text.LowPower_SendMeasurement) for [Anonymous Symbol]
+    low_power.o(.text.LowPower_WirelessSleep) refers to dl_common.o(.text.DL_Common_delayCycles) for DL_Common_delayCycles
     low_power.o(.text.LowPower_WirelessSleep) refers to low_power.o(.text.LowPower_WaitUartTxDone) for LowPower_WaitUartTxDone
+    low_power.o(.text.LowPower_WirelessSleep) refers to usr_uart.o(.text.USR_UART_sendString) for USR_UART_sendString
+    low_power.o(.text.LowPower_WirelessSleep) refers to low_power.o(.rodata.str1.1) for [Anonymous Symbol]
     low_power.o(.ARM.exidx.text.LowPower_WirelessSleep) refers to low_power.o(.text.LowPower_WirelessSleep) for [Anonymous Symbol]
     low_power.o(.text.LowPower_RunTimerMeasurementFlow) refers to low_power.o(.text.LowPower_ClearWakeReason) for LowPower_ClearWakeReason
     low_power.o(.text.LowPower_RunTimerMeasurementFlow) refers to low_power.o(.text.LowPower_DoMeasurement) for LowPower_DoMeasurement
@@ -2340,9 +2349,9 @@ Section Cross References
     low_power.o(.text.LowPower_EnableUart) refers to ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init) for SYSCFG_DL_UART_DEBUG_init
     low_power.o(.text.LowPower_EnableUart) refers to usr_uart.o(.text.USR_UART_init) for USR_UART_init
     low_power.o(.ARM.exidx.text.LowPower_EnableUart) refers to low_power.o(.text.LowPower_EnableUart) for [Anonymous Symbol]
-    low_power.o(.ARM.exidx.text.DL_UART_enablePower) refers to low_power.o(.text.DL_UART_enablePower) for [Anonymous Symbol]
     low_power.o(.text.LowPower_WaitUartTxDone) refers to low_power.o(.text.DL_UART_isBusy) for DL_UART_isBusy
     low_power.o(.ARM.exidx.text.LowPower_WaitUartTxDone) refers to low_power.o(.text.LowPower_WaitUartTxDone) for [Anonymous Symbol]
+    low_power.o(.ARM.exidx.text.DL_UART_enablePower) refers to low_power.o(.text.DL_UART_enablePower) for [Anonymous Symbol]
     low_power.o(.ARM.exidx.text.DL_UART_isBusy) refers to low_power.o(.text.DL_UART_isBusy) for [Anonymous Symbol]
     low_power.o(.ARM.exidx.text.DL_SPI_disablePower) refers to low_power.o(.text.DL_SPI_disablePower) for [Anonymous Symbol]
     low_power.o(.ARM.exidx.text.DL_DAC12_disablePower) refers to low_power.o(.text.DL_DAC12_disablePower) for [Anonymous Symbol]
@@ -4015,7 +4024,7 @@ Removing Unused input sections from the image.
     Removing usr_uart.o(.ARM.exidx.text.DL_UART_clearInterruptStatus), (8 bytes).
     Removing usr_uart.o(.ARM.exidx.text.USR_UART_sendByte), (8 bytes).
     Removing usr_uart.o(.ARM.exidx.text.USR_UART_sendBytes), (8 bytes).
-    Removing usr_uart.o(.text.USR_UART_sendString), (48 bytes).
+    Removing usr_uart.o(.ARM.exidx.text.USR_UART_waitTxDone), (8 bytes).
     Removing usr_uart.o(.ARM.exidx.text.USR_UART_sendString), (8 bytes).
     Removing usr_uart.o(.text.USR_UART_printf), (760 bytes).
     Removing usr_uart.o(.ARM.exidx.text.USR_UART_printf), (8 bytes).
@@ -4039,6 +4048,7 @@ Removing Unused input sections from the image.
     Removing usr_uart.o(.ARM.exidx.text.USR_UART_IRQHandler), (8 bytes).
     Removing usr_uart.o(.ARM.exidx.text.DL_UART_getPendingInterrupt), (8 bytes).
     Removing usr_uart.o(.ARM.exidx.text.UART0_IRQHandler), (8 bytes).
+    Removing usr_uart.o(.ARM.exidx.text.DL_UART_isBusy), (8 bytes).
     Removing usr_uart.o(.text.USR_UART_printUnsigned), (222 bytes).
     Removing usr_uart.o(.ARM.exidx.text.USR_UART_printUnsigned), (8 bytes).
     Removing usr_uart.o(.text.USR_UART_pow10), (46 bytes).
@@ -4309,8 +4319,8 @@ Removing Unused input sections from the image.
     Removing low_power.o(.ARM.exidx.text.DL_VREF_reset), (8 bytes).
     Removing low_power.o(.ARM.exidx.text.DL_VREF_disablePower), (8 bytes).
     Removing low_power.o(.ARM.exidx.text.LowPower_EnableUart), (8 bytes).
-    Removing low_power.o(.ARM.exidx.text.DL_UART_enablePower), (8 bytes).
     Removing low_power.o(.ARM.exidx.text.LowPower_WaitUartTxDone), (8 bytes).
+    Removing low_power.o(.ARM.exidx.text.DL_UART_enablePower), (8 bytes).
     Removing low_power.o(.ARM.exidx.text.DL_UART_isBusy), (8 bytes).
     Removing low_power.o(.ARM.exidx.text.DL_SPI_disablePower), (8 bytes).
     Removing low_power.o(.ARM.exidx.text.DL_DAC12_disablePower), (8 bytes).
@@ -4330,7 +4340,7 @@ Removing Unused input sections from the image.
     Removing serial_protocol.o(.ARM.exidx.text.DL_UART_isTXFIFOEmpty), (8 bytes).
     Removing serial_protocol.o(.ARM.exidx.text.DL_UART_isBusy), (8 bytes).
 
-1654 unused section(s) (total 83356 bytes) removed from the image.
+1655 unused section(s) (total 83324 bytes) removed from the image.
 
 ==============================================================================
 
@@ -4936,322 +4946,331 @@ Image Symbol Table
     [Anonymous Symbol]                       0x0000298c   Section        0  adc2chsample.o(.text.DL_Timer_isRunning)
     DL_Timer_reset                           0x000029a1   Thumb Code    16  ti_msp_dl_config.o(.text.DL_Timer_reset)
     [Anonymous Symbol]                       0x000029a0   Section        0  ti_msp_dl_config.o(.text.DL_Timer_reset)
-    [Anonymous Symbol]                       0x000029b0   Section        0  dl_timer.o(.text.DL_Timer_setCaptureCompareCtl)
-    __arm_cp.6_0                             0x000029e4   Number         4  dl_timer.o(.text.DL_Timer_setCaptureCompareCtl)
-    __arm_cp.6_1                             0x000029e8   Number         4  dl_timer.o(.text.DL_Timer_setCaptureCompareCtl)
-    [Anonymous Symbol]                       0x000029ec   Section        0  dl_timer.o(.text.DL_Timer_setCaptureCompareValue)
-    __arm_cp.5_0                             0x00002a14   Number         4  dl_timer.o(.text.DL_Timer_setCaptureCompareValue)
-    [Anonymous Symbol]                       0x00002a18   Section        0  dl_timer.o(.text.DL_Timer_setClockConfig)
-    __arm_cp.0_1                             0x00002a44   Number         4  dl_timer.o(.text.DL_Timer_setClockConfig)
-    DL_Timer_setCounterValueAfterEnable      0x00002a49   Thumb Code    28  dl_timer.o(.text.DL_Timer_setCounterValueAfterEnable)
-    [Anonymous Symbol]                       0x00002a48   Section        0  dl_timer.o(.text.DL_Timer_setCounterValueAfterEnable)
-    DL_Timer_setLoadValue                    0x00002a65   Thumb Code    20  dl_timer.o(.text.DL_Timer_setLoadValue)
-    [Anonymous Symbol]                       0x00002a64   Section        0  dl_timer.o(.text.DL_Timer_setLoadValue)
-    DL_Timer_setLoadValue                    0x00002a79   Thumb Code    20  adc2chsample.o(.text.DL_Timer_setLoadValue)
-    [Anonymous Symbol]                       0x00002a78   Section        0  adc2chsample.o(.text.DL_Timer_setLoadValue)
-    DL_Timer_setLoadValue                    0x00002a8d   Thumb Code    20  low_power.o(.text.DL_Timer_setLoadValue)
-    [Anonymous Symbol]                       0x00002a8c   Section        0  low_power.o(.text.DL_Timer_setLoadValue)
-    __arm_cp.38_0                            0x00002aa0   Number         4  low_power.o(.text.DL_Timer_setLoadValue)
-    DL_Timer_setPublisherChanID              0x00002aa5   Thumb Code    52  ti_msp_dl_config.o(.text.DL_Timer_setPublisherChanID)
-    [Anonymous Symbol]                       0x00002aa4   Section        0  ti_msp_dl_config.o(.text.DL_Timer_setPublisherChanID)
-    __arm_cp.50_0                            0x00002ad8   Number         4  ti_msp_dl_config.o(.text.DL_Timer_setPublisherChanID)
-    DL_Timer_setTimerCount                   0x00002add   Thumb Code    20  adc2chsample.o(.text.DL_Timer_setTimerCount)
-    [Anonymous Symbol]                       0x00002adc   Section        0  adc2chsample.o(.text.DL_Timer_setTimerCount)
-    DL_Timer_setTimerCount                   0x00002af1   Thumb Code    20  low_power.o(.text.DL_Timer_setTimerCount)
-    [Anonymous Symbol]                       0x00002af0   Section        0  low_power.o(.text.DL_Timer_setTimerCount)
-    DL_Timer_startCounter                    0x00002b05   Thumb Code    20  adc2chsample.o(.text.DL_Timer_startCounter)
-    [Anonymous Symbol]                       0x00002b04   Section        0  adc2chsample.o(.text.DL_Timer_startCounter)
-    DL_Timer_startCounter                    0x00002b19   Thumb Code    20  low_power.o(.text.DL_Timer_startCounter)
-    [Anonymous Symbol]                       0x00002b18   Section        0  low_power.o(.text.DL_Timer_startCounter)
-    DL_Timer_stopCounter                     0x00002b2d   Thumb Code    20  main.o(.text.DL_Timer_stopCounter)
-    [Anonymous Symbol]                       0x00002b2c   Section        0  main.o(.text.DL_Timer_stopCounter)
-    DL_Timer_stopCounter                     0x00002b41   Thumb Code    20  adc2chsample.o(.text.DL_Timer_stopCounter)
-    [Anonymous Symbol]                       0x00002b40   Section        0  adc2chsample.o(.text.DL_Timer_stopCounter)
-    DL_Timer_stopCounter                     0x00002b55   Thumb Code    20  low_power.o(.text.DL_Timer_stopCounter)
-    [Anonymous Symbol]                       0x00002b54   Section        0  low_power.o(.text.DL_Timer_stopCounter)
-    __arm_cp.36_0                            0x00002b68   Number         4  low_power.o(.text.DL_Timer_stopCounter)
-    DL_UART_clearInterruptStatus             0x00002b6d   Thumb Code    20  main.o(.text.DL_UART_clearInterruptStatus)
-    [Anonymous Symbol]                       0x00002b6c   Section        0  main.o(.text.DL_UART_clearInterruptStatus)
-    DL_UART_clearInterruptStatus             0x00002b81   Thumb Code    20  usr_uart.o(.text.DL_UART_clearInterruptStatus)
-    [Anonymous Symbol]                       0x00002b80   Section        0  usr_uart.o(.text.DL_UART_clearInterruptStatus)
-    __arm_cp.1_0                             0x00002b94   Number         4  usr_uart.o(.text.DL_UART_clearInterruptStatus)
-    DL_UART_disable                          0x00002b99   Thumb Code    22  main.o(.text.DL_UART_disable)
-    [Anonymous Symbol]                       0x00002b98   Section        0  main.o(.text.DL_UART_disable)
-    DL_UART_disable                          0x00002baf   Thumb Code    22  dl_uart.o(.text.DL_UART_disable)
-    [Anonymous Symbol]                       0x00002bae   Section        0  dl_uart.o(.text.DL_UART_disable)
-    DL_UART_disableFIFOs                     0x00002bc5   Thumb Code    24  ti_msp_dl_config.o(.text.DL_UART_disableFIFOs)
-    [Anonymous Symbol]                       0x00002bc4   Section        0  ti_msp_dl_config.o(.text.DL_UART_disableFIFOs)
-    DL_UART_disableInterrupt                 0x00002bdd   Thumb Code    24  main.o(.text.DL_UART_disableInterrupt)
-    [Anonymous Symbol]                       0x00002bdc   Section        0  main.o(.text.DL_UART_disableInterrupt)
-    __arm_cp.4_0                             0x00002bf4   Number         4  main.o(.text.DL_UART_disableInterrupt)
-    DL_UART_disablePower                     0x00002bf9   Thumb Code    20  main.o(.text.DL_UART_disablePower)
-    [Anonymous Symbol]                       0x00002bf8   Section        0  main.o(.text.DL_UART_disablePower)
-    DL_UART_disablePower                     0x00002c0d   Thumb Code    20  low_power.o(.text.DL_UART_disablePower)
-    [Anonymous Symbol]                       0x00002c0c   Section        0  low_power.o(.text.DL_UART_disablePower)
-    DL_UART_enable                           0x00002c21   Thumb Code    22  ti_msp_dl_config.o(.text.DL_UART_enable)
-    [Anonymous Symbol]                       0x00002c20   Section        0  ti_msp_dl_config.o(.text.DL_UART_enable)
-    DL_UART_enablePower                      0x00002c39   Thumb Code    20  ti_msp_dl_config.o(.text.DL_UART_enablePower)
-    [Anonymous Symbol]                       0x00002c38   Section        0  ti_msp_dl_config.o(.text.DL_UART_enablePower)
-    DL_UART_enablePower                      0x00002c4d   Thumb Code    20  low_power.o(.text.DL_UART_enablePower)
-    [Anonymous Symbol]                       0x00002c4c   Section        0  low_power.o(.text.DL_UART_enablePower)
-    DL_UART_getPendingInterrupt              0x00002c61   Thumb Code    18  usr_uart.o(.text.DL_UART_getPendingInterrupt)
-    [Anonymous Symbol]                       0x00002c60   Section        0  usr_uart.o(.text.DL_UART_getPendingInterrupt)
-    [Anonymous Symbol]                       0x00002c74   Section        0  dl_uart.o(.text.DL_UART_init)
-    __arm_cp.0_0                             0x00002cb8   Number         4  dl_uart.o(.text.DL_UART_init)
-    DL_UART_isBusy                           0x00002cbd   Thumb Code    20  low_power.o(.text.DL_UART_isBusy)
-    [Anonymous Symbol]                       0x00002cbc   Section        0  low_power.o(.text.DL_UART_isBusy)
-    DL_UART_isBusy                           0x00002cd1   Thumb Code    20  serial_protocol.o(.text.DL_UART_isBusy)
-    [Anonymous Symbol]                       0x00002cd0   Section        0  serial_protocol.o(.text.DL_UART_isBusy)
-    DL_UART_isRXFIFOEmpty                    0x00002ce5   Thumb Code    20  usr_uart.o(.text.DL_UART_isRXFIFOEmpty)
-    [Anonymous Symbol]                       0x00002ce4   Section        0  usr_uart.o(.text.DL_UART_isRXFIFOEmpty)
-    DL_UART_isTXFIFOEmpty                    0x00002cf9   Thumb Code    20  serial_protocol.o(.text.DL_UART_isTXFIFOEmpty)
-    [Anonymous Symbol]                       0x00002cf8   Section        0  serial_protocol.o(.text.DL_UART_isTXFIFOEmpty)
-    DL_UART_isTXFIFOFull                     0x00002d0d   Thumb Code    20  dl_uart.o(.text.DL_UART_isTXFIFOFull)
-    [Anonymous Symbol]                       0x00002d0c   Section        0  dl_uart.o(.text.DL_UART_isTXFIFOFull)
-    DL_UART_receiveData                      0x00002d21   Thumb Code    16  usr_uart.o(.text.DL_UART_receiveData)
-    [Anonymous Symbol]                       0x00002d20   Section        0  usr_uart.o(.text.DL_UART_receiveData)
-    __arm_cp.13_0                            0x00002d30   Number         4  usr_uart.o(.text.DL_UART_receiveData)
-    DL_UART_reset                            0x00002d35   Thumb Code    16  ti_msp_dl_config.o(.text.DL_UART_reset)
-    [Anonymous Symbol]                       0x00002d34   Section        0  ti_msp_dl_config.o(.text.DL_UART_reset)
-    __arm_cp.22_0                            0x00002d44   Number         4  ti_msp_dl_config.o(.text.DL_UART_reset)
-    __arm_cp.22_1                            0x00002d48   Number         4  ti_msp_dl_config.o(.text.DL_UART_reset)
-    DL_UART_setBaudRateDivisor               0x00002d4d   Thumb Code    60  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
-    [Anonymous Symbol]                       0x00002d4c   Section        0  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
-    __arm_cp.53_0                            0x00002d88   Number         4  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
-    __arm_cp.53_1                            0x00002d8c   Number         4  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
-    __arm_cp.53_2                            0x00002d90   Number         4  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
-    [Anonymous Symbol]                       0x00002d94   Section        0  dl_uart.o(.text.DL_UART_setClockConfig)
-    __arm_cp.3_0                             0x00002db4   Number         4  dl_uart.o(.text.DL_UART_setClockConfig)
-    DL_UART_setOversampling                  0x00002db9   Thumb Code    30  ti_msp_dl_config.o(.text.DL_UART_setOversampling)
-    [Anonymous Symbol]                       0x00002db8   Section        0  ti_msp_dl_config.o(.text.DL_UART_setOversampling)
-    DL_UART_transmitData                     0x00002dd7   Thumb Code    22  dl_uart.o(.text.DL_UART_transmitData)
-    [Anonymous Symbol]                       0x00002dd6   Section        0  dl_uart.o(.text.DL_UART_transmitData)
-    [Anonymous Symbol]                       0x00002dec   Section        0  dl_uart.o(.text.DL_UART_transmitDataBlocking)
-    [Anonymous Symbol]                       0x00002e14   Section        0  dl_vref.o(.text.DL_VREF_configReference)
-    __arm_cp.0_0                             0x00002e44   Number         4  dl_vref.o(.text.DL_VREF_configReference)
-    DL_VREF_disableInternalRef               0x00002e49   Thumb Code    22  main.o(.text.DL_VREF_disableInternalRef)
-    [Anonymous Symbol]                       0x00002e48   Section        0  main.o(.text.DL_VREF_disableInternalRef)
-    DL_VREF_disableInternalRef               0x00002e5f   Thumb Code    22  low_power.o(.text.DL_VREF_disableInternalRef)
-    [Anonymous Symbol]                       0x00002e5e   Section        0  low_power.o(.text.DL_VREF_disableInternalRef)
-    DL_VREF_disablePower                     0x00002e75   Thumb Code    20  main.o(.text.DL_VREF_disablePower)
-    [Anonymous Symbol]                       0x00002e74   Section        0  main.o(.text.DL_VREF_disablePower)
-    DL_VREF_disablePower                     0x00002e89   Thumb Code    20  low_power.o(.text.DL_VREF_disablePower)
-    [Anonymous Symbol]                       0x00002e88   Section        0  low_power.o(.text.DL_VREF_disablePower)
-    DL_VREF_enablePower                      0x00002e9d   Thumb Code    20  ti_msp_dl_config.o(.text.DL_VREF_enablePower)
-    [Anonymous Symbol]                       0x00002e9c   Section        0  ti_msp_dl_config.o(.text.DL_VREF_enablePower)
-    DL_VREF_enablePower                      0x00002eb1   Thumb Code    20  low_power.o(.text.DL_VREF_enablePower)
-    [Anonymous Symbol]                       0x00002eb0   Section        0  low_power.o(.text.DL_VREF_enablePower)
-    __arm_cp.44_0                            0x00002ec4   Number         4  low_power.o(.text.DL_VREF_enablePower)
-    DL_VREF_getStatus                        0x00002ec9   Thumb Code    20  ti_msp_dl_config.o(.text.DL_VREF_getStatus)
-    [Anonymous Symbol]                       0x00002ec8   Section        0  ti_msp_dl_config.o(.text.DL_VREF_getStatus)
-    __arm_cp.37_0                            0x00002edc   Number         4  ti_msp_dl_config.o(.text.DL_VREF_getStatus)
-    DL_VREF_reset                            0x00002ee1   Thumb Code    16  main.o(.text.DL_VREF_reset)
-    [Anonymous Symbol]                       0x00002ee0   Section        0  main.o(.text.DL_VREF_reset)
-    DL_VREF_reset                            0x00002ef1   Thumb Code    16  ti_msp_dl_config.o(.text.DL_VREF_reset)
-    [Anonymous Symbol]                       0x00002ef0   Section        0  ti_msp_dl_config.o(.text.DL_VREF_reset)
-    DL_VREF_reset                            0x00002f01   Thumb Code    16  low_power.o(.text.DL_VREF_reset)
-    [Anonymous Symbol]                       0x00002f00   Section        0  low_power.o(.text.DL_VREF_reset)
-    __arm_cp.59_0                            0x00002f10   Number         4  low_power.o(.text.DL_VREF_reset)
-    __arm_cp.59_1                            0x00002f14   Number         4  low_power.o(.text.DL_VREF_reset)
-    [Anonymous Symbol]                       0x00002f18   Section        0  dl_vref.o(.text.DL_VREF_setClockConfig)
-    __arm_cp.1_0                             0x00002f38   Number         4  dl_vref.o(.text.DL_VREF_setClockConfig)
-    [Anonymous Symbol]                       0x00002f3c   Section        0  low_power.o(.text.GROUP1_IRQHandler)
-    [Anonymous Symbol]                       0x00002f94   Section        0  low_power.o(.text.LowPower_ClearWakeReason)
-    LowPower_ConfigKey2Wake                  0x00002f9d   Thumb Code    88  low_power.o(.text.LowPower_ConfigKey2Wake)
-    [Anonymous Symbol]                       0x00002f9c   Section        0  low_power.o(.text.LowPower_ConfigKey2Wake)
-    __arm_cp.1_0                             0x00002ff4   Number         4  low_power.o(.text.LowPower_ConfigKey2Wake)
-    LowPower_ConfigWakeTimer1s               0x00002ff9   Thumb Code   160  low_power.o(.text.LowPower_ConfigWakeTimer1s)
-    [Anonymous Symbol]                       0x00002ff8   Section        0  low_power.o(.text.LowPower_ConfigWakeTimer1s)
-    __arm_cp.2_1                             0x00003098   Number         4  low_power.o(.text.LowPower_ConfigWakeTimer1s)
-    __arm_cp.2_2                             0x0000309c   Number         4  low_power.o(.text.LowPower_ConfigWakeTimer1s)
-    __arm_cp.2_3                             0x000030a0   Number         4  low_power.o(.text.LowPower_ConfigWakeTimer1s)
-    __arm_cp.2_4                             0x000030a4   Number         4  low_power.o(.text.LowPower_ConfigWakeTimer1s)
-    LowPower_DisableMeasurementPeripherals   0x000030a9   Thumb Code   200  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
-    [Anonymous Symbol]                       0x000030a8   Section        0  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
-    __arm_cp.43_1                            0x00003170   Number         4  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
-    __arm_cp.43_2                            0x00003174   Number         4  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
-    __arm_cp.43_3                            0x00003178   Number         4  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
-    LowPower_DisableUnusedPeripheralsBeforeStandby 0x0000317d   Thumb Code    60  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
-    [Anonymous Symbol]                       0x0000317c   Section        0  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
-    __arm_cp.15_0                            0x000031b8   Number         4  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
-    __arm_cp.15_1                            0x000031bc   Number         4  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
-    __arm_cp.15_2                            0x000031c0   Number         4  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
-    __arm_cp.15_3                            0x000031c4   Number         4  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
-    LowPower_DoMeasurement                   0x000031c9   Thumb Code   116  low_power.o(.text.LowPower_DoMeasurement)
-    [Anonymous Symbol]                       0x000031c8   Section        0  low_power.o(.text.LowPower_DoMeasurement)
-    LowPower_EnableMeasurementPeripherals    0x0000323d   Thumb Code    52  low_power.o(.text.LowPower_EnableMeasurementPeripherals)
-    [Anonymous Symbol]                       0x0000323c   Section        0  low_power.o(.text.LowPower_EnableMeasurementPeripherals)
-    __arm_cp.42_0                            0x00003270   Number         4  low_power.o(.text.LowPower_EnableMeasurementPeripherals)
-    __arm_cp.42_2                            0x00003274   Number         4  low_power.o(.text.LowPower_EnableMeasurementPeripherals)
-    LowPower_EnableUart                      0x00003279   Thumb Code    24  low_power.o(.text.LowPower_EnableUart)
-    [Anonymous Symbol]                       0x00003278   Section        0  low_power.o(.text.LowPower_EnableUart)
-    [Anonymous Symbol]                       0x00003290   Section        0  low_power.o(.text.LowPower_EnterStandby1)
-    [Anonymous Symbol]                       0x000032f8   Section        0  low_power.o(.text.LowPower_GetLatestMeasurement)
-    [Anonymous Symbol]                       0x000032fc   Section        0  low_power.o(.text.LowPower_GetWakeReason)
-    [Anonymous Symbol]                       0x00003304   Section        0  low_power.o(.text.LowPower_Init)
-    __arm_cp.0_0                             0x0000332c   Number         4  low_power.o(.text.LowPower_Init)
-    __arm_cp.0_3                             0x00003330   Number         4  low_power.o(.text.LowPower_Init)
-    __arm_cp.0_4                             0x00003334   Number         4  low_power.o(.text.LowPower_Init)
-    LowPower_IsKey2Pressed                   0x00003339   Thumb Code    28  low_power.o(.text.LowPower_IsKey2Pressed)
-    [Anonymous Symbol]                       0x00003338   Section        0  low_power.o(.text.LowPower_IsKey2Pressed)
-    __arm_cp.69_0                            0x00003354   Number         4  low_power.o(.text.LowPower_IsKey2Pressed)
-    LowPower_RestoreAdcTimer                 0x00003359   Thumb Code    52  low_power.o(.text.LowPower_RestoreAdcTimer)
-    [Anonymous Symbol]                       0x00003358   Section        0  low_power.o(.text.LowPower_RestoreAdcTimer)
-    __arm_cp.46_0                            0x0000338c   Number         4  low_power.o(.text.LowPower_RestoreAdcTimer)
-    [Anonymous Symbol]                       0x00003390   Section        0  low_power.o(.text.LowPower_RunTimerWakeFlow)
-    __arm_cp.7_0                             0x000033ac   Number         4  low_power.o(.text.LowPower_RunTimerWakeFlow)
-    __arm_cp.7_1                             0x000033b0   Number         4  low_power.o(.text.LowPower_RunTimerWakeFlow)
-    LowPower_SendMeasurement                 0x000033b5   Thumb Code    46  low_power.o(.text.LowPower_SendMeasurement)
-    [Anonymous Symbol]                       0x000033b4   Section        0  low_power.o(.text.LowPower_SendMeasurement)
-    LowPower_ServiceKey2Pending              0x000033e5   Thumb Code    76  low_power.o(.text.LowPower_ServiceKey2Pending)
-    [Anonymous Symbol]                       0x000033e4   Section        0  low_power.o(.text.LowPower_ServiceKey2Pending)
-    __arm_cp.17_0                            0x00003430   Number         4  low_power.o(.text.LowPower_ServiceKey2Pending)
-    LowPower_ServiceWakeTimerPending         0x00003435   Thumb Code    56  low_power.o(.text.LowPower_ServiceWakeTimerPending)
-    [Anonymous Symbol]                       0x00003434   Section        0  low_power.o(.text.LowPower_ServiceWakeTimerPending)
-    __arm_cp.16_0                            0x0000346c   Number         4  low_power.o(.text.LowPower_ServiceWakeTimerPending)
-    __arm_cp.16_1                            0x00003470   Number         4  low_power.o(.text.LowPower_ServiceWakeTimerPending)
-    __arm_cp.16_2                            0x00003474   Number         4  low_power.o(.text.LowPower_ServiceWakeTimerPending)
-    LowPower_WaitUartTxDone                  0x00003479   Thumb Code    60  low_power.o(.text.LowPower_WaitUartTxDone)
-    [Anonymous Symbol]                       0x00003478   Section        0  low_power.o(.text.LowPower_WaitUartTxDone)
-    __arm_cp.63_0                            0x000034b4   Number         4  low_power.o(.text.LowPower_WaitUartTxDone)
-    __arm_cp.63_1                            0x000034b8   Number         4  low_power.o(.text.LowPower_WaitUartTxDone)
-    LowPower_WirelessSleep                   0x000034bd   Thumb Code     8  low_power.o(.text.LowPower_WirelessSleep)
-    [Anonymous Symbol]                       0x000034bc   Section        0  low_power.o(.text.LowPower_WirelessSleep)
-    LowPower_WirelessWake                    0x000034c5   Thumb Code    16  low_power.o(.text.LowPower_WirelessWake)
-    [Anonymous Symbol]                       0x000034c4   Section        0  low_power.o(.text.LowPower_WirelessWake)
-    __arm_cp.9_0                             0x000034d4   Number         4  low_power.o(.text.LowPower_WirelessWake)
-    [Anonymous Symbol]                       0x000034d8   Section        0  oled.o(.text.OLED_Clear)
-    [Anonymous Symbol]                       0x0000352e   Section        0  oled.o(.text.OLED_DisplayOff)
-    [Anonymous Symbol]                       0x00003556   Section        0  oled.o(.text.OLED_DisplayOn)
-    [Anonymous Symbol]                       0x0000356c   Section        0  oled.o(.text.OLED_I2C_Init)
-    [Anonymous Symbol]                       0x000035a4   Section        0  oled.o(.text.OLED_I2C_SendByte)
-    [Anonymous Symbol]                       0x000035f8   Section        0  oled.o(.text.OLED_I2C_Start)
-    [Anonymous Symbol]                       0x0000361c   Section        0  oled.o(.text.OLED_I2C_Stop)
-    [Anonymous Symbol]                       0x00003638   Section        0  oled.o(.text.OLED_Init)
-    [Anonymous Symbol]                       0x00003704   Section        0  oled.o(.text.OLED_Pow)
-    [Anonymous Symbol]                       0x0000372c   Section        0  oled.o(.text.OLED_SetCursor)
-    [Anonymous Symbol]                       0x00003764   Section        0  oled.o(.text.OLED_ShowChar)
-    __arm_cp.14_0                            0x0000380c   Number         4  oled.o(.text.OLED_ShowChar)
-    __arm_cp.14_1                            0x00003810   Number         4  oled.o(.text.OLED_ShowChar)
-    __arm_cp.14_2                            0x00003814   Number         4  oled.o(.text.OLED_ShowChar)
-    [Anonymous Symbol]                       0x00003818   Section        0  oled.o(.text.OLED_ShowNum)
-    [Anonymous Symbol]                       0x00003892   Section        0  oled.o(.text.OLED_ShowString)
-    [Anonymous Symbol]                       0x000038dc   Section        0  oled.o(.text.OLED_W_SCL)
-    [Anonymous Symbol]                       0x0000390c   Section        0  oled.o(.text.OLED_W_SDA)
-    __arm_cp.3_0                             0x0000393c   Number         4  oled.o(.text.OLED_W_SDA)
-    [Anonymous Symbol]                       0x00003940   Section        0  oled.o(.text.OLED_WriteCommand)
-    [Anonymous Symbol]                       0x0000396a   Section        0  oled.o(.text.OLED_WriteData)
-    [Anonymous Symbol]                       0x00003994   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC12_0_init)
-    __arm_cp.14_0                            0x00003a00   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC12_0_init)
-    [Anonymous Symbol]                       0x00003a04   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC_SAMPLE_TIMER_init)
-    __arm_cp.8_0                             0x00003a5c   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC_SAMPLE_TIMER_init)
-    __arm_cp.8_2                             0x00003a60   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC_SAMPLE_TIMER_init)
-    [Anonymous Symbol]                       0x00003a64   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_CH0_init)
-    __arm_cp.70_0                            0x00003a74   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_CH0_init)
-    __arm_cp.70_1                            0x00003a78   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_CH0_init)
-    [Anonymous Symbol]                       0x00003a7c   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_init)
-    [Anonymous Symbol]                       0x00003a84   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_GPIO_init)
-    [Anonymous Symbol]                       0x00003ade   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_SYSCTL_init)
-    [Anonymous Symbol]                       0x00003b18   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init)
-    __arm_cp.11_0                            0x00003b50   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init)
-    __arm_cp.11_2                            0x00003b54   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init)
-    [Anonymous Symbol]                       0x00003b58   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_VREF_init)
-    __arm_cp.13_0                            0x00003b84   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_VREF_init)
-    __arm_cp.13_2                            0x00003b88   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_VREF_init)
-    [Anonymous Symbol]                       0x00003b8c   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_0                             0x00003c44   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_1                             0x00003c48   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_2                             0x00003c4c   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_3                             0x00003c50   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_4                             0x00003c54   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_5                             0x00003c58   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_7                             0x00003c5c   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_8                             0x00003c60   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_9                             0x00003c64   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    __arm_cp.5_10                            0x00003c68   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    [Anonymous Symbol]                       0x00003c6c   Section        0  serial_protocol.o(.text.SerialProtocol_PackCurrentFrame)
-    [Anonymous Symbol]                       0x00003cc2   Section        0  serial_protocol.o(.text.SerialProtocol_SendCurrentFrame)
-    SerialProtocol_WaitUartTxIdle            0x00003d05   Thumb Code    72  serial_protocol.o(.text.SerialProtocol_WaitUartTxIdle)
-    [Anonymous Symbol]                       0x00003d04   Section        0  serial_protocol.o(.text.SerialProtocol_WaitUartTxIdle)
-    __arm_cp.5_0                             0x00003d4c   Number         4  serial_protocol.o(.text.SerialProtocol_WaitUartTxIdle)
-    SerialProtocol_WriteFloatLittleEndian    0x00003d51   Thumb Code    40  serial_protocol.o(.text.SerialProtocol_WriteFloatLittleEndian)
-    [Anonymous Symbol]                       0x00003d50   Section        0  serial_protocol.o(.text.SerialProtocol_WriteFloatLittleEndian)
-    [Anonymous Symbol]                       0x00003d78   Section        0  ti_msp_dl_config.o(.text.Sysclk_WaitForLFOSCGood)
-    [Anonymous Symbol]                       0x00003dd4   Section        0  ti_msp_dl_config.o(.text.Sysclk_WaitForSYSOSCBase)
-    [Anonymous Symbol]                       0x00003e2c   Section        0  low_power.o(.text.TIMG8_IRQHandler)
-    __arm_cp.22_0                            0x00003e5c   Number         4  low_power.o(.text.TIMG8_IRQHandler)
-    __arm_cp.22_1                            0x00003e60   Number         4  low_power.o(.text.TIMG8_IRQHandler)
-    __arm_cp.22_2                            0x00003e64   Number         4  low_power.o(.text.TIMG8_IRQHandler)
-    [Anonymous Symbol]                       0x00003e68   Section        0  usr_uart.o(.text.UART0_IRQHandler)
-    [Anonymous Symbol]                       0x00003e70   Section        0  usr_uart.o(.text.USR_UART_IRQHandler)
-    __arm_cp.16_0                            0x00003ec4   Number         4  usr_uart.o(.text.USR_UART_IRQHandler)
-    [Anonymous Symbol]                       0x00003ec8   Section        0  usr_uart.o(.text.USR_UART_init)
-    __arm_cp.0_3                             0x00003ef4   Number         4  usr_uart.o(.text.USR_UART_init)
-    __arm_cp.0_4                             0x00003ef8   Number         4  usr_uart.o(.text.USR_UART_init)
-    __arm_cp.0_5                             0x00003efc   Number         4  usr_uart.o(.text.USR_UART_init)
-    __arm_cp.0_6                             0x00003f00   Number         4  usr_uart.o(.text.USR_UART_init)
-    __arm_cp.0_8                             0x00003f04   Number         4  usr_uart.o(.text.USR_UART_init)
-    [Anonymous Symbol]                       0x00003f08   Section        0  usr_uart.o(.text.USR_UART_sendByte)
-    __arm_cp.2_0                             0x00003f20   Number         4  usr_uart.o(.text.USR_UART_sendByte)
-    [Anonymous Symbol]                       0x00003f24   Section        0  usr_uart.o(.text.USR_UART_sendBytes)
-    USR_UART_storeRxByte                     0x00003f6d   Thumb Code    60  usr_uart.o(.text.USR_UART_storeRxByte)
-    [Anonymous Symbol]                       0x00003f6c   Section        0  usr_uart.o(.text.USR_UART_storeRxByte)
-    __arm_cp.14_0                            0x00003fa8   Number         4  usr_uart.o(.text.USR_UART_storeRxByte)
-    __arm_cp.14_1                            0x00003fac   Number         4  usr_uart.o(.text.USR_UART_storeRxByte)
-    __arm_cp.14_2                            0x00003fb0   Number         4  usr_uart.o(.text.USR_UART_storeRxByte)
-    __arm_cp.14_3                            0x00003fb4   Number         4  usr_uart.o(.text.USR_UART_storeRxByte)
-    __NVIC_ClearPendingIRQ                   0x00003fb9   Thumb Code    40  main.o(.text.__NVIC_ClearPendingIRQ)
-    [Anonymous Symbol]                       0x00003fb8   Section        0  main.o(.text.__NVIC_ClearPendingIRQ)
-    __NVIC_ClearPendingIRQ                   0x00003fe1   Thumb Code    40  adc2chsample.o(.text.__NVIC_ClearPendingIRQ)
-    [Anonymous Symbol]                       0x00003fe0   Section        0  adc2chsample.o(.text.__NVIC_ClearPendingIRQ)
-    __NVIC_ClearPendingIRQ                   0x00004009   Thumb Code    40  low_power.o(.text.__NVIC_ClearPendingIRQ)
-    [Anonymous Symbol]                       0x00004008   Section        0  low_power.o(.text.__NVIC_ClearPendingIRQ)
-    __arm_cp.18_0                            0x00004030   Number         4  low_power.o(.text.__NVIC_ClearPendingIRQ)
-    __NVIC_DisableIRQ                        0x00004035   Thumb Code    48  main.o(.text.__NVIC_DisableIRQ)
-    [Anonymous Symbol]                       0x00004034   Section        0  main.o(.text.__NVIC_DisableIRQ)
-    __NVIC_DisableIRQ                        0x00004065   Thumb Code    48  adc2chsample.o(.text.__NVIC_DisableIRQ)
-    [Anonymous Symbol]                       0x00004064   Section        0  adc2chsample.o(.text.__NVIC_DisableIRQ)
-    __NVIC_DisableIRQ                        0x00004095   Thumb Code    48  low_power.o(.text.__NVIC_DisableIRQ)
-    [Anonymous Symbol]                       0x00004094   Section        0  low_power.o(.text.__NVIC_DisableIRQ)
-    __arm_cp.55_0                            0x000040c4   Number         4  low_power.o(.text.__NVIC_DisableIRQ)
-    __NVIC_EnableIRQ                         0x000040c9   Thumb Code    40  adc2chsample.o(.text.__NVIC_EnableIRQ)
-    [Anonymous Symbol]                       0x000040c8   Section        0  adc2chsample.o(.text.__NVIC_EnableIRQ)
-    __NVIC_EnableIRQ                         0x000040f1   Thumb Code    40  low_power.o(.text.__NVIC_EnableIRQ)
-    [Anonymous Symbol]                       0x000040f0   Section        0  low_power.o(.text.__NVIC_EnableIRQ)
-    __arm_cp.33_0                            0x00004118   Number         4  low_power.o(.text.__NVIC_EnableIRQ)
-    [Anonymous Symbol]                       0x0000411c   Section        0  main.o(.text.main)
-    __arm_cp.0_0                             0x000041b4   Number         4  main.o(.text.main)
-    i.sqrt                                   0x000041b8   Section        0  sqrt.o(i.sqrt)
-    x$fpl$fadd                               0x00004200   Section      140  faddsub.o(x$fpl$fadd)
-    _fadd1                                   0x0000420d   Thumb Code     0  faddsub.o(x$fpl$fadd)
-    x$fpl$fsub                               0x0000428c   Section      208  faddsub.o(x$fpl$fsub)
-    _fsub1                                   0x00004299   Thumb Code     0  faddsub.o(x$fpl$fsub)
-    ddiv_reciptbl                            0x0000435c   Data         128  ddiv.o(.constdata)
-    .constdata                               0x0000435c   Section      128  ddiv.o(.constdata)
-    x$fpl$usenofp                            0x0000435c   Section        0  usenofp.o(x$fpl$usenofp)
-    LowPower_ConfigWakeTimer1s.wakeClockConfig 0x000043dc   Data           3  low_power.o(.rodata.LowPower_ConfigWakeTimer1s.wakeClockConfig)
-    [Anonymous Symbol]                       0x000043dc   Section        0  low_power.o(.rodata.LowPower_ConfigWakeTimer1s.wakeClockConfig)
-    LowPower_ConfigWakeTimer1s.wakeTimerConfig 0x000043e0   Data          20  low_power.o(.rodata.LowPower_ConfigWakeTimer1s.wakeTimerConfig)
-    [Anonymous Symbol]                       0x000043e0   Section        0  low_power.o(.rodata.LowPower_ConfigWakeTimer1s.wakeTimerConfig)
-    gADC12_0ClockConfig                      0x000049e4   Data           8  ti_msp_dl_config.o(.rodata.gADC12_0ClockConfig)
-    [Anonymous Symbol]                       0x000049e4   Section        0  ti_msp_dl_config.o(.rodata.gADC12_0ClockConfig)
-    gADC_SAMPLE_TIMERClockConfig             0x000049ec   Data           3  ti_msp_dl_config.o(.rodata.gADC_SAMPLE_TIMERClockConfig)
-    [Anonymous Symbol]                       0x000049ec   Section        0  ti_msp_dl_config.o(.rodata.gADC_SAMPLE_TIMERClockConfig)
-    gADC_SAMPLE_TIMERTimerConfig             0x000049f0   Data          20  ti_msp_dl_config.o(.rodata.gADC_SAMPLE_TIMERTimerConfig)
-    [Anonymous Symbol]                       0x000049f0   Section        0  ti_msp_dl_config.o(.rodata.gADC_SAMPLE_TIMERTimerConfig)
-    gDMA_CH0Config                           0x00004a04   Data          24  ti_msp_dl_config.o(.rodata.gDMA_CH0Config)
-    [Anonymous Symbol]                       0x00004a04   Section        0  ti_msp_dl_config.o(.rodata.gDMA_CH0Config)
-    gUART_DEBUGClockConfig                   0x00004a1c   Data           2  ti_msp_dl_config.o(.rodata.gUART_DEBUGClockConfig)
-    [Anonymous Symbol]                       0x00004a1c   Section        0  ti_msp_dl_config.o(.rodata.gUART_DEBUGClockConfig)
-    gUART_DEBUGConfig                        0x00004a1e   Data          10  ti_msp_dl_config.o(.rodata.gUART_DEBUGConfig)
-    [Anonymous Symbol]                       0x00004a1e   Section        0  ti_msp_dl_config.o(.rodata.gUART_DEBUGConfig)
-    gVREFClockConfig                         0x00004a28   Data           2  ti_msp_dl_config.o(.rodata.gVREFClockConfig)
-    [Anonymous Symbol]                       0x00004a28   Section        0  ti_msp_dl_config.o(.rodata.gVREFClockConfig)
-    gVREFConfig                              0x00004a2c   Data          12  ti_msp_dl_config.o(.rodata.gVREFConfig)
-    [Anonymous Symbol]                       0x00004a2c   Section        0  ti_msp_dl_config.o(.rodata.gVREFConfig)
-    [Anonymous Symbol]                       0x00004a38   Section        0  main.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x00004a56   Section        0  adc2chsample.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x00004d8b   Section        0  low_power.o(.rodata.str1.1)
+    __arm_cp.21_0                            0x000029b0   Number         4  ti_msp_dl_config.o(.text.DL_Timer_reset)
+    __arm_cp.21_1                            0x000029b4   Number         4  ti_msp_dl_config.o(.text.DL_Timer_reset)
+    [Anonymous Symbol]                       0x000029b8   Section        0  dl_timer.o(.text.DL_Timer_setCaptureCompareCtl)
+    __arm_cp.6_0                             0x000029ec   Number         4  dl_timer.o(.text.DL_Timer_setCaptureCompareCtl)
+    __arm_cp.6_1                             0x000029f0   Number         4  dl_timer.o(.text.DL_Timer_setCaptureCompareCtl)
+    [Anonymous Symbol]                       0x000029f4   Section        0  dl_timer.o(.text.DL_Timer_setCaptureCompareValue)
+    __arm_cp.5_0                             0x00002a1c   Number         4  dl_timer.o(.text.DL_Timer_setCaptureCompareValue)
+    [Anonymous Symbol]                       0x00002a20   Section        0  dl_timer.o(.text.DL_Timer_setClockConfig)
+    __arm_cp.0_1                             0x00002a4c   Number         4  dl_timer.o(.text.DL_Timer_setClockConfig)
+    DL_Timer_setCounterValueAfterEnable      0x00002a51   Thumb Code    28  dl_timer.o(.text.DL_Timer_setCounterValueAfterEnable)
+    [Anonymous Symbol]                       0x00002a50   Section        0  dl_timer.o(.text.DL_Timer_setCounterValueAfterEnable)
+    DL_Timer_setLoadValue                    0x00002a6d   Thumb Code    20  dl_timer.o(.text.DL_Timer_setLoadValue)
+    [Anonymous Symbol]                       0x00002a6c   Section        0  dl_timer.o(.text.DL_Timer_setLoadValue)
+    DL_Timer_setLoadValue                    0x00002a81   Thumb Code    20  adc2chsample.o(.text.DL_Timer_setLoadValue)
+    [Anonymous Symbol]                       0x00002a80   Section        0  adc2chsample.o(.text.DL_Timer_setLoadValue)
+    DL_Timer_setLoadValue                    0x00002a95   Thumb Code    20  low_power.o(.text.DL_Timer_setLoadValue)
+    [Anonymous Symbol]                       0x00002a94   Section        0  low_power.o(.text.DL_Timer_setLoadValue)
+    __arm_cp.38_0                            0x00002aa8   Number         4  low_power.o(.text.DL_Timer_setLoadValue)
+    DL_Timer_setPublisherChanID              0x00002aad   Thumb Code    52  ti_msp_dl_config.o(.text.DL_Timer_setPublisherChanID)
+    [Anonymous Symbol]                       0x00002aac   Section        0  ti_msp_dl_config.o(.text.DL_Timer_setPublisherChanID)
+    __arm_cp.50_0                            0x00002ae0   Number         4  ti_msp_dl_config.o(.text.DL_Timer_setPublisherChanID)
+    DL_Timer_setTimerCount                   0x00002ae5   Thumb Code    20  adc2chsample.o(.text.DL_Timer_setTimerCount)
+    [Anonymous Symbol]                       0x00002ae4   Section        0  adc2chsample.o(.text.DL_Timer_setTimerCount)
+    DL_Timer_setTimerCount                   0x00002af9   Thumb Code    20  low_power.o(.text.DL_Timer_setTimerCount)
+    [Anonymous Symbol]                       0x00002af8   Section        0  low_power.o(.text.DL_Timer_setTimerCount)
+    DL_Timer_startCounter                    0x00002b0d   Thumb Code    20  adc2chsample.o(.text.DL_Timer_startCounter)
+    [Anonymous Symbol]                       0x00002b0c   Section        0  adc2chsample.o(.text.DL_Timer_startCounter)
+    DL_Timer_startCounter                    0x00002b21   Thumb Code    20  low_power.o(.text.DL_Timer_startCounter)
+    [Anonymous Symbol]                       0x00002b20   Section        0  low_power.o(.text.DL_Timer_startCounter)
+    DL_Timer_stopCounter                     0x00002b35   Thumb Code    20  main.o(.text.DL_Timer_stopCounter)
+    [Anonymous Symbol]                       0x00002b34   Section        0  main.o(.text.DL_Timer_stopCounter)
+    DL_Timer_stopCounter                     0x00002b49   Thumb Code    20  adc2chsample.o(.text.DL_Timer_stopCounter)
+    [Anonymous Symbol]                       0x00002b48   Section        0  adc2chsample.o(.text.DL_Timer_stopCounter)
+    DL_Timer_stopCounter                     0x00002b5d   Thumb Code    20  low_power.o(.text.DL_Timer_stopCounter)
+    [Anonymous Symbol]                       0x00002b5c   Section        0  low_power.o(.text.DL_Timer_stopCounter)
+    __arm_cp.36_0                            0x00002b70   Number         4  low_power.o(.text.DL_Timer_stopCounter)
+    DL_UART_clearInterruptStatus             0x00002b75   Thumb Code    20  main.o(.text.DL_UART_clearInterruptStatus)
+    [Anonymous Symbol]                       0x00002b74   Section        0  main.o(.text.DL_UART_clearInterruptStatus)
+    DL_UART_clearInterruptStatus             0x00002b89   Thumb Code    20  usr_uart.o(.text.DL_UART_clearInterruptStatus)
+    [Anonymous Symbol]                       0x00002b88   Section        0  usr_uart.o(.text.DL_UART_clearInterruptStatus)
+    __arm_cp.1_0                             0x00002b9c   Number         4  usr_uart.o(.text.DL_UART_clearInterruptStatus)
+    DL_UART_disable                          0x00002ba1   Thumb Code    22  main.o(.text.DL_UART_disable)
+    [Anonymous Symbol]                       0x00002ba0   Section        0  main.o(.text.DL_UART_disable)
+    DL_UART_disable                          0x00002bb7   Thumb Code    22  dl_uart.o(.text.DL_UART_disable)
+    [Anonymous Symbol]                       0x00002bb6   Section        0  dl_uart.o(.text.DL_UART_disable)
+    DL_UART_disableFIFOs                     0x00002bcd   Thumb Code    24  ti_msp_dl_config.o(.text.DL_UART_disableFIFOs)
+    [Anonymous Symbol]                       0x00002bcc   Section        0  ti_msp_dl_config.o(.text.DL_UART_disableFIFOs)
+    DL_UART_disableInterrupt                 0x00002be5   Thumb Code    24  main.o(.text.DL_UART_disableInterrupt)
+    [Anonymous Symbol]                       0x00002be4   Section        0  main.o(.text.DL_UART_disableInterrupt)
+    __arm_cp.4_0                             0x00002bfc   Number         4  main.o(.text.DL_UART_disableInterrupt)
+    DL_UART_disablePower                     0x00002c01   Thumb Code    20  main.o(.text.DL_UART_disablePower)
+    [Anonymous Symbol]                       0x00002c00   Section        0  main.o(.text.DL_UART_disablePower)
+    DL_UART_disablePower                     0x00002c15   Thumb Code    20  low_power.o(.text.DL_UART_disablePower)
+    [Anonymous Symbol]                       0x00002c14   Section        0  low_power.o(.text.DL_UART_disablePower)
+    DL_UART_enable                           0x00002c29   Thumb Code    22  ti_msp_dl_config.o(.text.DL_UART_enable)
+    [Anonymous Symbol]                       0x00002c28   Section        0  ti_msp_dl_config.o(.text.DL_UART_enable)
+    DL_UART_enablePower                      0x00002c41   Thumb Code    20  ti_msp_dl_config.o(.text.DL_UART_enablePower)
+    [Anonymous Symbol]                       0x00002c40   Section        0  ti_msp_dl_config.o(.text.DL_UART_enablePower)
+    DL_UART_enablePower                      0x00002c55   Thumb Code    20  low_power.o(.text.DL_UART_enablePower)
+    [Anonymous Symbol]                       0x00002c54   Section        0  low_power.o(.text.DL_UART_enablePower)
+    DL_UART_getPendingInterrupt              0x00002c69   Thumb Code    18  usr_uart.o(.text.DL_UART_getPendingInterrupt)
+    [Anonymous Symbol]                       0x00002c68   Section        0  usr_uart.o(.text.DL_UART_getPendingInterrupt)
+    [Anonymous Symbol]                       0x00002c7c   Section        0  dl_uart.o(.text.DL_UART_init)
+    __arm_cp.0_0                             0x00002cc0   Number         4  dl_uart.o(.text.DL_UART_init)
+    DL_UART_isBusy                           0x00002cc5   Thumb Code    20  usr_uart.o(.text.DL_UART_isBusy)
+    [Anonymous Symbol]                       0x00002cc4   Section        0  usr_uart.o(.text.DL_UART_isBusy)
+    DL_UART_isBusy                           0x00002cd9   Thumb Code    20  low_power.o(.text.DL_UART_isBusy)
+    [Anonymous Symbol]                       0x00002cd8   Section        0  low_power.o(.text.DL_UART_isBusy)
+    DL_UART_isBusy                           0x00002ced   Thumb Code    20  serial_protocol.o(.text.DL_UART_isBusy)
+    [Anonymous Symbol]                       0x00002cec   Section        0  serial_protocol.o(.text.DL_UART_isBusy)
+    DL_UART_isRXFIFOEmpty                    0x00002d01   Thumb Code    20  usr_uart.o(.text.DL_UART_isRXFIFOEmpty)
+    [Anonymous Symbol]                       0x00002d00   Section        0  usr_uart.o(.text.DL_UART_isRXFIFOEmpty)
+    DL_UART_isTXFIFOEmpty                    0x00002d15   Thumb Code    20  serial_protocol.o(.text.DL_UART_isTXFIFOEmpty)
+    [Anonymous Symbol]                       0x00002d14   Section        0  serial_protocol.o(.text.DL_UART_isTXFIFOEmpty)
+    DL_UART_isTXFIFOFull                     0x00002d29   Thumb Code    20  dl_uart.o(.text.DL_UART_isTXFIFOFull)
+    [Anonymous Symbol]                       0x00002d28   Section        0  dl_uart.o(.text.DL_UART_isTXFIFOFull)
+    DL_UART_receiveData                      0x00002d3d   Thumb Code    16  usr_uart.o(.text.DL_UART_receiveData)
+    [Anonymous Symbol]                       0x00002d3c   Section        0  usr_uart.o(.text.DL_UART_receiveData)
+    __arm_cp.14_0                            0x00002d4c   Number         4  usr_uart.o(.text.DL_UART_receiveData)
+    DL_UART_reset                            0x00002d51   Thumb Code    16  ti_msp_dl_config.o(.text.DL_UART_reset)
+    [Anonymous Symbol]                       0x00002d50   Section        0  ti_msp_dl_config.o(.text.DL_UART_reset)
+    __arm_cp.22_1                            0x00002d60   Number         4  ti_msp_dl_config.o(.text.DL_UART_reset)
+    DL_UART_setBaudRateDivisor               0x00002d65   Thumb Code    60  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
+    [Anonymous Symbol]                       0x00002d64   Section        0  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
+    __arm_cp.53_0                            0x00002da0   Number         4  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
+    __arm_cp.53_1                            0x00002da4   Number         4  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
+    __arm_cp.53_2                            0x00002da8   Number         4  ti_msp_dl_config.o(.text.DL_UART_setBaudRateDivisor)
+    [Anonymous Symbol]                       0x00002dac   Section        0  dl_uart.o(.text.DL_UART_setClockConfig)
+    __arm_cp.3_0                             0x00002dcc   Number         4  dl_uart.o(.text.DL_UART_setClockConfig)
+    DL_UART_setOversampling                  0x00002dd1   Thumb Code    30  ti_msp_dl_config.o(.text.DL_UART_setOversampling)
+    [Anonymous Symbol]                       0x00002dd0   Section        0  ti_msp_dl_config.o(.text.DL_UART_setOversampling)
+    DL_UART_transmitData                     0x00002def   Thumb Code    22  dl_uart.o(.text.DL_UART_transmitData)
+    [Anonymous Symbol]                       0x00002dee   Section        0  dl_uart.o(.text.DL_UART_transmitData)
+    [Anonymous Symbol]                       0x00002e04   Section        0  dl_uart.o(.text.DL_UART_transmitDataBlocking)
+    [Anonymous Symbol]                       0x00002e2c   Section        0  dl_vref.o(.text.DL_VREF_configReference)
+    __arm_cp.0_0                             0x00002e5c   Number         4  dl_vref.o(.text.DL_VREF_configReference)
+    DL_VREF_disableInternalRef               0x00002e61   Thumb Code    22  main.o(.text.DL_VREF_disableInternalRef)
+    [Anonymous Symbol]                       0x00002e60   Section        0  main.o(.text.DL_VREF_disableInternalRef)
+    DL_VREF_disableInternalRef               0x00002e77   Thumb Code    22  low_power.o(.text.DL_VREF_disableInternalRef)
+    [Anonymous Symbol]                       0x00002e76   Section        0  low_power.o(.text.DL_VREF_disableInternalRef)
+    DL_VREF_disablePower                     0x00002e8d   Thumb Code    20  main.o(.text.DL_VREF_disablePower)
+    [Anonymous Symbol]                       0x00002e8c   Section        0  main.o(.text.DL_VREF_disablePower)
+    DL_VREF_disablePower                     0x00002ea1   Thumb Code    20  low_power.o(.text.DL_VREF_disablePower)
+    [Anonymous Symbol]                       0x00002ea0   Section        0  low_power.o(.text.DL_VREF_disablePower)
+    DL_VREF_enablePower                      0x00002eb5   Thumb Code    20  ti_msp_dl_config.o(.text.DL_VREF_enablePower)
+    [Anonymous Symbol]                       0x00002eb4   Section        0  ti_msp_dl_config.o(.text.DL_VREF_enablePower)
+    DL_VREF_enablePower                      0x00002ec9   Thumb Code    20  low_power.o(.text.DL_VREF_enablePower)
+    [Anonymous Symbol]                       0x00002ec8   Section        0  low_power.o(.text.DL_VREF_enablePower)
+    __arm_cp.44_0                            0x00002edc   Number         4  low_power.o(.text.DL_VREF_enablePower)
+    DL_VREF_getStatus                        0x00002ee1   Thumb Code    20  ti_msp_dl_config.o(.text.DL_VREF_getStatus)
+    [Anonymous Symbol]                       0x00002ee0   Section        0  ti_msp_dl_config.o(.text.DL_VREF_getStatus)
+    __arm_cp.37_0                            0x00002ef4   Number         4  ti_msp_dl_config.o(.text.DL_VREF_getStatus)
+    DL_VREF_reset                            0x00002ef9   Thumb Code    16  main.o(.text.DL_VREF_reset)
+    [Anonymous Symbol]                       0x00002ef8   Section        0  main.o(.text.DL_VREF_reset)
+    DL_VREF_reset                            0x00002f09   Thumb Code    16  ti_msp_dl_config.o(.text.DL_VREF_reset)
+    [Anonymous Symbol]                       0x00002f08   Section        0  ti_msp_dl_config.o(.text.DL_VREF_reset)
+    DL_VREF_reset                            0x00002f19   Thumb Code    16  low_power.o(.text.DL_VREF_reset)
+    [Anonymous Symbol]                       0x00002f18   Section        0  low_power.o(.text.DL_VREF_reset)
+    __arm_cp.59_0                            0x00002f28   Number         4  low_power.o(.text.DL_VREF_reset)
+    __arm_cp.59_1                            0x00002f2c   Number         4  low_power.o(.text.DL_VREF_reset)
+    [Anonymous Symbol]                       0x00002f30   Section        0  dl_vref.o(.text.DL_VREF_setClockConfig)
+    __arm_cp.1_0                             0x00002f50   Number         4  dl_vref.o(.text.DL_VREF_setClockConfig)
+    [Anonymous Symbol]                       0x00002f54   Section        0  low_power.o(.text.GROUP1_IRQHandler)
+    [Anonymous Symbol]                       0x00002fac   Section        0  low_power.o(.text.LowPower_ClearWakeReason)
+    LowPower_ConfigKey2Wake                  0x00002fb5   Thumb Code    88  low_power.o(.text.LowPower_ConfigKey2Wake)
+    [Anonymous Symbol]                       0x00002fb4   Section        0  low_power.o(.text.LowPower_ConfigKey2Wake)
+    __arm_cp.1_0                             0x0000300c   Number         4  low_power.o(.text.LowPower_ConfigKey2Wake)
+    LowPower_ConfigWakeTimer1s               0x00003011   Thumb Code   160  low_power.o(.text.LowPower_ConfigWakeTimer1s)
+    [Anonymous Symbol]                       0x00003010   Section        0  low_power.o(.text.LowPower_ConfigWakeTimer1s)
+    __arm_cp.2_1                             0x000030b0   Number         4  low_power.o(.text.LowPower_ConfigWakeTimer1s)
+    __arm_cp.2_2                             0x000030b4   Number         4  low_power.o(.text.LowPower_ConfigWakeTimer1s)
+    __arm_cp.2_3                             0x000030b8   Number         4  low_power.o(.text.LowPower_ConfigWakeTimer1s)
+    __arm_cp.2_4                             0x000030bc   Number         4  low_power.o(.text.LowPower_ConfigWakeTimer1s)
+    LowPower_DisableMeasurementPeripherals   0x000030c1   Thumb Code   200  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
+    [Anonymous Symbol]                       0x000030c0   Section        0  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
+    __arm_cp.43_1                            0x00003188   Number         4  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
+    __arm_cp.43_2                            0x0000318c   Number         4  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
+    __arm_cp.43_3                            0x00003190   Number         4  low_power.o(.text.LowPower_DisableMeasurementPeripherals)
+    LowPower_DisableUnusedPeripheralsBeforeStandby 0x00003195   Thumb Code    60  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
+    [Anonymous Symbol]                       0x00003194   Section        0  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
+    __arm_cp.15_0                            0x000031d0   Number         4  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
+    __arm_cp.15_1                            0x000031d4   Number         4  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
+    __arm_cp.15_2                            0x000031d8   Number         4  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
+    __arm_cp.15_3                            0x000031dc   Number         4  low_power.o(.text.LowPower_DisableUnusedPeripheralsBeforeStandby)
+    LowPower_DoMeasurement                   0x000031e1   Thumb Code   116  low_power.o(.text.LowPower_DoMeasurement)
+    [Anonymous Symbol]                       0x000031e0   Section        0  low_power.o(.text.LowPower_DoMeasurement)
+    LowPower_EnableMeasurementPeripherals    0x00003255   Thumb Code    52  low_power.o(.text.LowPower_EnableMeasurementPeripherals)
+    [Anonymous Symbol]                       0x00003254   Section        0  low_power.o(.text.LowPower_EnableMeasurementPeripherals)
+    __arm_cp.42_0                            0x00003288   Number         4  low_power.o(.text.LowPower_EnableMeasurementPeripherals)
+    __arm_cp.42_2                            0x0000328c   Number         4  low_power.o(.text.LowPower_EnableMeasurementPeripherals)
+    LowPower_EnableUart                      0x00003291   Thumb Code    24  low_power.o(.text.LowPower_EnableUart)
+    [Anonymous Symbol]                       0x00003290   Section        0  low_power.o(.text.LowPower_EnableUart)
+    [Anonymous Symbol]                       0x000032a8   Section        0  low_power.o(.text.LowPower_EnterStandby1)
+    [Anonymous Symbol]                       0x00003310   Section        0  low_power.o(.text.LowPower_GetLatestMeasurement)
+    [Anonymous Symbol]                       0x00003314   Section        0  low_power.o(.text.LowPower_GetWakeReason)
+    [Anonymous Symbol]                       0x0000331c   Section        0  low_power.o(.text.LowPower_Init)
+    __arm_cp.0_0                             0x00003344   Number         4  low_power.o(.text.LowPower_Init)
+    __arm_cp.0_3                             0x00003348   Number         4  low_power.o(.text.LowPower_Init)
+    __arm_cp.0_4                             0x0000334c   Number         4  low_power.o(.text.LowPower_Init)
+    LowPower_IsKey2Pressed                   0x00003351   Thumb Code    28  low_power.o(.text.LowPower_IsKey2Pressed)
+    [Anonymous Symbol]                       0x00003350   Section        0  low_power.o(.text.LowPower_IsKey2Pressed)
+    __arm_cp.69_0                            0x0000336c   Number         4  low_power.o(.text.LowPower_IsKey2Pressed)
+    LowPower_RestoreAdcTimer                 0x00003371   Thumb Code    52  low_power.o(.text.LowPower_RestoreAdcTimer)
+    [Anonymous Symbol]                       0x00003370   Section        0  low_power.o(.text.LowPower_RestoreAdcTimer)
+    __arm_cp.46_0                            0x000033a4   Number         4  low_power.o(.text.LowPower_RestoreAdcTimer)
+    [Anonymous Symbol]                       0x000033a8   Section        0  low_power.o(.text.LowPower_RunTimerWakeFlow)
+    __arm_cp.7_0                             0x000033c4   Number         4  low_power.o(.text.LowPower_RunTimerWakeFlow)
+    __arm_cp.7_1                             0x000033c8   Number         4  low_power.o(.text.LowPower_RunTimerWakeFlow)
+    LowPower_SendMeasurement                 0x000033cd   Thumb Code    46  low_power.o(.text.LowPower_SendMeasurement)
+    [Anonymous Symbol]                       0x000033cc   Section        0  low_power.o(.text.LowPower_SendMeasurement)
+    LowPower_ServiceKey2Pending              0x000033fd   Thumb Code    76  low_power.o(.text.LowPower_ServiceKey2Pending)
+    [Anonymous Symbol]                       0x000033fc   Section        0  low_power.o(.text.LowPower_ServiceKey2Pending)
+    __arm_cp.17_0                            0x00003448   Number         4  low_power.o(.text.LowPower_ServiceKey2Pending)
+    LowPower_ServiceWakeTimerPending         0x0000344d   Thumb Code    56  low_power.o(.text.LowPower_ServiceWakeTimerPending)
+    [Anonymous Symbol]                       0x0000344c   Section        0  low_power.o(.text.LowPower_ServiceWakeTimerPending)
+    __arm_cp.16_0                            0x00003484   Number         4  low_power.o(.text.LowPower_ServiceWakeTimerPending)
+    __arm_cp.16_1                            0x00003488   Number         4  low_power.o(.text.LowPower_ServiceWakeTimerPending)
+    __arm_cp.16_2                            0x0000348c   Number         4  low_power.o(.text.LowPower_ServiceWakeTimerPending)
+    LowPower_WaitUartTxDone                  0x00003491   Thumb Code    60  low_power.o(.text.LowPower_WaitUartTxDone)
+    [Anonymous Symbol]                       0x00003490   Section        0  low_power.o(.text.LowPower_WaitUartTxDone)
+    __arm_cp.62_0                            0x000034cc   Number         4  low_power.o(.text.LowPower_WaitUartTxDone)
+    __arm_cp.62_1                            0x000034d0   Number         4  low_power.o(.text.LowPower_WaitUartTxDone)
+    LowPower_WirelessSleep                   0x000034d5   Thumb Code    24  low_power.o(.text.LowPower_WirelessSleep)
+    [Anonymous Symbol]                       0x000034d4   Section        0  low_power.o(.text.LowPower_WirelessSleep)
+    __arm_cp.11_1                            0x000034ec   Number         4  low_power.o(.text.LowPower_WirelessSleep)
+    LowPower_WirelessWake                    0x000034f1   Thumb Code   104  low_power.o(.text.LowPower_WirelessWake)
+    [Anonymous Symbol]                       0x000034f0   Section        0  low_power.o(.text.LowPower_WirelessWake)
+    __arm_cp.9_0                             0x00003558   Number         4  low_power.o(.text.LowPower_WirelessWake)
+    __arm_cp.9_1                             0x0000355c   Number         4  low_power.o(.text.LowPower_WirelessWake)
+    [Anonymous Symbol]                       0x00003560   Section        0  oled.o(.text.OLED_Clear)
+    [Anonymous Symbol]                       0x000035b6   Section        0  oled.o(.text.OLED_DisplayOff)
+    [Anonymous Symbol]                       0x000035de   Section        0  oled.o(.text.OLED_DisplayOn)
+    [Anonymous Symbol]                       0x000035f4   Section        0  oled.o(.text.OLED_I2C_Init)
+    [Anonymous Symbol]                       0x0000362c   Section        0  oled.o(.text.OLED_I2C_SendByte)
+    [Anonymous Symbol]                       0x00003680   Section        0  oled.o(.text.OLED_I2C_Start)
+    [Anonymous Symbol]                       0x000036a4   Section        0  oled.o(.text.OLED_I2C_Stop)
+    [Anonymous Symbol]                       0x000036c0   Section        0  oled.o(.text.OLED_Init)
+    [Anonymous Symbol]                       0x0000378c   Section        0  oled.o(.text.OLED_Pow)
+    [Anonymous Symbol]                       0x000037b4   Section        0  oled.o(.text.OLED_SetCursor)
+    [Anonymous Symbol]                       0x000037ec   Section        0  oled.o(.text.OLED_ShowChar)
+    __arm_cp.14_0                            0x00003894   Number         4  oled.o(.text.OLED_ShowChar)
+    __arm_cp.14_1                            0x00003898   Number         4  oled.o(.text.OLED_ShowChar)
+    __arm_cp.14_2                            0x0000389c   Number         4  oled.o(.text.OLED_ShowChar)
+    [Anonymous Symbol]                       0x000038a0   Section        0  oled.o(.text.OLED_ShowNum)
+    [Anonymous Symbol]                       0x0000391a   Section        0  oled.o(.text.OLED_ShowString)
+    [Anonymous Symbol]                       0x00003964   Section        0  oled.o(.text.OLED_W_SCL)
+    [Anonymous Symbol]                       0x00003994   Section        0  oled.o(.text.OLED_W_SDA)
+    __arm_cp.3_0                             0x000039c4   Number         4  oled.o(.text.OLED_W_SDA)
+    [Anonymous Symbol]                       0x000039c8   Section        0  oled.o(.text.OLED_WriteCommand)
+    [Anonymous Symbol]                       0x000039f2   Section        0  oled.o(.text.OLED_WriteData)
+    [Anonymous Symbol]                       0x00003a1c   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC12_0_init)
+    __arm_cp.14_0                            0x00003a88   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC12_0_init)
+    [Anonymous Symbol]                       0x00003a8c   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC_SAMPLE_TIMER_init)
+    __arm_cp.8_0                             0x00003ae4   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC_SAMPLE_TIMER_init)
+    __arm_cp.8_2                             0x00003ae8   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC_SAMPLE_TIMER_init)
+    [Anonymous Symbol]                       0x00003aec   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_CH0_init)
+    __arm_cp.70_0                            0x00003afc   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_CH0_init)
+    __arm_cp.70_1                            0x00003b00   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_CH0_init)
+    [Anonymous Symbol]                       0x00003b04   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_init)
+    [Anonymous Symbol]                       0x00003b0c   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_GPIO_init)
+    [Anonymous Symbol]                       0x00003b66   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_SYSCTL_init)
+    [Anonymous Symbol]                       0x00003ba0   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init)
+    __arm_cp.11_0                            0x00003bd8   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init)
+    __arm_cp.11_2                            0x00003bdc   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init)
+    [Anonymous Symbol]                       0x00003be0   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_VREF_init)
+    __arm_cp.13_0                            0x00003c0c   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_VREF_init)
+    __arm_cp.13_2                            0x00003c10   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_VREF_init)
+    [Anonymous Symbol]                       0x00003c14   Section        0  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_0                             0x00003ccc   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_1                             0x00003cd0   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_2                             0x00003cd4   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_3                             0x00003cd8   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_4                             0x00003cdc   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_5                             0x00003ce0   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_7                             0x00003ce4   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_8                             0x00003ce8   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_9                             0x00003cec   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    __arm_cp.5_10                            0x00003cf0   Number         4  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    [Anonymous Symbol]                       0x00003cf4   Section        0  serial_protocol.o(.text.SerialProtocol_PackCurrentFrame)
+    [Anonymous Symbol]                       0x00003d4a   Section        0  serial_protocol.o(.text.SerialProtocol_SendCurrentFrame)
+    SerialProtocol_WaitUartTxIdle            0x00003d8d   Thumb Code    72  serial_protocol.o(.text.SerialProtocol_WaitUartTxIdle)
+    [Anonymous Symbol]                       0x00003d8c   Section        0  serial_protocol.o(.text.SerialProtocol_WaitUartTxIdle)
+    SerialProtocol_WriteFloatLittleEndian    0x00003dd5   Thumb Code    40  serial_protocol.o(.text.SerialProtocol_WriteFloatLittleEndian)
+    [Anonymous Symbol]                       0x00003dd4   Section        0  serial_protocol.o(.text.SerialProtocol_WriteFloatLittleEndian)
+    [Anonymous Symbol]                       0x00003dfc   Section        0  ti_msp_dl_config.o(.text.Sysclk_WaitForLFOSCGood)
+    [Anonymous Symbol]                       0x00003e58   Section        0  ti_msp_dl_config.o(.text.Sysclk_WaitForSYSOSCBase)
+    [Anonymous Symbol]                       0x00003eb0   Section        0  low_power.o(.text.TIMG8_IRQHandler)
+    __arm_cp.22_0                            0x00003ee0   Number         4  low_power.o(.text.TIMG8_IRQHandler)
+    __arm_cp.22_1                            0x00003ee4   Number         4  low_power.o(.text.TIMG8_IRQHandler)
+    __arm_cp.22_2                            0x00003ee8   Number         4  low_power.o(.text.TIMG8_IRQHandler)
+    [Anonymous Symbol]                       0x00003eec   Section        0  usr_uart.o(.text.UART0_IRQHandler)
+    [Anonymous Symbol]                       0x00003ef4   Section        0  usr_uart.o(.text.USR_UART_IRQHandler)
+    __arm_cp.17_0                            0x00003f48   Number         4  usr_uart.o(.text.USR_UART_IRQHandler)
+    [Anonymous Symbol]                       0x00003f4c   Section        0  usr_uart.o(.text.USR_UART_init)
+    __arm_cp.0_3                             0x00003f78   Number         4  usr_uart.o(.text.USR_UART_init)
+    __arm_cp.0_4                             0x00003f7c   Number         4  usr_uart.o(.text.USR_UART_init)
+    __arm_cp.0_5                             0x00003f80   Number         4  usr_uart.o(.text.USR_UART_init)
+    __arm_cp.0_6                             0x00003f84   Number         4  usr_uart.o(.text.USR_UART_init)
+    __arm_cp.0_8                             0x00003f88   Number         4  usr_uart.o(.text.USR_UART_init)
+    [Anonymous Symbol]                       0x00003f8c   Section        0  usr_uart.o(.text.USR_UART_sendByte)
+    __arm_cp.2_0                             0x00003fa4   Number         4  usr_uart.o(.text.USR_UART_sendByte)
+    [Anonymous Symbol]                       0x00003fa8   Section        0  usr_uart.o(.text.USR_UART_sendBytes)
+    [Anonymous Symbol]                       0x00003ff2   Section        0  usr_uart.o(.text.USR_UART_sendString)
+    USR_UART_storeRxByte                     0x00004025   Thumb Code    60  usr_uart.o(.text.USR_UART_storeRxByte)
+    [Anonymous Symbol]                       0x00004024   Section        0  usr_uart.o(.text.USR_UART_storeRxByte)
+    __arm_cp.15_0                            0x00004060   Number         4  usr_uart.o(.text.USR_UART_storeRxByte)
+    __arm_cp.15_1                            0x00004064   Number         4  usr_uart.o(.text.USR_UART_storeRxByte)
+    __arm_cp.15_2                            0x00004068   Number         4  usr_uart.o(.text.USR_UART_storeRxByte)
+    __arm_cp.15_3                            0x0000406c   Number         4  usr_uart.o(.text.USR_UART_storeRxByte)
+    USR_UART_waitTxDone                      0x00004071   Thumb Code    60  usr_uart.o(.text.USR_UART_waitTxDone)
+    [Anonymous Symbol]                       0x00004070   Section        0  usr_uart.o(.text.USR_UART_waitTxDone)
+    __arm_cp.4_0                             0x000040ac   Number         4  usr_uart.o(.text.USR_UART_waitTxDone)
+    __arm_cp.4_1                             0x000040b0   Number         4  usr_uart.o(.text.USR_UART_waitTxDone)
+    __NVIC_ClearPendingIRQ                   0x000040b5   Thumb Code    40  main.o(.text.__NVIC_ClearPendingIRQ)
+    [Anonymous Symbol]                       0x000040b4   Section        0  main.o(.text.__NVIC_ClearPendingIRQ)
+    __NVIC_ClearPendingIRQ                   0x000040dd   Thumb Code    40  adc2chsample.o(.text.__NVIC_ClearPendingIRQ)
+    [Anonymous Symbol]                       0x000040dc   Section        0  adc2chsample.o(.text.__NVIC_ClearPendingIRQ)
+    __NVIC_ClearPendingIRQ                   0x00004105   Thumb Code    40  low_power.o(.text.__NVIC_ClearPendingIRQ)
+    [Anonymous Symbol]                       0x00004104   Section        0  low_power.o(.text.__NVIC_ClearPendingIRQ)
+    __arm_cp.18_0                            0x0000412c   Number         4  low_power.o(.text.__NVIC_ClearPendingIRQ)
+    __NVIC_DisableIRQ                        0x00004131   Thumb Code    48  main.o(.text.__NVIC_DisableIRQ)
+    [Anonymous Symbol]                       0x00004130   Section        0  main.o(.text.__NVIC_DisableIRQ)
+    __NVIC_DisableIRQ                        0x00004161   Thumb Code    48  adc2chsample.o(.text.__NVIC_DisableIRQ)
+    [Anonymous Symbol]                       0x00004160   Section        0  adc2chsample.o(.text.__NVIC_DisableIRQ)
+    __NVIC_DisableIRQ                        0x00004191   Thumb Code    48  low_power.o(.text.__NVIC_DisableIRQ)
+    [Anonymous Symbol]                       0x00004190   Section        0  low_power.o(.text.__NVIC_DisableIRQ)
+    __arm_cp.55_0                            0x000041c0   Number         4  low_power.o(.text.__NVIC_DisableIRQ)
+    __NVIC_EnableIRQ                         0x000041c5   Thumb Code    40  adc2chsample.o(.text.__NVIC_EnableIRQ)
+    [Anonymous Symbol]                       0x000041c4   Section        0  adc2chsample.o(.text.__NVIC_EnableIRQ)
+    __NVIC_EnableIRQ                         0x000041ed   Thumb Code    40  low_power.o(.text.__NVIC_EnableIRQ)
+    [Anonymous Symbol]                       0x000041ec   Section        0  low_power.o(.text.__NVIC_EnableIRQ)
+    __arm_cp.33_0                            0x00004214   Number         4  low_power.o(.text.__NVIC_EnableIRQ)
+    [Anonymous Symbol]                       0x00004218   Section        0  main.o(.text.main)
+    __arm_cp.0_0                             0x000042c8   Number         4  main.o(.text.main)
+    i.sqrt                                   0x000042cc   Section        0  sqrt.o(i.sqrt)
+    x$fpl$fadd                               0x00004314   Section      140  faddsub.o(x$fpl$fadd)
+    _fadd1                                   0x00004321   Thumb Code     0  faddsub.o(x$fpl$fadd)
+    x$fpl$fsub                               0x000043a0   Section      208  faddsub.o(x$fpl$fsub)
+    _fsub1                                   0x000043ad   Thumb Code     0  faddsub.o(x$fpl$fsub)
+    ddiv_reciptbl                            0x00004470   Data         128  ddiv.o(.constdata)
+    .constdata                               0x00004470   Section      128  ddiv.o(.constdata)
+    x$fpl$usenofp                            0x00004470   Section        0  usenofp.o(x$fpl$usenofp)
+    LowPower_ConfigWakeTimer1s.wakeClockConfig 0x000044f0   Data           3  low_power.o(.rodata.LowPower_ConfigWakeTimer1s.wakeClockConfig)
+    [Anonymous Symbol]                       0x000044f0   Section        0  low_power.o(.rodata.LowPower_ConfigWakeTimer1s.wakeClockConfig)
+    LowPower_ConfigWakeTimer1s.wakeTimerConfig 0x000044f4   Data          20  low_power.o(.rodata.LowPower_ConfigWakeTimer1s.wakeTimerConfig)
+    [Anonymous Symbol]                       0x000044f4   Section        0  low_power.o(.rodata.LowPower_ConfigWakeTimer1s.wakeTimerConfig)
+    gADC12_0ClockConfig                      0x00004af8   Data           8  ti_msp_dl_config.o(.rodata.gADC12_0ClockConfig)
+    [Anonymous Symbol]                       0x00004af8   Section        0  ti_msp_dl_config.o(.rodata.gADC12_0ClockConfig)
+    gADC_SAMPLE_TIMERClockConfig             0x00004b00   Data           3  ti_msp_dl_config.o(.rodata.gADC_SAMPLE_TIMERClockConfig)
+    [Anonymous Symbol]                       0x00004b00   Section        0  ti_msp_dl_config.o(.rodata.gADC_SAMPLE_TIMERClockConfig)
+    gADC_SAMPLE_TIMERTimerConfig             0x00004b04   Data          20  ti_msp_dl_config.o(.rodata.gADC_SAMPLE_TIMERTimerConfig)
+    [Anonymous Symbol]                       0x00004b04   Section        0  ti_msp_dl_config.o(.rodata.gADC_SAMPLE_TIMERTimerConfig)
+    gDMA_CH0Config                           0x00004b18   Data          24  ti_msp_dl_config.o(.rodata.gDMA_CH0Config)
+    [Anonymous Symbol]                       0x00004b18   Section        0  ti_msp_dl_config.o(.rodata.gDMA_CH0Config)
+    gUART_DEBUGClockConfig                   0x00004b30   Data           2  ti_msp_dl_config.o(.rodata.gUART_DEBUGClockConfig)
+    [Anonymous Symbol]                       0x00004b30   Section        0  ti_msp_dl_config.o(.rodata.gUART_DEBUGClockConfig)
+    gUART_DEBUGConfig                        0x00004b32   Data          10  ti_msp_dl_config.o(.rodata.gUART_DEBUGConfig)
+    [Anonymous Symbol]                       0x00004b32   Section        0  ti_msp_dl_config.o(.rodata.gUART_DEBUGConfig)
+    gVREFClockConfig                         0x00004b3c   Data           2  ti_msp_dl_config.o(.rodata.gVREFClockConfig)
+    [Anonymous Symbol]                       0x00004b3c   Section        0  ti_msp_dl_config.o(.rodata.gVREFClockConfig)
+    gVREFConfig                              0x00004b40   Data          12  ti_msp_dl_config.o(.rodata.gVREFConfig)
+    [Anonymous Symbol]                       0x00004b40   Section        0  ti_msp_dl_config.o(.rodata.gVREFConfig)
+    [Anonymous Symbol]                       0x00004b4c   Section        0  main.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x00004b6a   Section        0  adc2chsample.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x00004e9f   Section        0  low_power.o(.rodata.str1.1)
     gADCSampleRateHz                         0x20200000   Data           4  adc2chsample.o(.data.gADCSampleRateHz)
     [Anonymous Symbol]                       0x20200000   Section        0  adc2chsample.o(.data.gADCSampleRateHz)
     gADCSampleTimerPeriod                    0x20200004   Data           2  adc2chsample.o(.data.gADCSampleTimerPeriod)
@@ -5477,67 +5496,68 @@ Image Symbol Table
     DL_DMA_initChannel                       0x00002269   Thumb Code    70  dl_dma.o(.text.DL_DMA_initChannel)
     DL_SYSCTL_switchMCLKfromLFCLKtoSYSOSC    0x000026dd   Thumb Code    44  dl_sysctl_mspm0g1x0x_g3x0x.o(.text.DL_SYSCTL_switchMCLKfromLFCLKtoSYSOSC)
     DL_Timer_initTimerMode                   0x00002891   Thumb Code   252  dl_timer.o(.text.DL_Timer_initTimerMode)
-    DL_Timer_setCaptureCompareCtl            0x000029b1   Thumb Code    52  dl_timer.o(.text.DL_Timer_setCaptureCompareCtl)
-    DL_Timer_setCaptureCompareValue          0x000029ed   Thumb Code    40  dl_timer.o(.text.DL_Timer_setCaptureCompareValue)
-    DL_Timer_setClockConfig                  0x00002a19   Thumb Code    44  dl_timer.o(.text.DL_Timer_setClockConfig)
-    DL_UART_init                             0x00002c75   Thumb Code    68  dl_uart.o(.text.DL_UART_init)
-    DL_UART_setClockConfig                   0x00002d95   Thumb Code    32  dl_uart.o(.text.DL_UART_setClockConfig)
-    DL_UART_transmitDataBlocking             0x00002ded   Thumb Code    40  dl_uart.o(.text.DL_UART_transmitDataBlocking)
-    DL_VREF_configReference                  0x00002e15   Thumb Code    48  dl_vref.o(.text.DL_VREF_configReference)
-    DL_VREF_setClockConfig                   0x00002f19   Thumb Code    32  dl_vref.o(.text.DL_VREF_setClockConfig)
-    GROUP1_IRQHandler                        0x00002f3d   Thumb Code    88  low_power.o(.text.GROUP1_IRQHandler)
-    LowPower_ClearWakeReason                 0x00002f95   Thumb Code     8  low_power.o(.text.LowPower_ClearWakeReason)
-    LowPower_EnterStandby1                   0x00003291   Thumb Code   104  low_power.o(.text.LowPower_EnterStandby1)
-    LowPower_GetLatestMeasurement            0x000032f9   Thumb Code     4  low_power.o(.text.LowPower_GetLatestMeasurement)
-    LowPower_GetWakeReason                   0x000032fd   Thumb Code     8  low_power.o(.text.LowPower_GetWakeReason)
-    LowPower_Init                            0x00003305   Thumb Code    40  low_power.o(.text.LowPower_Init)
-    LowPower_RunTimerWakeFlow                0x00003391   Thumb Code    28  low_power.o(.text.LowPower_RunTimerWakeFlow)
-    OLED_Clear                               0x000034d9   Thumb Code    86  oled.o(.text.OLED_Clear)
-    OLED_DisplayOff                          0x0000352f   Thumb Code    40  oled.o(.text.OLED_DisplayOff)
-    OLED_DisplayOn                           0x00003557   Thumb Code    22  oled.o(.text.OLED_DisplayOn)
-    OLED_I2C_Init                            0x0000356d   Thumb Code    56  oled.o(.text.OLED_I2C_Init)
-    OLED_I2C_SendByte                        0x000035a5   Thumb Code    84  oled.o(.text.OLED_I2C_SendByte)
-    OLED_I2C_Start                           0x000035f9   Thumb Code    36  oled.o(.text.OLED_I2C_Start)
-    OLED_I2C_Stop                            0x0000361d   Thumb Code    28  oled.o(.text.OLED_I2C_Stop)
-    OLED_Init                                0x00003639   Thumb Code   204  oled.o(.text.OLED_Init)
-    OLED_Pow                                 0x00003705   Thumb Code    40  oled.o(.text.OLED_Pow)
-    OLED_SetCursor                           0x0000372d   Thumb Code    54  oled.o(.text.OLED_SetCursor)
-    OLED_ShowChar                            0x00003765   Thumb Code   168  oled.o(.text.OLED_ShowChar)
-    OLED_ShowNum                             0x00003819   Thumb Code   122  oled.o(.text.OLED_ShowNum)
-    OLED_ShowString                          0x00003893   Thumb Code    74  oled.o(.text.OLED_ShowString)
-    OLED_W_SCL                               0x000038dd   Thumb Code    48  oled.o(.text.OLED_W_SCL)
-    OLED_W_SDA                               0x0000390d   Thumb Code    48  oled.o(.text.OLED_W_SDA)
-    OLED_WriteCommand                        0x00003941   Thumb Code    42  oled.o(.text.OLED_WriteCommand)
-    OLED_WriteData                           0x0000396b   Thumb Code    42  oled.o(.text.OLED_WriteData)
-    SYSCFG_DL_ADC12_0_init                   0x00003995   Thumb Code   108  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC12_0_init)
-    SYSCFG_DL_ADC_SAMPLE_TIMER_init          0x00003a05   Thumb Code    88  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC_SAMPLE_TIMER_init)
-    SYSCFG_DL_DMA_CH0_init                   0x00003a65   Thumb Code    16  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_CH0_init)
-    SYSCFG_DL_DMA_init                       0x00003a7d   Thumb Code     8  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_init)
-    SYSCFG_DL_GPIO_init                      0x00003a85   Thumb Code    90  ti_msp_dl_config.o(.text.SYSCFG_DL_GPIO_init)
-    SYSCFG_DL_SYSCTL_init                    0x00003adf   Thumb Code    58  ti_msp_dl_config.o(.text.SYSCFG_DL_SYSCTL_init)
-    SYSCFG_DL_UART_DEBUG_init                0x00003b19   Thumb Code    56  ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init)
-    SYSCFG_DL_VREF_init                      0x00003b59   Thumb Code    44  ti_msp_dl_config.o(.text.SYSCFG_DL_VREF_init)
-    SYSCFG_DL_initPower                      0x00003b8d   Thumb Code   184  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
-    SerialProtocol_PackCurrentFrame          0x00003c6d   Thumb Code    86  serial_protocol.o(.text.SerialProtocol_PackCurrentFrame)
-    SerialProtocol_SendCurrentFrame          0x00003cc3   Thumb Code    66  serial_protocol.o(.text.SerialProtocol_SendCurrentFrame)
-    Sysclk_WaitForLFOSCGood                  0x00003d79   Thumb Code    92  ti_msp_dl_config.o(.text.Sysclk_WaitForLFOSCGood)
-    Sysclk_WaitForSYSOSCBase                 0x00003dd5   Thumb Code    88  ti_msp_dl_config.o(.text.Sysclk_WaitForSYSOSCBase)
-    TIMG8_IRQHandler                         0x00003e2d   Thumb Code    48  low_power.o(.text.TIMG8_IRQHandler)
-    UART0_IRQHandler                         0x00003e69   Thumb Code     8  usr_uart.o(.text.UART0_IRQHandler)
-    USR_UART_IRQHandler                      0x00003e71   Thumb Code    84  usr_uart.o(.text.USR_UART_IRQHandler)
-    USR_UART_init                            0x00003ec9   Thumb Code    44  usr_uart.o(.text.USR_UART_init)
-    USR_UART_sendByte                        0x00003f09   Thumb Code    24  usr_uart.o(.text.USR_UART_sendByte)
-    USR_UART_sendBytes                       0x00003f25   Thumb Code    70  usr_uart.o(.text.USR_UART_sendBytes)
-    main                                     0x0000411d   Thumb Code   152  main.o(.text.main)
-    sqrt                                     0x000041b9   Thumb Code    66  sqrt.o(i.sqrt)
-    __aeabi_fadd                             0x00004201   Thumb Code     0  faddsub.o(x$fpl$fadd)
-    _fadd                                    0x00004201   Thumb Code   134  faddsub.o(x$fpl$fadd)
-    __aeabi_fsub                             0x0000428d   Thumb Code     0  faddsub.o(x$fpl$fsub)
-    _fsub                                    0x0000428d   Thumb Code   204  faddsub.o(x$fpl$fsub)
-    __I$use$fp                               0x0000435c   Number         0  usenofp.o(x$fpl$usenofp)
-    OLED_F8x16                               0x000043f4   Data        1520  oled.o(.rodata.OLED_F8x16)
-    Region$$Table$$Base                      0x00004da8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x00004dc8   Number         0  anon$$obj.o(Region$$Table)
+    DL_Timer_setCaptureCompareCtl            0x000029b9   Thumb Code    52  dl_timer.o(.text.DL_Timer_setCaptureCompareCtl)
+    DL_Timer_setCaptureCompareValue          0x000029f5   Thumb Code    40  dl_timer.o(.text.DL_Timer_setCaptureCompareValue)
+    DL_Timer_setClockConfig                  0x00002a21   Thumb Code    44  dl_timer.o(.text.DL_Timer_setClockConfig)
+    DL_UART_init                             0x00002c7d   Thumb Code    68  dl_uart.o(.text.DL_UART_init)
+    DL_UART_setClockConfig                   0x00002dad   Thumb Code    32  dl_uart.o(.text.DL_UART_setClockConfig)
+    DL_UART_transmitDataBlocking             0x00002e05   Thumb Code    40  dl_uart.o(.text.DL_UART_transmitDataBlocking)
+    DL_VREF_configReference                  0x00002e2d   Thumb Code    48  dl_vref.o(.text.DL_VREF_configReference)
+    DL_VREF_setClockConfig                   0x00002f31   Thumb Code    32  dl_vref.o(.text.DL_VREF_setClockConfig)
+    GROUP1_IRQHandler                        0x00002f55   Thumb Code    88  low_power.o(.text.GROUP1_IRQHandler)
+    LowPower_ClearWakeReason                 0x00002fad   Thumb Code     8  low_power.o(.text.LowPower_ClearWakeReason)
+    LowPower_EnterStandby1                   0x000032a9   Thumb Code   104  low_power.o(.text.LowPower_EnterStandby1)
+    LowPower_GetLatestMeasurement            0x00003311   Thumb Code     4  low_power.o(.text.LowPower_GetLatestMeasurement)
+    LowPower_GetWakeReason                   0x00003315   Thumb Code     8  low_power.o(.text.LowPower_GetWakeReason)
+    LowPower_Init                            0x0000331d   Thumb Code    40  low_power.o(.text.LowPower_Init)
+    LowPower_RunTimerWakeFlow                0x000033a9   Thumb Code    28  low_power.o(.text.LowPower_RunTimerWakeFlow)
+    OLED_Clear                               0x00003561   Thumb Code    86  oled.o(.text.OLED_Clear)
+    OLED_DisplayOff                          0x000035b7   Thumb Code    40  oled.o(.text.OLED_DisplayOff)
+    OLED_DisplayOn                           0x000035df   Thumb Code    22  oled.o(.text.OLED_DisplayOn)
+    OLED_I2C_Init                            0x000035f5   Thumb Code    56  oled.o(.text.OLED_I2C_Init)
+    OLED_I2C_SendByte                        0x0000362d   Thumb Code    84  oled.o(.text.OLED_I2C_SendByte)
+    OLED_I2C_Start                           0x00003681   Thumb Code    36  oled.o(.text.OLED_I2C_Start)
+    OLED_I2C_Stop                            0x000036a5   Thumb Code    28  oled.o(.text.OLED_I2C_Stop)
+    OLED_Init                                0x000036c1   Thumb Code   204  oled.o(.text.OLED_Init)
+    OLED_Pow                                 0x0000378d   Thumb Code    40  oled.o(.text.OLED_Pow)
+    OLED_SetCursor                           0x000037b5   Thumb Code    54  oled.o(.text.OLED_SetCursor)
+    OLED_ShowChar                            0x000037ed   Thumb Code   168  oled.o(.text.OLED_ShowChar)
+    OLED_ShowNum                             0x000038a1   Thumb Code   122  oled.o(.text.OLED_ShowNum)
+    OLED_ShowString                          0x0000391b   Thumb Code    74  oled.o(.text.OLED_ShowString)
+    OLED_W_SCL                               0x00003965   Thumb Code    48  oled.o(.text.OLED_W_SCL)
+    OLED_W_SDA                               0x00003995   Thumb Code    48  oled.o(.text.OLED_W_SDA)
+    OLED_WriteCommand                        0x000039c9   Thumb Code    42  oled.o(.text.OLED_WriteCommand)
+    OLED_WriteData                           0x000039f3   Thumb Code    42  oled.o(.text.OLED_WriteData)
+    SYSCFG_DL_ADC12_0_init                   0x00003a1d   Thumb Code   108  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC12_0_init)
+    SYSCFG_DL_ADC_SAMPLE_TIMER_init          0x00003a8d   Thumb Code    88  ti_msp_dl_config.o(.text.SYSCFG_DL_ADC_SAMPLE_TIMER_init)
+    SYSCFG_DL_DMA_CH0_init                   0x00003aed   Thumb Code    16  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_CH0_init)
+    SYSCFG_DL_DMA_init                       0x00003b05   Thumb Code     8  ti_msp_dl_config.o(.text.SYSCFG_DL_DMA_init)
+    SYSCFG_DL_GPIO_init                      0x00003b0d   Thumb Code    90  ti_msp_dl_config.o(.text.SYSCFG_DL_GPIO_init)
+    SYSCFG_DL_SYSCTL_init                    0x00003b67   Thumb Code    58  ti_msp_dl_config.o(.text.SYSCFG_DL_SYSCTL_init)
+    SYSCFG_DL_UART_DEBUG_init                0x00003ba1   Thumb Code    56  ti_msp_dl_config.o(.text.SYSCFG_DL_UART_DEBUG_init)
+    SYSCFG_DL_VREF_init                      0x00003be1   Thumb Code    44  ti_msp_dl_config.o(.text.SYSCFG_DL_VREF_init)
+    SYSCFG_DL_initPower                      0x00003c15   Thumb Code   184  ti_msp_dl_config.o(.text.SYSCFG_DL_initPower)
+    SerialProtocol_PackCurrentFrame          0x00003cf5   Thumb Code    86  serial_protocol.o(.text.SerialProtocol_PackCurrentFrame)
+    SerialProtocol_SendCurrentFrame          0x00003d4b   Thumb Code    66  serial_protocol.o(.text.SerialProtocol_SendCurrentFrame)
+    Sysclk_WaitForLFOSCGood                  0x00003dfd   Thumb Code    92  ti_msp_dl_config.o(.text.Sysclk_WaitForLFOSCGood)
+    Sysclk_WaitForSYSOSCBase                 0x00003e59   Thumb Code    88  ti_msp_dl_config.o(.text.Sysclk_WaitForSYSOSCBase)
+    TIMG8_IRQHandler                         0x00003eb1   Thumb Code    48  low_power.o(.text.TIMG8_IRQHandler)
+    UART0_IRQHandler                         0x00003eed   Thumb Code     8  usr_uart.o(.text.UART0_IRQHandler)
+    USR_UART_IRQHandler                      0x00003ef5   Thumb Code    84  usr_uart.o(.text.USR_UART_IRQHandler)
+    USR_UART_init                            0x00003f4d   Thumb Code    44  usr_uart.o(.text.USR_UART_init)
+    USR_UART_sendByte                        0x00003f8d   Thumb Code    24  usr_uart.o(.text.USR_UART_sendByte)
+    USR_UART_sendBytes                       0x00003fa9   Thumb Code    74  usr_uart.o(.text.USR_UART_sendBytes)
+    USR_UART_sendString                      0x00003ff3   Thumb Code    48  usr_uart.o(.text.USR_UART_sendString)
+    main                                     0x00004219   Thumb Code   176  main.o(.text.main)
+    sqrt                                     0x000042cd   Thumb Code    66  sqrt.o(i.sqrt)
+    __aeabi_fadd                             0x00004315   Thumb Code     0  faddsub.o(x$fpl$fadd)
+    _fadd                                    0x00004315   Thumb Code   134  faddsub.o(x$fpl$fadd)
+    __aeabi_fsub                             0x000043a1   Thumb Code     0  faddsub.o(x$fpl$fsub)
+    _fsub                                    0x000043a1   Thumb Code   204  faddsub.o(x$fpl$fsub)
+    __I$use$fp                               0x00004470   Number         0  usenofp.o(x$fpl$usenofp)
+    OLED_F8x16                               0x00004508   Data        1520  oled.o(.rodata.OLED_F8x16)
+    Region$$Table$$Base                      0x00004ed0   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00004ef0   Number         0  anon$$obj.o(Region$$Table)
     pADC_Buffer0                             0x20200008   Data           4  adc2chsample.o(.data.pADC_Buffer0)
     pADC_Buffer1                             0x2020000c   Data           4  adc2chsample.o(.data.pADC_Buffer1)
     per                                      0x20200010   Data           2  adc2chsample.o(.data.per)
@@ -5553,86 +5573,86 @@ Memory Map of the image
 
   Image Entry point : 0x000000c1
 
-  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x00004de0, Max: 0x0001fc00, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x00004f08, Max: 0x0001fc00, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00004dc8, Max: 0x0001fc00, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00004ef0, Max: 0x0001fc00, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000000   0x000000c0   Data   RO          252    RESET               startup_mspm0g350x_uvision.o
-    0x000000c0   0x000000c0   0x00000008   Code   RO         2183  * !!!main             c_p.l(__main.o)
-    0x000000c8   0x000000c8   0x00000054   Code   RO         2537    !!!scatter          c_p.l(__scatter.o)
+    0x000000c0   0x000000c0   0x00000008   Code   RO         2187  * !!!main             c_p.l(__main.o)
+    0x000000c8   0x000000c8   0x00000054   Code   RO         2541    !!!scatter          c_p.l(__scatter.o)
     0x0000011c   0x0000011c   0x00000004   PAD
-    0x00000120   0x00000120   0x0000001a   Code   RO         2541    !!handler_copy      c_p.l(__scatter_copy.o)
+    0x00000120   0x00000120   0x0000001a   Code   RO         2545    !!handler_copy      c_p.l(__scatter_copy.o)
     0x0000013a   0x0000013a   0x00000006   PAD
-    0x00000140   0x00000140   0x00000002   Code   RO         2538    !!handler_null      c_p.l(__scatter.o)
+    0x00000140   0x00000140   0x00000002   Code   RO         2542    !!handler_null      c_p.l(__scatter.o)
     0x00000142   0x00000142   0x00000006   PAD
-    0x00000148   0x00000148   0x0000001c   Code   RO         2543    !!handler_zi        c_p.l(__scatter_zi.o)
-    0x00000164   0x00000164   0x00000002   Code   RO         2393    .ARM.Collect$$libinit$$00000000  c_p.l(libinit.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2410    .ARM.Collect$$libinit$$00000002  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2412    .ARM.Collect$$libinit$$00000004  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2414    .ARM.Collect$$libinit$$00000006  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2417    .ARM.Collect$$libinit$$0000000C  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2419    .ARM.Collect$$libinit$$0000000E  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2421    .ARM.Collect$$libinit$$00000010  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2424    .ARM.Collect$$libinit$$00000013  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2426    .ARM.Collect$$libinit$$00000015  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2428    .ARM.Collect$$libinit$$00000017  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2430    .ARM.Collect$$libinit$$00000019  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2432    .ARM.Collect$$libinit$$0000001B  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2434    .ARM.Collect$$libinit$$0000001D  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2436    .ARM.Collect$$libinit$$0000001F  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2438    .ARM.Collect$$libinit$$00000021  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2440    .ARM.Collect$$libinit$$00000023  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2442    .ARM.Collect$$libinit$$00000025  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2444    .ARM.Collect$$libinit$$00000027  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2448    .ARM.Collect$$libinit$$0000002E  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2450    .ARM.Collect$$libinit$$00000030  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2452    .ARM.Collect$$libinit$$00000032  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000000   Code   RO         2454    .ARM.Collect$$libinit$$00000034  c_p.l(libinit2.o)
-    0x00000166   0x00000166   0x00000002   Code   RO         2455    .ARM.Collect$$libinit$$00000035  c_p.l(libinit2.o)
-    0x00000168   0x00000168   0x00000002   Code   RO         2492    .ARM.Collect$$libshutdown$$00000000  c_p.l(libshutdown.o)
-    0x0000016a   0x0000016a   0x00000000   Code   RO         2520    .ARM.Collect$$libshutdown$$00000002  c_p.l(libshutdown2.o)
-    0x0000016a   0x0000016a   0x00000000   Code   RO         2522    .ARM.Collect$$libshutdown$$00000004  c_p.l(libshutdown2.o)
-    0x0000016a   0x0000016a   0x00000000   Code   RO         2525    .ARM.Collect$$libshutdown$$00000007  c_p.l(libshutdown2.o)
-    0x0000016a   0x0000016a   0x00000000   Code   RO         2528    .ARM.Collect$$libshutdown$$0000000A  c_p.l(libshutdown2.o)
-    0x0000016a   0x0000016a   0x00000000   Code   RO         2530    .ARM.Collect$$libshutdown$$0000000C  c_p.l(libshutdown2.o)
-    0x0000016a   0x0000016a   0x00000000   Code   RO         2533    .ARM.Collect$$libshutdown$$0000000F  c_p.l(libshutdown2.o)
-    0x0000016a   0x0000016a   0x00000002   Code   RO         2534    .ARM.Collect$$libshutdown$$00000010  c_p.l(libshutdown2.o)
-    0x0000016c   0x0000016c   0x00000000   Code   RO         2283    .ARM.Collect$$rtentry$$00000000  c_p.l(__rtentry.o)
-    0x0000016c   0x0000016c   0x00000000   Code   RO         2345    .ARM.Collect$$rtentry$$00000002  c_p.l(__rtentry2.o)
-    0x0000016c   0x0000016c   0x00000006   Code   RO         2357    .ARM.Collect$$rtentry$$00000004  c_p.l(__rtentry4.o)
-    0x00000172   0x00000172   0x00000000   Code   RO         2347    .ARM.Collect$$rtentry$$00000009  c_p.l(__rtentry2.o)
-    0x00000172   0x00000172   0x00000004   Code   RO         2348    .ARM.Collect$$rtentry$$0000000A  c_p.l(__rtentry2.o)
-    0x00000176   0x00000176   0x00000000   Code   RO         2350    .ARM.Collect$$rtentry$$0000000C  c_p.l(__rtentry2.o)
-    0x00000176   0x00000176   0x00000008   Code   RO         2351    .ARM.Collect$$rtentry$$0000000D  c_p.l(__rtentry2.o)
-    0x0000017e   0x0000017e   0x00000002   Code   RO         2401    .ARM.Collect$$rtexit$$00000000  c_p.l(rtexit.o)
-    0x00000180   0x00000180   0x00000000   Code   RO         2463    .ARM.Collect$$rtexit$$00000002  c_p.l(rtexit2.o)
-    0x00000180   0x00000180   0x00000004   Code   RO         2464    .ARM.Collect$$rtexit$$00000003  c_p.l(rtexit2.o)
-    0x00000184   0x00000184   0x00000006   Code   RO         2465    .ARM.Collect$$rtexit$$00000004  c_p.l(rtexit2.o)
+    0x00000148   0x00000148   0x0000001c   Code   RO         2547    !!handler_zi        c_p.l(__scatter_zi.o)
+    0x00000164   0x00000164   0x00000002   Code   RO         2397    .ARM.Collect$$libinit$$00000000  c_p.l(libinit.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2414    .ARM.Collect$$libinit$$00000002  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2416    .ARM.Collect$$libinit$$00000004  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2418    .ARM.Collect$$libinit$$00000006  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2421    .ARM.Collect$$libinit$$0000000C  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2423    .ARM.Collect$$libinit$$0000000E  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2425    .ARM.Collect$$libinit$$00000010  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2428    .ARM.Collect$$libinit$$00000013  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2430    .ARM.Collect$$libinit$$00000015  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2432    .ARM.Collect$$libinit$$00000017  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2434    .ARM.Collect$$libinit$$00000019  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2436    .ARM.Collect$$libinit$$0000001B  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2438    .ARM.Collect$$libinit$$0000001D  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2440    .ARM.Collect$$libinit$$0000001F  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2442    .ARM.Collect$$libinit$$00000021  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2444    .ARM.Collect$$libinit$$00000023  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2446    .ARM.Collect$$libinit$$00000025  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2448    .ARM.Collect$$libinit$$00000027  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2452    .ARM.Collect$$libinit$$0000002E  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2454    .ARM.Collect$$libinit$$00000030  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2456    .ARM.Collect$$libinit$$00000032  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000000   Code   RO         2458    .ARM.Collect$$libinit$$00000034  c_p.l(libinit2.o)
+    0x00000166   0x00000166   0x00000002   Code   RO         2459    .ARM.Collect$$libinit$$00000035  c_p.l(libinit2.o)
+    0x00000168   0x00000168   0x00000002   Code   RO         2496    .ARM.Collect$$libshutdown$$00000000  c_p.l(libshutdown.o)
+    0x0000016a   0x0000016a   0x00000000   Code   RO         2524    .ARM.Collect$$libshutdown$$00000002  c_p.l(libshutdown2.o)
+    0x0000016a   0x0000016a   0x00000000   Code   RO         2526    .ARM.Collect$$libshutdown$$00000004  c_p.l(libshutdown2.o)
+    0x0000016a   0x0000016a   0x00000000   Code   RO         2529    .ARM.Collect$$libshutdown$$00000007  c_p.l(libshutdown2.o)
+    0x0000016a   0x0000016a   0x00000000   Code   RO         2532    .ARM.Collect$$libshutdown$$0000000A  c_p.l(libshutdown2.o)
+    0x0000016a   0x0000016a   0x00000000   Code   RO         2534    .ARM.Collect$$libshutdown$$0000000C  c_p.l(libshutdown2.o)
+    0x0000016a   0x0000016a   0x00000000   Code   RO         2537    .ARM.Collect$$libshutdown$$0000000F  c_p.l(libshutdown2.o)
+    0x0000016a   0x0000016a   0x00000002   Code   RO         2538    .ARM.Collect$$libshutdown$$00000010  c_p.l(libshutdown2.o)
+    0x0000016c   0x0000016c   0x00000000   Code   RO         2287    .ARM.Collect$$rtentry$$00000000  c_p.l(__rtentry.o)
+    0x0000016c   0x0000016c   0x00000000   Code   RO         2349    .ARM.Collect$$rtentry$$00000002  c_p.l(__rtentry2.o)
+    0x0000016c   0x0000016c   0x00000006   Code   RO         2361    .ARM.Collect$$rtentry$$00000004  c_p.l(__rtentry4.o)
+    0x00000172   0x00000172   0x00000000   Code   RO         2351    .ARM.Collect$$rtentry$$00000009  c_p.l(__rtentry2.o)
+    0x00000172   0x00000172   0x00000004   Code   RO         2352    .ARM.Collect$$rtentry$$0000000A  c_p.l(__rtentry2.o)
+    0x00000176   0x00000176   0x00000000   Code   RO         2354    .ARM.Collect$$rtentry$$0000000C  c_p.l(__rtentry2.o)
+    0x00000176   0x00000176   0x00000008   Code   RO         2355    .ARM.Collect$$rtentry$$0000000D  c_p.l(__rtentry2.o)
+    0x0000017e   0x0000017e   0x00000002   Code   RO         2405    .ARM.Collect$$rtexit$$00000000  c_p.l(rtexit.o)
+    0x00000180   0x00000180   0x00000000   Code   RO         2467    .ARM.Collect$$rtexit$$00000002  c_p.l(rtexit2.o)
+    0x00000180   0x00000180   0x00000004   Code   RO         2468    .ARM.Collect$$rtexit$$00000003  c_p.l(rtexit2.o)
+    0x00000184   0x00000184   0x00000006   Code   RO         2469    .ARM.Collect$$rtexit$$00000004  c_p.l(rtexit2.o)
     0x0000018a   0x0000018a   0x00000002   PAD
     0x0000018c   0x0000018c   0x0000002c   Code   RO          253    .text               startup_mspm0g350x_uvision.o
-    0x000001b8   0x000001b8   0x0000016c   Code   RO         2177    .text               c_p.l(aeabi_sdiv.o)
-    0x00000324   0x00000324   0x00000006   Code   RO         2181    .text               c_p.l(heapauxi.o)
+    0x000001b8   0x000001b8   0x0000016c   Code   RO         2181    .text               c_p.l(aeabi_sdiv.o)
+    0x00000324   0x00000324   0x00000006   Code   RO         2185    .text               c_p.l(heapauxi.o)
     0x0000032a   0x0000032a   0x00000002   PAD
-    0x0000032c   0x0000032c   0x0000007c   Code   RO         2185    .text               fz_ps.l(d2f.o)
-    0x000003a8   0x000003a8   0x00000358   Code   RO         2187    .text               fz_ps.l(daddsub.o)
-    0x00000700   0x00000700   0x00000448   Code   RO         2213    .text               fz_ps.l(ddiv.o)
-    0x00000b48   0x00000b48   0x00000058   Code   RO         2220    .text               fz_ps.l(dflti.o)
-    0x00000ba0   0x00000ba0   0x00000248   Code   RO         2222    .text               fz_ps.l(dmul.o)
-    0x00000de8   0x00000de8   0x00000054   Code   RO         2224    .text               fz_ps.l(f2d.o)
-    0x00000e3c   0x00000e3c   0x00000030   Code   RO         2261    .text               fz_ps.l(ffixui.o)
-    0x00000e6c   0x00000e6c   0x00000016   Code   RO         2292    .text               c_p.l(_rserrno.o)
+    0x0000032c   0x0000032c   0x0000007c   Code   RO         2189    .text               fz_ps.l(d2f.o)
+    0x000003a8   0x000003a8   0x00000358   Code   RO         2191    .text               fz_ps.l(daddsub.o)
+    0x00000700   0x00000700   0x00000448   Code   RO         2217    .text               fz_ps.l(ddiv.o)
+    0x00000b48   0x00000b48   0x00000058   Code   RO         2224    .text               fz_ps.l(dflti.o)
+    0x00000ba0   0x00000ba0   0x00000248   Code   RO         2226    .text               fz_ps.l(dmul.o)
+    0x00000de8   0x00000de8   0x00000054   Code   RO         2228    .text               fz_ps.l(f2d.o)
+    0x00000e3c   0x00000e3c   0x00000030   Code   RO         2265    .text               fz_ps.l(ffixui.o)
+    0x00000e6c   0x00000e6c   0x00000016   Code   RO         2296    .text               c_p.l(_rserrno.o)
     0x00000e82   0x00000e82   0x00000002   PAD
-    0x00000e84   0x00000e84   0x00000100   Code   RO         2302    .text               fz_ps.l(dsqrt.o)
-    0x00000f84   0x00000f84   0x00000008   Code   RO         2364    .text               c_p.l(rt_errno_addr_intlibspace.o)
-    0x00000f8c   0x00000f8c   0x00000008   Code   RO         2376    .text               c_p.l(libspace.o)
-    0x00000f94   0x00000f94   0x0000003e   Code   RO         2379    .text               c_p.l(sys_stackheap_outer.o)
-    0x00000fd2   0x00000fd2   0x00000010   Code   RO         2382    .text               c_p.l(exit.o)
+    0x00000e84   0x00000e84   0x00000100   Code   RO         2306    .text               fz_ps.l(dsqrt.o)
+    0x00000f84   0x00000f84   0x00000008   Code   RO         2368    .text               c_p.l(rt_errno_addr_intlibspace.o)
+    0x00000f8c   0x00000f8c   0x00000008   Code   RO         2380    .text               c_p.l(libspace.o)
+    0x00000f94   0x00000f94   0x0000003e   Code   RO         2383    .text               c_p.l(sys_stackheap_outer.o)
+    0x00000fd2   0x00000fd2   0x00000010   Code   RO         2386    .text               c_p.l(exit.o)
     0x00000fe2   0x00000fe2   0x00000002   PAD
-    0x00000fe4   0x00000fe4   0x0000000c   Code   RO         2458    .text               c_p.l(sys_exit.o)
-    0x00000ff0   0x00000ff0   0x00000002   Code   RO         2481    .text               c_p.l(use_no_semi.o)
-    0x00000ff2   0x00000ff2   0x00000000   Code   RO         2483    .text               c_p.l(indicate_semi.o)
+    0x00000fe4   0x00000fe4   0x0000000c   Code   RO         2462    .text               c_p.l(sys_exit.o)
+    0x00000ff0   0x00000ff0   0x00000002   Code   RO         2485    .text               c_p.l(use_no_semi.o)
+    0x00000ff2   0x00000ff2   0x00000000   Code   RO         2487    .text               c_p.l(indicate_semi.o)
     0x00000ff2   0x00000ff2   0x00000002   PAD
     0x00000ff4   0x00000ff4   0x00000030   Code   RO         1487    .text.ADC0_IRQHandler  adc2chsample.o
     0x00001024   0x00001024   0x0000017c   Code   RO         1471    .text.ADC12_CalcRms  adc2chsample.o
@@ -5650,33 +5670,33 @@ Memory Map of the image
     0x000017cc   0x000017cc   0x000000cc   Code   RO         1505    .text.ADC12_startFrame  adc2chsample.o
     0x00001898   0x00001898   0x000000a0   Code   RO         1509    .text.ADC12_stopFrame  adc2chsample.o
     0x00001938   0x00001938   0x00000030   Code   RO         1491    .text.ADC1_IRQHandler  adc2chsample.o
-    0x00001968   0x00001968   0x00000094   Code   RO         1974    .text.AddrCode_Read  addr_code.o
+    0x00001968   0x00001968   0x00000094   Code   RO         1978    .text.AddrCode_Read  addr_code.o
     0x000019fc   0x000019fc   0x00000108   Code   RO            4    .text.App_PrepareForStandby  main.o
     0x00001b04   0x00001b04   0x00000044   Code   RO            6    .text.App_ServiceOledTimerTick  main.o
     0x00001b48   0x00001b48   0x0000009c   Code   RO            8    .text.App_ShowLatestMeasurement  main.o
     0x00001be4   0x00001be4   0x00000018   Code   RO           40    .text.DL_ADC12_clearInterruptStatus  main.o
     0x00001bfc   0x00001bfc   0x00000018   Code   RO          199    .text.DL_ADC12_clearInterruptStatus  ti_msp_dl_config.o
     0x00001c14   0x00001c14   0x00000018   Code   RO         1519    .text.DL_ADC12_clearInterruptStatus  adc2chsample.o
-    0x00001c2c   0x00001c2c   0x0000001c   Code   RO         2096    .text.DL_ADC12_clearInterruptStatus  low_power.o
+    0x00001c2c   0x00001c2c   0x0000001c   Code   RO         2100    .text.DL_ADC12_clearInterruptStatus  low_power.o
     0x00001c48   0x00001c48   0x0000004a   Code   RO          189    .text.DL_ADC12_configConversionMem  ti_msp_dl_config.o
     0x00001c92   0x00001c92   0x00000016   Code   RO           32    .text.DL_ADC12_disableConversions  main.o
     0x00001ca8   0x00001ca8   0x00000016   Code   RO         1515    .text.DL_ADC12_disableConversions  adc2chsample.o
-    0x00001cbe   0x00001cbe   0x00000016   Code   RO         2088    .text.DL_ADC12_disableConversions  low_power.o
+    0x00001cbe   0x00001cbe   0x00000016   Code   RO         2092    .text.DL_ADC12_disableConversions  low_power.o
     0x00001cd4   0x00001cd4   0x00000018   Code   RO           34    .text.DL_ADC12_disableDMA  main.o
-    0x00001cec   0x00001cec   0x00000018   Code   RO         2090    .text.DL_ADC12_disableDMA  low_power.o
+    0x00001cec   0x00001cec   0x00000018   Code   RO         2094    .text.DL_ADC12_disableDMA  low_power.o
     0x00001d04   0x00001d04   0x00000018   Code   RO           36    .text.DL_ADC12_disableDMATrigger  main.o
-    0x00001d1c   0x00001d1c   0x00000018   Code   RO         2092    .text.DL_ADC12_disableDMATrigger  low_power.o
+    0x00001d1c   0x00001d1c   0x00000018   Code   RO         2096    .text.DL_ADC12_disableDMATrigger  low_power.o
     0x00001d34   0x00001d34   0x00000018   Code   RO           38    .text.DL_ADC12_disableInterrupt  main.o
-    0x00001d4c   0x00001d4c   0x00000018   Code   RO         2094    .text.DL_ADC12_disableInterrupt  low_power.o
+    0x00001d4c   0x00001d4c   0x00000018   Code   RO         2098    .text.DL_ADC12_disableInterrupt  low_power.o
     0x00001d64   0x00001d64   0x00000014   Code   RO           46    .text.DL_ADC12_disablePower  main.o
-    0x00001d78   0x00001d78   0x00000014   Code   RO         2102    .text.DL_ADC12_disablePower  low_power.o
+    0x00001d78   0x00001d78   0x00000014   Code   RO         2106    .text.DL_ADC12_disablePower  low_power.o
     0x00001d8c   0x00001d8c   0x00000016   Code   RO         1529    .text.DL_ADC12_enableConversions  adc2chsample.o
     0x00001da2   0x00001da2   0x00000002   PAD
     0x00001da4   0x00001da4   0x00000018   Code   RO         1541    .text.DL_ADC12_enableDMA  adc2chsample.o
     0x00001dbc   0x00001dbc   0x0000001c   Code   RO         1543    .text.DL_ADC12_enableDMATrigger  adc2chsample.o
     0x00001dd8   0x00001dd8   0x0000001c   Code   RO         1549    .text.DL_ADC12_enableInterrupt  adc2chsample.o
     0x00001df4   0x00001df4   0x00000014   Code   RO          133    .text.DL_ADC12_enablePower  ti_msp_dl_config.o
-    0x00001e08   0x00001e08   0x00000014   Code   RO         2078    .text.DL_ADC12_enablePower  low_power.o
+    0x00001e08   0x00001e08   0x00000014   Code   RO         2082    .text.DL_ADC12_enablePower  low_power.o
     0x00001e1c   0x00001e1c   0x00000030   Code   RO         1527    .text.DL_ADC12_getMemResult  adc2chsample.o
     0x00001e4c   0x00001e4c   0x00000024   Code   RO         1533    .text.DL_ADC12_getMemResultAddress  adc2chsample.o
     0x00001e70   0x00001e70   0x00000012   Code   RO         1489    .text.DL_ADC12_getPendingInterrupt  adc2chsample.o
@@ -5685,7 +5705,7 @@ Memory Map of the image
     0x00001e9c   0x00001e9c   0x00000044   Code   RO          187    .text.DL_ADC12_initSingleSample  ti_msp_dl_config.o
     0x00001ee0   0x00001ee0   0x00000010   Code   RO           44    .text.DL_ADC12_reset  main.o
     0x00001ef0   0x00001ef0   0x00000010   Code   RO          119    .text.DL_ADC12_reset  ti_msp_dl_config.o
-    0x00001f00   0x00001f00   0x00000010   Code   RO         2100    .text.DL_ADC12_reset  low_power.o
+    0x00001f00   0x00001f00   0x00000010   Code   RO         2104    .text.DL_ADC12_reset  low_power.o
     0x00001f10   0x00001f10   0x0000004c   Code   RO          260    .text.DL_ADC12_setClockConfig  dl_adc12.o
     0x00001f5c   0x00001f5c   0x0000002c   Code   RO          195    .text.DL_ADC12_setDMASamplesCnt  ti_msp_dl_config.o
     0x00001f88   0x00001f88   0x0000001e   Code   RO          191    .text.DL_ADC12_setPowerDownMode  ti_msp_dl_config.o
@@ -5695,21 +5715,21 @@ Memory Map of the image
     0x00001fda   0x00001fda   0x00000002   PAD
     0x00001fdc   0x00001fdc   0x00000018   Code   RO           30    .text.DL_ADC12_stopConversion  main.o
     0x00001ff4   0x00001ff4   0x00000018   Code   RO         1513    .text.DL_ADC12_stopConversion  adc2chsample.o
-    0x0000200c   0x0000200c   0x0000001c   Code   RO         2086    .text.DL_ADC12_stopConversion  low_power.o
+    0x0000200c   0x0000200c   0x0000001c   Code   RO         2090    .text.DL_ADC12_stopConversion  low_power.o
     0x00002028   0x00002028   0x00000014   Code   RO          313    .text.DL_Common_delayCycles  dl_common.o
     0x0000203c   0x0000203c   0x00000028   Code   RO          221    .text.DL_Common_updateReg  ti_msp_dl_config.o
     0x00002064   0x00002064   0x00000028   Code   RO          262    .text.DL_Common_updateReg  dl_adc12.o
     0x0000208c   0x0000208c   0x00000028   Code   RO          390    .text.DL_Common_updateReg  dl_dma.o
     0x000020b4   0x000020b4   0x00000028   Code   RO         1202    .text.DL_Common_updateReg  dl_timer.o
     0x000020dc   0x000020dc   0x00000028   Code   RO         1308    .text.DL_Common_updateReg  dl_uart.o
-    0x00002104   0x00002104   0x00000014   Code   RO         2120    .text.DL_DAC12_disablePower  low_power.o
+    0x00002104   0x00002104   0x00000014   Code   RO         2124    .text.DL_DAC12_disablePower  low_power.o
     0x00002118   0x00002118   0x00000018   Code   RO          135    .text.DL_DAC12_enablePower  ti_msp_dl_config.o
     0x00002130   0x00002130   0x00000018   Code   RO          121    .text.DL_DAC12_reset  ti_msp_dl_config.o
     0x00002148   0x00002148   0x00000014   Code   RO         1521    .text.DL_DMA_clearInterruptStatus  adc2chsample.o
     0x0000215c   0x0000215c   0x00000054   Code   RO          386    .text.DL_DMA_configTransfer  dl_dma.o
     0x000021b0   0x000021b0   0x00000026   Code   RO           28    .text.DL_DMA_disableChannel  main.o
     0x000021d6   0x000021d6   0x00000026   Code   RO         1517    .text.DL_DMA_disableChannel  adc2chsample.o
-    0x000021fc   0x000021fc   0x00000026   Code   RO         2084    .text.DL_DMA_disableChannel  low_power.o
+    0x000021fc   0x000021fc   0x00000026   Code   RO         2088    .text.DL_DMA_disableChannel  low_power.o
     0x00002222   0x00002222   0x00000026   Code   RO         1539    .text.DL_DMA_enableChannel  adc2chsample.o
     0x00002248   0x00002248   0x00000020   Code   RO         1555    .text.DL_DMA_getTransferSize  adc2chsample.o
     0x00002268   0x00002268   0x00000046   Code   RO          384    .text.DL_DMA_initChannel  dl_dma.o
@@ -5718,26 +5738,26 @@ Memory Map of the image
     0x000022d8   0x000022d8   0x00000028   Code   RO         1531    .text.DL_DMA_setSrcAddr  adc2chsample.o
     0x00002300   0x00002300   0x00000030   Code   RO         1537    .text.DL_DMA_setTransferSize  adc2chsample.o
     0x00002330   0x00002330   0x00000038   Code   RO          388    .text.DL_DMA_setTrigger  dl_dma.o
-    0x00002368   0x00002368   0x0000001c   Code   RO         2044    .text.DL_GPIO_clearInterruptStatus  low_power.o
+    0x00002368   0x00002368   0x0000001c   Code   RO         2048    .text.DL_GPIO_clearInterruptStatus  low_power.o
     0x00002384   0x00002384   0x00000014   Code   RO         1545    .text.DL_GPIO_clearPins  adc2chsample.o
     0x00002398   0x00002398   0x00000014   Code   RO         1588    .text.DL_GPIO_clearPins  oled.o
-    0x000023ac   0x000023ac   0x0000001c   Code   RO         2052    .text.DL_GPIO_enableInterrupt  low_power.o
+    0x000023ac   0x000023ac   0x0000001c   Code   RO         2056    .text.DL_GPIO_enableInterrupt  low_power.o
     0x000023c8   0x000023c8   0x00000018   Code   RO         1596    .text.DL_GPIO_enableOutput  oled.o
     0x000023e0   0x000023e0   0x00000018   Code   RO          123    .text.DL_GPIO_enablePower  ti_msp_dl_config.o
-    0x000023f8   0x000023f8   0x00000018   Code   RO         2042    .text.DL_GPIO_getEnabledInterruptStatus  low_power.o
+    0x000023f8   0x000023f8   0x00000018   Code   RO         2046    .text.DL_GPIO_getEnabledInterruptStatus  low_power.o
     0x00002410   0x00002410   0x0000002c   Code   RO          141    .text.DL_GPIO_initDigitalInputFeatures  ti_msp_dl_config.o
-    0x0000243c   0x0000243c   0x00000030   Code   RO         2048    .text.DL_GPIO_initDigitalInputFeatures  low_power.o
+    0x0000243c   0x0000243c   0x00000030   Code   RO         2052    .text.DL_GPIO_initDigitalInputFeatures  low_power.o
     0x0000246c   0x0000246c   0x00000014   Code   RO         1594    .text.DL_GPIO_initDigitalOutput  oled.o
     0x00002480   0x00002480   0x00000014   Code   RO          139    .text.DL_GPIO_initPeripheralAnalogFunction  ti_msp_dl_config.o
     0x00002494   0x00002494   0x0000001c   Code   RO          137    .text.DL_GPIO_initPeripheralOutputFunction  ti_msp_dl_config.o
-    0x000024b0   0x000024b0   0x00000016   Code   RO         1976    .text.DL_GPIO_readPins  addr_code.o
-    0x000024c6   0x000024c6   0x00000016   Code   RO         2128    .text.DL_GPIO_readPins  low_power.o
+    0x000024b0   0x000024b0   0x00000016   Code   RO         1980    .text.DL_GPIO_readPins  addr_code.o
+    0x000024c6   0x000024c6   0x00000016   Code   RO         2132    .text.DL_GPIO_readPins  low_power.o
     0x000024dc   0x000024dc   0x00000018   Code   RO          109    .text.DL_GPIO_reset  ti_msp_dl_config.o
-    0x000024f4   0x000024f4   0x0000001c   Code   RO         2050    .text.DL_GPIO_setLowerPinsPolarity  low_power.o
+    0x000024f4   0x000024f4   0x0000001c   Code   RO         2054    .text.DL_GPIO_setLowerPinsPolarity  low_power.o
     0x00002510   0x00002510   0x00000018   Code   RO         1586    .text.DL_GPIO_setPins  oled.o
-    0x00002528   0x00002528   0x00000024   Code   RO         2046    .text.DL_Interrupt_clearGroup  low_power.o
-    0x0000254c   0x0000254c   0x0000001c   Code   RO         2040    .text.DL_Interrupt_getPendingGroup  low_power.o
-    0x00002568   0x00002568   0x00000014   Code   RO         2118    .text.DL_SPI_disablePower  low_power.o
+    0x00002528   0x00002528   0x00000024   Code   RO         2050    .text.DL_Interrupt_clearGroup  low_power.o
+    0x0000254c   0x0000254c   0x0000001c   Code   RO         2044    .text.DL_Interrupt_getPendingGroup  low_power.o
+    0x00002568   0x00002568   0x00000014   Code   RO         2122    .text.DL_SPI_disablePower  low_power.o
     0x0000257c   0x0000257c   0x00000018   Code   RO          129    .text.DL_SPI_enablePower  ti_msp_dl_config.o
     0x00002594   0x00002594   0x00000018   Code   RO          115    .text.DL_SPI_reset  ti_msp_dl_config.o
     0x000025ac   0x000025ac   0x0000000c   Code   RO           54    .text.DL_SYSCTL_disableHFXT  main.o
@@ -5745,7 +5765,7 @@ Memory Map of the image
     0x000025c4   0x000025c4   0x0000000c   Code   RO           58    .text.DL_SYSCTL_disableMFPCLK  main.o
     0x000025d0   0x000025d0   0x00000010   Code   RO           56    .text.DL_SYSCTL_disableSYSPLL  main.o
     0x000025e0   0x000025e0   0x00000010   Code   RO          153    .text.DL_SYSCTL_disableSYSPLL  ti_msp_dl_config.o
-    0x000025f0   0x000025f0   0x00000014   Code   RO         2026    .text.DL_SYSCTL_disableSYSPLL  low_power.o
+    0x000025f0   0x000025f0   0x00000014   Code   RO         2030    .text.DL_SYSCTL_disableSYSPLL  low_power.o
     0x00002604   0x00002604   0x00000010   Code   RO          155    .text.DL_SYSCTL_enableMFPCLK  ti_msp_dl_config.o
     0x00002614   0x00002614   0x00000008   Code   RO           75    .text.DL_SYSCTL_getClockStatus  ti_msp_dl_config.o
     0x0000261c   0x0000261c   0x00000008   Code   RO         1390    .text.DL_SYSCTL_getClockStatus  dl_sysctl_mspm0g1x0x_g3x0x.o
@@ -5753,218 +5773,221 @@ Memory Map of the image
     0x0000263c   0x0000263c   0x00000018   Code   RO          145    .text.DL_SYSCTL_setBORThreshold  ti_msp_dl_config.o
     0x00002654   0x00002654   0x00000018   Code   RO          149    .text.DL_SYSCTL_setMCLKDivider  ti_msp_dl_config.o
     0x0000266c   0x0000266c   0x00000020   Code   RO          157    .text.DL_SYSCTL_setMFPCLKSource  ti_msp_dl_config.o
-    0x0000268c   0x0000268c   0x00000014   Code   RO         2030    .text.DL_SYSCTL_setPowerPolicyRUN0SLEEP0  low_power.o
-    0x000026a0   0x000026a0   0x00000024   Code   RO         2028    .text.DL_SYSCTL_setPowerPolicySTANDBY1  low_power.o
+    0x0000268c   0x0000268c   0x00000014   Code   RO         2034    .text.DL_SYSCTL_setPowerPolicyRUN0SLEEP0  low_power.o
+    0x000026a0   0x000026a0   0x00000024   Code   RO         2032    .text.DL_SYSCTL_setPowerPolicySTANDBY1  low_power.o
     0x000026c4   0x000026c4   0x00000018   Code   RO          147    .text.DL_SYSCTL_setSYSOSCFreq  ti_msp_dl_config.o
     0x000026dc   0x000026dc   0x00000034   Code   RO         1404    .text.DL_SYSCTL_switchMCLKfromLFCLKtoSYSOSC  dl_sysctl_mspm0g1x0x_g3x0x.o
     0x00002710   0x00002710   0x00000018   Code   RO           24    .text.DL_Timer_clearInterruptStatus  main.o
     0x00002728   0x00002728   0x00000014   Code   RO          171    .text.DL_Timer_clearInterruptStatus  ti_msp_dl_config.o
     0x0000273c   0x0000273c   0x00000014   Code   RO         1547    .text.DL_Timer_clearInterruptStatus  adc2chsample.o
-    0x00002750   0x00002750   0x00000018   Code   RO         2036    .text.DL_Timer_clearInterruptStatus  low_power.o
+    0x00002750   0x00002750   0x00000018   Code   RO         2040    .text.DL_Timer_clearInterruptStatus  low_power.o
     0x00002768   0x00002768   0x00000018   Code   RO           22    .text.DL_Timer_disableInterrupt  main.o
-    0x00002780   0x00002780   0x00000018   Code   RO         2062    .text.DL_Timer_disableInterrupt  low_power.o
+    0x00002780   0x00002780   0x00000018   Code   RO         2066    .text.DL_Timer_disableInterrupt  low_power.o
     0x00002798   0x00002798   0x00000014   Code   RO           26    .text.DL_Timer_disablePower  main.o
-    0x000027ac   0x000027ac   0x00000014   Code   RO         2082    .text.DL_Timer_disablePower  low_power.o
+    0x000027ac   0x000027ac   0x00000014   Code   RO         2086    .text.DL_Timer_disablePower  low_power.o
     0x000027c0   0x000027c0   0x00000010   Code   RO          163    .text.DL_Timer_enableClock  ti_msp_dl_config.o
-    0x000027d0   0x000027d0   0x00000014   Code   RO         2068    .text.DL_Timer_enableClock  low_power.o
+    0x000027d0   0x000027d0   0x00000014   Code   RO         2072    .text.DL_Timer_enableClock  low_power.o
     0x000027e4   0x000027e4   0x00000028   Code   RO          167    .text.DL_Timer_enableEvent  ti_msp_dl_config.o
-    0x0000280c   0x0000280c   0x0000001c   Code   RO         2056    .text.DL_Timer_enableInterrupt  low_power.o
+    0x0000280c   0x0000280c   0x0000001c   Code   RO         2060    .text.DL_Timer_enableInterrupt  low_power.o
     0x00002828   0x00002828   0x00000014   Code   RO          125    .text.DL_Timer_enablePower  ti_msp_dl_config.o
-    0x0000283c   0x0000283c   0x00000018   Code   RO         2058    .text.DL_Timer_enablePower  low_power.o
-    0x00002854   0x00002854   0x00000012   Code   RO         2034    .text.DL_Timer_getPendingInterrupt  low_power.o
+    0x0000283c   0x0000283c   0x00000018   Code   RO         2062    .text.DL_Timer_enablePower  low_power.o
+    0x00002854   0x00002854   0x00000012   Code   RO         2038    .text.DL_Timer_getPendingInterrupt  low_power.o
     0x00002866   0x00002866   0x00000002   PAD
-    0x00002868   0x00002868   0x00000018   Code   RO         2124    .text.DL_Timer_getRawInterruptStatus  low_power.o
+    0x00002868   0x00002868   0x00000018   Code   RO         2128    .text.DL_Timer_getRawInterruptStatus  low_power.o
     0x00002880   0x00002880   0x00000010   Code   RO         1495    .text.DL_Timer_getTimerCount  adc2chsample.o
     0x00002890   0x00002890   0x000000fc   Code   RO         1184    .text.DL_Timer_initTimerMode  dl_timer.o
     0x0000298c   0x0000298c   0x00000014   Code   RO         1493    .text.DL_Timer_isRunning  adc2chsample.o
-    0x000029a0   0x000029a0   0x00000010   Code   RO          111    .text.DL_Timer_reset  ti_msp_dl_config.o
-    0x000029b0   0x000029b0   0x0000003c   Code   RO         1192    .text.DL_Timer_setCaptureCompareCtl  dl_timer.o
-    0x000029ec   0x000029ec   0x0000002c   Code   RO         1190    .text.DL_Timer_setCaptureCompareValue  dl_timer.o
-    0x00002a18   0x00002a18   0x00000030   Code   RO         1180    .text.DL_Timer_setClockConfig  dl_timer.o
-    0x00002a48   0x00002a48   0x0000001c   Code   RO         1188    .text.DL_Timer_setCounterValueAfterEnable  dl_timer.o
-    0x00002a64   0x00002a64   0x00000014   Code   RO         1186    .text.DL_Timer_setLoadValue  dl_timer.o
-    0x00002a78   0x00002a78   0x00000014   Code   RO         1445    .text.DL_Timer_setLoadValue  adc2chsample.o
-    0x00002a8c   0x00002a8c   0x00000018   Code   RO         2064    .text.DL_Timer_setLoadValue  low_power.o
-    0x00002aa4   0x00002aa4   0x00000038   Code   RO          169    .text.DL_Timer_setPublisherChanID  ti_msp_dl_config.o
-    0x00002adc   0x00002adc   0x00000014   Code   RO         1447    .text.DL_Timer_setTimerCount  adc2chsample.o
-    0x00002af0   0x00002af0   0x00000014   Code   RO         2066    .text.DL_Timer_setTimerCount  low_power.o
-    0x00002b04   0x00002b04   0x00000014   Code   RO         1553    .text.DL_Timer_startCounter  adc2chsample.o
-    0x00002b18   0x00002b18   0x00000014   Code   RO         2070    .text.DL_Timer_startCounter  low_power.o
-    0x00002b2c   0x00002b2c   0x00000014   Code   RO           20    .text.DL_Timer_stopCounter  main.o
-    0x00002b40   0x00002b40   0x00000014   Code   RO         1443    .text.DL_Timer_stopCounter  adc2chsample.o
-    0x00002b54   0x00002b54   0x00000018   Code   RO         2060    .text.DL_Timer_stopCounter  low_power.o
-    0x00002b6c   0x00002b6c   0x00000014   Code   RO           12    .text.DL_UART_clearInterruptStatus  main.o
-    0x00002b80   0x00002b80   0x00000018   Code   RO         1700    .text.DL_UART_clearInterruptStatus  usr_uart.o
-    0x00002b98   0x00002b98   0x00000016   Code   RO           16    .text.DL_UART_disable  main.o
-    0x00002bae   0x00002bae   0x00000016   Code   RO         1306    .text.DL_UART_disable  dl_uart.o
-    0x00002bc4   0x00002bc4   0x00000018   Code   RO          177    .text.DL_UART_disableFIFOs  ti_msp_dl_config.o
-    0x00002bdc   0x00002bdc   0x0000001c   Code   RO           10    .text.DL_UART_disableInterrupt  main.o
-    0x00002bf8   0x00002bf8   0x00000014   Code   RO           18    .text.DL_UART_disablePower  main.o
-    0x00002c0c   0x00002c0c   0x00000014   Code   RO         2122    .text.DL_UART_disablePower  low_power.o
-    0x00002c20   0x00002c20   0x00000016   Code   RO          179    .text.DL_UART_enable  ti_msp_dl_config.o
-    0x00002c36   0x00002c36   0x00000002   PAD
-    0x00002c38   0x00002c38   0x00000014   Code   RO          127    .text.DL_UART_enablePower  ti_msp_dl_config.o
-    0x00002c4c   0x00002c4c   0x00000014   Code   RO         2112    .text.DL_UART_enablePower  low_power.o
-    0x00002c60   0x00002c60   0x00000012   Code   RO         1732    .text.DL_UART_getPendingInterrupt  usr_uart.o
-    0x00002c72   0x00002c72   0x00000002   PAD
-    0x00002c74   0x00002c74   0x00000048   Code   RO         1304    .text.DL_UART_init  dl_uart.o
-    0x00002cbc   0x00002cbc   0x00000014   Code   RO         2116    .text.DL_UART_isBusy  low_power.o
-    0x00002cd0   0x00002cd0   0x00000014   Code   RO         2159    .text.DL_UART_isBusy  serial_protocol.o
-    0x00002ce4   0x00002ce4   0x00000014   Code   RO         1722    .text.DL_UART_isRXFIFOEmpty  usr_uart.o
-    0x00002cf8   0x00002cf8   0x00000014   Code   RO         2157    .text.DL_UART_isTXFIFOEmpty  serial_protocol.o
-    0x00002d0c   0x00002d0c   0x00000014   Code   RO         1332    .text.DL_UART_isTXFIFOFull  dl_uart.o
-    0x00002d20   0x00002d20   0x00000014   Code   RO         1724    .text.DL_UART_receiveData  usr_uart.o
-    0x00002d34   0x00002d34   0x00000018   Code   RO          113    .text.DL_UART_reset  ti_msp_dl_config.o
-    0x00002d4c   0x00002d4c   0x00000048   Code   RO          175    .text.DL_UART_setBaudRateDivisor  ti_msp_dl_config.o
-    0x00002d94   0x00002d94   0x00000024   Code   RO         1310    .text.DL_UART_setClockConfig  dl_uart.o
-    0x00002db8   0x00002db8   0x0000001e   Code   RO          173    .text.DL_UART_setOversampling  ti_msp_dl_config.o
-    0x00002dd6   0x00002dd6   0x00000016   Code   RO         1334    .text.DL_UART_transmitData  dl_uart.o
-    0x00002dec   0x00002dec   0x00000028   Code   RO         1330    .text.DL_UART_transmitDataBlocking  dl_uart.o
-    0x00002e14   0x00002e14   0x00000034   Code   RO         1361    .text.DL_VREF_configReference  dl_vref.o
-    0x00002e48   0x00002e48   0x00000016   Code   RO           48    .text.DL_VREF_disableInternalRef  main.o
-    0x00002e5e   0x00002e5e   0x00000016   Code   RO         2104    .text.DL_VREF_disableInternalRef  low_power.o
-    0x00002e74   0x00002e74   0x00000014   Code   RO           52    .text.DL_VREF_disablePower  main.o
-    0x00002e88   0x00002e88   0x00000014   Code   RO         2108    .text.DL_VREF_disablePower  low_power.o
-    0x00002e9c   0x00002e9c   0x00000014   Code   RO          131    .text.DL_VREF_enablePower  ti_msp_dl_config.o
-    0x00002eb0   0x00002eb0   0x00000018   Code   RO         2076    .text.DL_VREF_enablePower  low_power.o
-    0x00002ec8   0x00002ec8   0x00000018   Code   RO          143    .text.DL_VREF_getStatus  ti_msp_dl_config.o
-    0x00002ee0   0x00002ee0   0x00000010   Code   RO           50    .text.DL_VREF_reset  main.o
-    0x00002ef0   0x00002ef0   0x00000010   Code   RO          117    .text.DL_VREF_reset  ti_msp_dl_config.o
-    0x00002f00   0x00002f00   0x00000018   Code   RO         2106    .text.DL_VREF_reset  low_power.o
-    0x00002f18   0x00002f18   0x00000024   Code   RO         1363    .text.DL_VREF_setClockConfig  dl_vref.o
-    0x00002f3c   0x00002f3c   0x00000058   Code   RO         2038    .text.GROUP1_IRQHandler  low_power.o
-    0x00002f94   0x00002f94   0x00000008   Code   RO         1998    .text.LowPower_ClearWakeReason  low_power.o
-    0x00002f9c   0x00002f9c   0x0000005c   Code   RO         1990    .text.LowPower_ConfigKey2Wake  low_power.o
-    0x00002ff8   0x00002ff8   0x000000b0   Code   RO         1992    .text.LowPower_ConfigWakeTimer1s  low_power.o
-    0x000030a8   0x000030a8   0x000000d4   Code   RO         2074    .text.LowPower_DisableMeasurementPeripherals  low_power.o
-    0x0000317c   0x0000317c   0x0000004c   Code   RO         2018    .text.LowPower_DisableUnusedPeripheralsBeforeStandby  low_power.o
-    0x000031c8   0x000031c8   0x00000074   Code   RO         2004    .text.LowPower_DoMeasurement  low_power.o
-    0x0000323c   0x0000323c   0x0000003c   Code   RO         2072    .text.LowPower_EnableMeasurementPeripherals  low_power.o
-    0x00003278   0x00003278   0x00000018   Code   RO         2110    .text.LowPower_EnableUart  low_power.o
-    0x00003290   0x00003290   0x00000068   Code   RO         2016    .text.LowPower_EnterStandby1  low_power.o
-    0x000032f8   0x000032f8   0x00000004   Code   RO         2000    .text.LowPower_GetLatestMeasurement  low_power.o
-    0x000032fc   0x000032fc   0x00000008   Code   RO         1994    .text.LowPower_GetWakeReason  low_power.o
-    0x00003304   0x00003304   0x00000034   Code   RO         1988    .text.LowPower_Init  low_power.o
-    0x00003338   0x00003338   0x00000020   Code   RO         2126    .text.LowPower_IsKey2Pressed  low_power.o
-    0x00003358   0x00003358   0x00000038   Code   RO         2080    .text.LowPower_RestoreAdcTimer  low_power.o
-    0x00003390   0x00003390   0x00000024   Code   RO         2002    .text.LowPower_RunTimerWakeFlow  low_power.o
-    0x000033b4   0x000033b4   0x0000002e   Code   RO         2008    .text.LowPower_SendMeasurement  low_power.o
-    0x000033e2   0x000033e2   0x00000002   PAD
-    0x000033e4   0x000033e4   0x00000050   Code   RO         2022    .text.LowPower_ServiceKey2Pending  low_power.o
-    0x00003434   0x00003434   0x00000044   Code   RO         2020    .text.LowPower_ServiceWakeTimerPending  low_power.o
-    0x00003478   0x00003478   0x00000044   Code   RO         2114    .text.LowPower_WaitUartTxDone  low_power.o
-    0x000034bc   0x000034bc   0x00000008   Code   RO         2010    .text.LowPower_WirelessSleep  low_power.o
-    0x000034c4   0x000034c4   0x00000014   Code   RO         2006    .text.LowPower_WirelessWake  low_power.o
-    0x000034d8   0x000034d8   0x00000056   Code   RO         1610    .text.OLED_Clear    oled.o
-    0x0000352e   0x0000352e   0x00000028   Code   RO         1626    .text.OLED_DisplayOff  oled.o
-    0x00003556   0x00003556   0x00000016   Code   RO         1628    .text.OLED_DisplayOn  oled.o
-    0x0000356c   0x0000356c   0x00000038   Code   RO         1592    .text.OLED_I2C_Init  oled.o
-    0x000035a4   0x000035a4   0x00000054   Code   RO         1602    .text.OLED_I2C_SendByte  oled.o
-    0x000035f8   0x000035f8   0x00000024   Code   RO         1598    .text.OLED_I2C_Start  oled.o
-    0x0000361c   0x0000361c   0x0000001c   Code   RO         1600    .text.OLED_I2C_Stop  oled.o
-    0x00003638   0x00003638   0x000000cc   Code   RO         1630    .text.OLED_Init     oled.o
-    0x00003704   0x00003704   0x00000028   Code   RO         1616    .text.OLED_Pow      oled.o
-    0x0000372c   0x0000372c   0x00000036   Code   RO         1608    .text.OLED_SetCursor  oled.o
-    0x00003762   0x00003762   0x00000002   PAD
-    0x00003764   0x00003764   0x000000b4   Code   RO         1612    .text.OLED_ShowChar  oled.o
-    0x00003818   0x00003818   0x0000007a   Code   RO         1618    .text.OLED_ShowNum  oled.o
-    0x00003892   0x00003892   0x0000004a   Code   RO         1614    .text.OLED_ShowString  oled.o
-    0x000038dc   0x000038dc   0x00000030   Code   RO         1584    .text.OLED_W_SCL    oled.o
-    0x0000390c   0x0000390c   0x00000034   Code   RO         1590    .text.OLED_W_SDA    oled.o
-    0x00003940   0x00003940   0x0000002a   Code   RO         1604    .text.OLED_WriteCommand  oled.o
-    0x0000396a   0x0000396a   0x0000002a   Code   RO         1606    .text.OLED_WriteData  oled.o
-    0x00003994   0x00003994   0x00000070   Code   RO           97    .text.SYSCFG_DL_ADC12_0_init  ti_msp_dl_config.o
-    0x00003a04   0x00003a04   0x00000060   Code   RO           85    .text.SYSCFG_DL_ADC_SAMPLE_TIMER_init  ti_msp_dl_config.o
-    0x00003a64   0x00003a64   0x00000018   Code   RO          209    .text.SYSCFG_DL_DMA_CH0_init  ti_msp_dl_config.o
-    0x00003a7c   0x00003a7c   0x00000008   Code   RO          101    .text.SYSCFG_DL_DMA_init  ti_msp_dl_config.o
-    0x00003a84   0x00003a84   0x0000005a   Code   RO           81    .text.SYSCFG_DL_GPIO_init  ti_msp_dl_config.o
-    0x00003ade   0x00003ade   0x0000003a   Code   RO           83    .text.SYSCFG_DL_SYSCTL_init  ti_msp_dl_config.o
-    0x00003b18   0x00003b18   0x00000040   Code   RO           91    .text.SYSCFG_DL_UART_DEBUG_init  ti_msp_dl_config.o
-    0x00003b58   0x00003b58   0x00000034   Code   RO           95    .text.SYSCFG_DL_VREF_init  ti_msp_dl_config.o
-    0x00003b8c   0x00003b8c   0x000000e0   Code   RO           79    .text.SYSCFG_DL_initPower  ti_msp_dl_config.o
-    0x00003c6c   0x00003c6c   0x00000056   Code   RO         2145    .text.SerialProtocol_PackCurrentFrame  serial_protocol.o
-    0x00003cc2   0x00003cc2   0x00000042   Code   RO         2153    .text.SerialProtocol_SendCurrentFrame  serial_protocol.o
-    0x00003d04   0x00003d04   0x0000004c   Code   RO         2155    .text.SerialProtocol_WaitUartTxIdle  serial_protocol.o
-    0x00003d50   0x00003d50   0x00000028   Code   RO         2147    .text.SerialProtocol_WriteFloatLittleEndian  serial_protocol.o
-    0x00003d78   0x00003d78   0x0000005c   Code   RO           73    .text.Sysclk_WaitForLFOSCGood  ti_msp_dl_config.o
-    0x00003dd4   0x00003dd4   0x00000058   Code   RO           69    .text.Sysclk_WaitForSYSOSCBase  ti_msp_dl_config.o
-    0x00003e2c   0x00003e2c   0x0000003c   Code   RO         2032    .text.TIMG8_IRQHandler  low_power.o
-    0x00003e68   0x00003e68   0x00000008   Code   RO         1734    .text.UART0_IRQHandler  usr_uart.o
-    0x00003e70   0x00003e70   0x00000058   Code   RO         1730    .text.USR_UART_IRQHandler  usr_uart.o
-    0x00003ec8   0x00003ec8   0x00000040   Code   RO         1698    .text.USR_UART_init  usr_uart.o
-    0x00003f08   0x00003f08   0x0000001c   Code   RO         1702    .text.USR_UART_sendByte  usr_uart.o
-    0x00003f24   0x00003f24   0x00000046   Code   RO         1704    .text.USR_UART_sendBytes  usr_uart.o
-    0x00003f6a   0x00003f6a   0x00000002   PAD
-    0x00003f6c   0x00003f6c   0x0000004c   Code   RO         1726    .text.USR_UART_storeRxByte  usr_uart.o
-    0x00003fb8   0x00003fb8   0x00000028   Code   RO           14    .text.__NVIC_ClearPendingIRQ  main.o
-    0x00003fe0   0x00003fe0   0x00000028   Code   RO         1525    .text.__NVIC_ClearPendingIRQ  adc2chsample.o
-    0x00004008   0x00004008   0x0000002c   Code   RO         2024    .text.__NVIC_ClearPendingIRQ  low_power.o
-    0x00004034   0x00004034   0x00000030   Code   RO           42    .text.__NVIC_DisableIRQ  main.o
-    0x00004064   0x00004064   0x00000030   Code   RO         1523    .text.__NVIC_DisableIRQ  adc2chsample.o
-    0x00004094   0x00004094   0x00000034   Code   RO         2098    .text.__NVIC_DisableIRQ  low_power.o
-    0x000040c8   0x000040c8   0x00000028   Code   RO         1551    .text.__NVIC_EnableIRQ  adc2chsample.o
-    0x000040f0   0x000040f0   0x0000002c   Code   RO         2054    .text.__NVIC_EnableIRQ  low_power.o
-    0x0000411c   0x0000411c   0x0000009c   Code   RO            2    .text.main          main.o
-    0x000041b8   0x000041b8   0x00000048   Code   RO         2280    i.sqrt              m_ps.l(sqrt.o)
-    0x00004200   0x00004200   0x0000008c   Code   RO         2226    x$fpl$fadd          fz_ps.l(faddsub.o)
-    0x0000428c   0x0000428c   0x000000d0   Code   RO         2228    x$fpl$fsub          fz_ps.l(faddsub.o)
-    0x0000435c   0x0000435c   0x00000000   Code   RO         2310    x$fpl$usenofp       fz_ps.l(usenofp.o)
-    0x0000435c   0x0000435c   0x00000080   Data   RO         2214    .constdata          fz_ps.l(ddiv.o)
-    0x000043dc   0x000043dc   0x00000003   Data   RO         2136    .rodata.LowPower_ConfigWakeTimer1s.wakeClockConfig  low_power.o
-    0x000043df   0x000043df   0x00000001   PAD
-    0x000043e0   0x000043e0   0x00000014   Data   RO         2137    .rodata.LowPower_ConfigWakeTimer1s.wakeTimerConfig  low_power.o
-    0x000043f4   0x000043f4   0x000005f0   Data   RO         1632    .rodata.OLED_F8x16  oled.o
-    0x000049e4   0x000049e4   0x00000008   Data   RO          238    .rodata.gADC12_0ClockConfig  ti_msp_dl_config.o
-    0x000049ec   0x000049ec   0x00000003   Data   RO          230    .rodata.gADC_SAMPLE_TIMERClockConfig  ti_msp_dl_config.o
-    0x000049ef   0x000049ef   0x00000001   PAD
-    0x000049f0   0x000049f0   0x00000014   Data   RO          231    .rodata.gADC_SAMPLE_TIMERTimerConfig  ti_msp_dl_config.o
-    0x00004a04   0x00004a04   0x00000018   Data   RO          240    .rodata.gDMA_CH0Config  ti_msp_dl_config.o
-    0x00004a1c   0x00004a1c   0x00000002   Data   RO          234    .rodata.gUART_DEBUGClockConfig  ti_msp_dl_config.o
-    0x00004a1e   0x00004a1e   0x0000000a   Data   RO          235    .rodata.gUART_DEBUGConfig  ti_msp_dl_config.o
-    0x00004a28   0x00004a28   0x00000002   Data   RO          226    .rodata.gVREFClockConfig  ti_msp_dl_config.o
-    0x00004a2a   0x00004a2a   0x00000002   PAD
-    0x00004a2c   0x00004a2c   0x0000000c   Data   RO          227    .rodata.gVREFConfig  ti_msp_dl_config.o
-    0x00004a38   0x00004a38   0x0000001e   Data   RO           60    .rodata.str1.1      main.o
-    0x00004a56   0x00004a56   0x00000335   Data   RO         1570    .rodata.str1.1      adc2chsample.o
-    0x00004d8b   0x00004d8b   0x0000001b   Data   RO         2135    .rodata.str1.1      low_power.o
-    0x00004da6   0x00004da6   0x00000002   PAD
-    0x00004da8   0x00004da8   0x00000020   Data   RO         2536    Region$$Table       anon$$obj.o
+    0x000029a0   0x000029a0   0x00000018   Code   RO          111    .text.DL_Timer_reset  ti_msp_dl_config.o
+    0x000029b8   0x000029b8   0x0000003c   Code   RO         1192    .text.DL_Timer_setCaptureCompareCtl  dl_timer.o
+    0x000029f4   0x000029f4   0x0000002c   Code   RO         1190    .text.DL_Timer_setCaptureCompareValue  dl_timer.o
+    0x00002a20   0x00002a20   0x00000030   Code   RO         1180    .text.DL_Timer_setClockConfig  dl_timer.o
+    0x00002a50   0x00002a50   0x0000001c   Code   RO         1188    .text.DL_Timer_setCounterValueAfterEnable  dl_timer.o
+    0x00002a6c   0x00002a6c   0x00000014   Code   RO         1186    .text.DL_Timer_setLoadValue  dl_timer.o
+    0x00002a80   0x00002a80   0x00000014   Code   RO         1445    .text.DL_Timer_setLoadValue  adc2chsample.o
+    0x00002a94   0x00002a94   0x00000018   Code   RO         2068    .text.DL_Timer_setLoadValue  low_power.o
+    0x00002aac   0x00002aac   0x00000038   Code   RO          169    .text.DL_Timer_setPublisherChanID  ti_msp_dl_config.o
+    0x00002ae4   0x00002ae4   0x00000014   Code   RO         1447    .text.DL_Timer_setTimerCount  adc2chsample.o
+    0x00002af8   0x00002af8   0x00000014   Code   RO         2070    .text.DL_Timer_setTimerCount  low_power.o
+    0x00002b0c   0x00002b0c   0x00000014   Code   RO         1553    .text.DL_Timer_startCounter  adc2chsample.o
+    0x00002b20   0x00002b20   0x00000014   Code   RO         2074    .text.DL_Timer_startCounter  low_power.o
+    0x00002b34   0x00002b34   0x00000014   Code   RO           20    .text.DL_Timer_stopCounter  main.o
+    0x00002b48   0x00002b48   0x00000014   Code   RO         1443    .text.DL_Timer_stopCounter  adc2chsample.o
+    0x00002b5c   0x00002b5c   0x00000018   Code   RO         2064    .text.DL_Timer_stopCounter  low_power.o
+    0x00002b74   0x00002b74   0x00000014   Code   RO           12    .text.DL_UART_clearInterruptStatus  main.o
+    0x00002b88   0x00002b88   0x00000018   Code   RO         1700    .text.DL_UART_clearInterruptStatus  usr_uart.o
+    0x00002ba0   0x00002ba0   0x00000016   Code   RO           16    .text.DL_UART_disable  main.o
+    0x00002bb6   0x00002bb6   0x00000016   Code   RO         1306    .text.DL_UART_disable  dl_uart.o
+    0x00002bcc   0x00002bcc   0x00000018   Code   RO          177    .text.DL_UART_disableFIFOs  ti_msp_dl_config.o
+    0x00002be4   0x00002be4   0x0000001c   Code   RO           10    .text.DL_UART_disableInterrupt  main.o
+    0x00002c00   0x00002c00   0x00000014   Code   RO           18    .text.DL_UART_disablePower  main.o
+    0x00002c14   0x00002c14   0x00000014   Code   RO         2126    .text.DL_UART_disablePower  low_power.o
+    0x00002c28   0x00002c28   0x00000016   Code   RO          179    .text.DL_UART_enable  ti_msp_dl_config.o
+    0x00002c3e   0x00002c3e   0x00000002   PAD
+    0x00002c40   0x00002c40   0x00000014   Code   RO          127    .text.DL_UART_enablePower  ti_msp_dl_config.o
+    0x00002c54   0x00002c54   0x00000014   Code   RO         2118    .text.DL_UART_enablePower  low_power.o
+    0x00002c68   0x00002c68   0x00000012   Code   RO         1734    .text.DL_UART_getPendingInterrupt  usr_uart.o
+    0x00002c7a   0x00002c7a   0x00000002   PAD
+    0x00002c7c   0x00002c7c   0x00000048   Code   RO         1304    .text.DL_UART_init  dl_uart.o
+    0x00002cc4   0x00002cc4   0x00000014   Code   RO         1738    .text.DL_UART_isBusy  usr_uart.o
+    0x00002cd8   0x00002cd8   0x00000014   Code   RO         2120    .text.DL_UART_isBusy  low_power.o
+    0x00002cec   0x00002cec   0x00000014   Code   RO         2163    .text.DL_UART_isBusy  serial_protocol.o
+    0x00002d00   0x00002d00   0x00000014   Code   RO         1724    .text.DL_UART_isRXFIFOEmpty  usr_uart.o
+    0x00002d14   0x00002d14   0x00000014   Code   RO         2161    .text.DL_UART_isTXFIFOEmpty  serial_protocol.o
+    0x00002d28   0x00002d28   0x00000014   Code   RO         1332    .text.DL_UART_isTXFIFOFull  dl_uart.o
+    0x00002d3c   0x00002d3c   0x00000014   Code   RO         1726    .text.DL_UART_receiveData  usr_uart.o
+    0x00002d50   0x00002d50   0x00000014   Code   RO          113    .text.DL_UART_reset  ti_msp_dl_config.o
+    0x00002d64   0x00002d64   0x00000048   Code   RO          175    .text.DL_UART_setBaudRateDivisor  ti_msp_dl_config.o
+    0x00002dac   0x00002dac   0x00000024   Code   RO         1310    .text.DL_UART_setClockConfig  dl_uart.o
+    0x00002dd0   0x00002dd0   0x0000001e   Code   RO          173    .text.DL_UART_setOversampling  ti_msp_dl_config.o
+    0x00002dee   0x00002dee   0x00000016   Code   RO         1334    .text.DL_UART_transmitData  dl_uart.o
+    0x00002e04   0x00002e04   0x00000028   Code   RO         1330    .text.DL_UART_transmitDataBlocking  dl_uart.o
+    0x00002e2c   0x00002e2c   0x00000034   Code   RO         1361    .text.DL_VREF_configReference  dl_vref.o
+    0x00002e60   0x00002e60   0x00000016   Code   RO           48    .text.DL_VREF_disableInternalRef  main.o
+    0x00002e76   0x00002e76   0x00000016   Code   RO         2108    .text.DL_VREF_disableInternalRef  low_power.o
+    0x00002e8c   0x00002e8c   0x00000014   Code   RO           52    .text.DL_VREF_disablePower  main.o
+    0x00002ea0   0x00002ea0   0x00000014   Code   RO         2112    .text.DL_VREF_disablePower  low_power.o
+    0x00002eb4   0x00002eb4   0x00000014   Code   RO          131    .text.DL_VREF_enablePower  ti_msp_dl_config.o
+    0x00002ec8   0x00002ec8   0x00000018   Code   RO         2080    .text.DL_VREF_enablePower  low_power.o
+    0x00002ee0   0x00002ee0   0x00000018   Code   RO          143    .text.DL_VREF_getStatus  ti_msp_dl_config.o
+    0x00002ef8   0x00002ef8   0x00000010   Code   RO           50    .text.DL_VREF_reset  main.o
+    0x00002f08   0x00002f08   0x00000010   Code   RO          117    .text.DL_VREF_reset  ti_msp_dl_config.o
+    0x00002f18   0x00002f18   0x00000018   Code   RO         2110    .text.DL_VREF_reset  low_power.o
+    0x00002f30   0x00002f30   0x00000024   Code   RO         1363    .text.DL_VREF_setClockConfig  dl_vref.o
+    0x00002f54   0x00002f54   0x00000058   Code   RO         2042    .text.GROUP1_IRQHandler  low_power.o
+    0x00002fac   0x00002fac   0x00000008   Code   RO         2002    .text.LowPower_ClearWakeReason  low_power.o
+    0x00002fb4   0x00002fb4   0x0000005c   Code   RO         1994    .text.LowPower_ConfigKey2Wake  low_power.o
+    0x00003010   0x00003010   0x000000b0   Code   RO         1996    .text.LowPower_ConfigWakeTimer1s  low_power.o
+    0x000030c0   0x000030c0   0x000000d4   Code   RO         2078    .text.LowPower_DisableMeasurementPeripherals  low_power.o
+    0x00003194   0x00003194   0x0000004c   Code   RO         2022    .text.LowPower_DisableUnusedPeripheralsBeforeStandby  low_power.o
+    0x000031e0   0x000031e0   0x00000074   Code   RO         2008    .text.LowPower_DoMeasurement  low_power.o
+    0x00003254   0x00003254   0x0000003c   Code   RO         2076    .text.LowPower_EnableMeasurementPeripherals  low_power.o
+    0x00003290   0x00003290   0x00000018   Code   RO         2114    .text.LowPower_EnableUart  low_power.o
+    0x000032a8   0x000032a8   0x00000068   Code   RO         2020    .text.LowPower_EnterStandby1  low_power.o
+    0x00003310   0x00003310   0x00000004   Code   RO         2004    .text.LowPower_GetLatestMeasurement  low_power.o
+    0x00003314   0x00003314   0x00000008   Code   RO         1998    .text.LowPower_GetWakeReason  low_power.o
+    0x0000331c   0x0000331c   0x00000034   Code   RO         1992    .text.LowPower_Init  low_power.o
+    0x00003350   0x00003350   0x00000020   Code   RO         2130    .text.LowPower_IsKey2Pressed  low_power.o
+    0x00003370   0x00003370   0x00000038   Code   RO         2084    .text.LowPower_RestoreAdcTimer  low_power.o
+    0x000033a8   0x000033a8   0x00000024   Code   RO         2006    .text.LowPower_RunTimerWakeFlow  low_power.o
+    0x000033cc   0x000033cc   0x0000002e   Code   RO         2012    .text.LowPower_SendMeasurement  low_power.o
+    0x000033fa   0x000033fa   0x00000002   PAD
+    0x000033fc   0x000033fc   0x00000050   Code   RO         2026    .text.LowPower_ServiceKey2Pending  low_power.o
+    0x0000344c   0x0000344c   0x00000044   Code   RO         2024    .text.LowPower_ServiceWakeTimerPending  low_power.o
+    0x00003490   0x00003490   0x00000044   Code   RO         2116    .text.LowPower_WaitUartTxDone  low_power.o
+    0x000034d4   0x000034d4   0x0000001c   Code   RO         2014    .text.LowPower_WirelessSleep  low_power.o
+    0x000034f0   0x000034f0   0x00000070   Code   RO         2010    .text.LowPower_WirelessWake  low_power.o
+    0x00003560   0x00003560   0x00000056   Code   RO         1610    .text.OLED_Clear    oled.o
+    0x000035b6   0x000035b6   0x00000028   Code   RO         1626    .text.OLED_DisplayOff  oled.o
+    0x000035de   0x000035de   0x00000016   Code   RO         1628    .text.OLED_DisplayOn  oled.o
+    0x000035f4   0x000035f4   0x00000038   Code   RO         1592    .text.OLED_I2C_Init  oled.o
+    0x0000362c   0x0000362c   0x00000054   Code   RO         1602    .text.OLED_I2C_SendByte  oled.o
+    0x00003680   0x00003680   0x00000024   Code   RO         1598    .text.OLED_I2C_Start  oled.o
+    0x000036a4   0x000036a4   0x0000001c   Code   RO         1600    .text.OLED_I2C_Stop  oled.o
+    0x000036c0   0x000036c0   0x000000cc   Code   RO         1630    .text.OLED_Init     oled.o
+    0x0000378c   0x0000378c   0x00000028   Code   RO         1616    .text.OLED_Pow      oled.o
+    0x000037b4   0x000037b4   0x00000036   Code   RO         1608    .text.OLED_SetCursor  oled.o
+    0x000037ea   0x000037ea   0x00000002   PAD
+    0x000037ec   0x000037ec   0x000000b4   Code   RO         1612    .text.OLED_ShowChar  oled.o
+    0x000038a0   0x000038a0   0x0000007a   Code   RO         1618    .text.OLED_ShowNum  oled.o
+    0x0000391a   0x0000391a   0x0000004a   Code   RO         1614    .text.OLED_ShowString  oled.o
+    0x00003964   0x00003964   0x00000030   Code   RO         1584    .text.OLED_W_SCL    oled.o
+    0x00003994   0x00003994   0x00000034   Code   RO         1590    .text.OLED_W_SDA    oled.o
+    0x000039c8   0x000039c8   0x0000002a   Code   RO         1604    .text.OLED_WriteCommand  oled.o
+    0x000039f2   0x000039f2   0x0000002a   Code   RO         1606    .text.OLED_WriteData  oled.o
+    0x00003a1c   0x00003a1c   0x00000070   Code   RO           97    .text.SYSCFG_DL_ADC12_0_init  ti_msp_dl_config.o
+    0x00003a8c   0x00003a8c   0x00000060   Code   RO           85    .text.SYSCFG_DL_ADC_SAMPLE_TIMER_init  ti_msp_dl_config.o
+    0x00003aec   0x00003aec   0x00000018   Code   RO          209    .text.SYSCFG_DL_DMA_CH0_init  ti_msp_dl_config.o
+    0x00003b04   0x00003b04   0x00000008   Code   RO          101    .text.SYSCFG_DL_DMA_init  ti_msp_dl_config.o
+    0x00003b0c   0x00003b0c   0x0000005a   Code   RO           81    .text.SYSCFG_DL_GPIO_init  ti_msp_dl_config.o
+    0x00003b66   0x00003b66   0x0000003a   Code   RO           83    .text.SYSCFG_DL_SYSCTL_init  ti_msp_dl_config.o
+    0x00003ba0   0x00003ba0   0x00000040   Code   RO           91    .text.SYSCFG_DL_UART_DEBUG_init  ti_msp_dl_config.o
+    0x00003be0   0x00003be0   0x00000034   Code   RO           95    .text.SYSCFG_DL_VREF_init  ti_msp_dl_config.o
+    0x00003c14   0x00003c14   0x000000e0   Code   RO           79    .text.SYSCFG_DL_initPower  ti_msp_dl_config.o
+    0x00003cf4   0x00003cf4   0x00000056   Code   RO         2149    .text.SerialProtocol_PackCurrentFrame  serial_protocol.o
+    0x00003d4a   0x00003d4a   0x00000042   Code   RO         2157    .text.SerialProtocol_SendCurrentFrame  serial_protocol.o
+    0x00003d8c   0x00003d8c   0x00000048   Code   RO         2159    .text.SerialProtocol_WaitUartTxIdle  serial_protocol.o
+    0x00003dd4   0x00003dd4   0x00000028   Code   RO         2151    .text.SerialProtocol_WriteFloatLittleEndian  serial_protocol.o
+    0x00003dfc   0x00003dfc   0x0000005c   Code   RO           73    .text.Sysclk_WaitForLFOSCGood  ti_msp_dl_config.o
+    0x00003e58   0x00003e58   0x00000058   Code   RO           69    .text.Sysclk_WaitForSYSOSCBase  ti_msp_dl_config.o
+    0x00003eb0   0x00003eb0   0x0000003c   Code   RO         2036    .text.TIMG8_IRQHandler  low_power.o
+    0x00003eec   0x00003eec   0x00000008   Code   RO         1736    .text.UART0_IRQHandler  usr_uart.o
+    0x00003ef4   0x00003ef4   0x00000058   Code   RO         1732    .text.USR_UART_IRQHandler  usr_uart.o
+    0x00003f4c   0x00003f4c   0x00000040   Code   RO         1698    .text.USR_UART_init  usr_uart.o
+    0x00003f8c   0x00003f8c   0x0000001c   Code   RO         1702    .text.USR_UART_sendByte  usr_uart.o
+    0x00003fa8   0x00003fa8   0x0000004a   Code   RO         1704    .text.USR_UART_sendBytes  usr_uart.o
+    0x00003ff2   0x00003ff2   0x00000030   Code   RO         1708    .text.USR_UART_sendString  usr_uart.o
+    0x00004022   0x00004022   0x00000002   PAD
+    0x00004024   0x00004024   0x0000004c   Code   RO         1728    .text.USR_UART_storeRxByte  usr_uart.o
+    0x00004070   0x00004070   0x00000044   Code   RO         1706    .text.USR_UART_waitTxDone  usr_uart.o
+    0x000040b4   0x000040b4   0x00000028   Code   RO           14    .text.__NVIC_ClearPendingIRQ  main.o
+    0x000040dc   0x000040dc   0x00000028   Code   RO         1525    .text.__NVIC_ClearPendingIRQ  adc2chsample.o
+    0x00004104   0x00004104   0x0000002c   Code   RO         2028    .text.__NVIC_ClearPendingIRQ  low_power.o
+    0x00004130   0x00004130   0x00000030   Code   RO           42    .text.__NVIC_DisableIRQ  main.o
+    0x00004160   0x00004160   0x00000030   Code   RO         1523    .text.__NVIC_DisableIRQ  adc2chsample.o
+    0x00004190   0x00004190   0x00000034   Code   RO         2102    .text.__NVIC_DisableIRQ  low_power.o
+    0x000041c4   0x000041c4   0x00000028   Code   RO         1551    .text.__NVIC_EnableIRQ  adc2chsample.o
+    0x000041ec   0x000041ec   0x0000002c   Code   RO         2058    .text.__NVIC_EnableIRQ  low_power.o
+    0x00004218   0x00004218   0x000000b4   Code   RO            2    .text.main          main.o
+    0x000042cc   0x000042cc   0x00000048   Code   RO         2284    i.sqrt              m_ps.l(sqrt.o)
+    0x00004314   0x00004314   0x0000008c   Code   RO         2230    x$fpl$fadd          fz_ps.l(faddsub.o)
+    0x000043a0   0x000043a0   0x000000d0   Code   RO         2232    x$fpl$fsub          fz_ps.l(faddsub.o)
+    0x00004470   0x00004470   0x00000000   Code   RO         2314    x$fpl$usenofp       fz_ps.l(usenofp.o)
+    0x00004470   0x00004470   0x00000080   Data   RO         2218    .constdata          fz_ps.l(ddiv.o)
+    0x000044f0   0x000044f0   0x00000003   Data   RO         2140    .rodata.LowPower_ConfigWakeTimer1s.wakeClockConfig  low_power.o
+    0x000044f3   0x000044f3   0x00000001   PAD
+    0x000044f4   0x000044f4   0x00000014   Data   RO         2141    .rodata.LowPower_ConfigWakeTimer1s.wakeTimerConfig  low_power.o
+    0x00004508   0x00004508   0x000005f0   Data   RO         1632    .rodata.OLED_F8x16  oled.o
+    0x00004af8   0x00004af8   0x00000008   Data   RO          238    .rodata.gADC12_0ClockConfig  ti_msp_dl_config.o
+    0x00004b00   0x00004b00   0x00000003   Data   RO          230    .rodata.gADC_SAMPLE_TIMERClockConfig  ti_msp_dl_config.o
+    0x00004b03   0x00004b03   0x00000001   PAD
+    0x00004b04   0x00004b04   0x00000014   Data   RO          231    .rodata.gADC_SAMPLE_TIMERTimerConfig  ti_msp_dl_config.o
+    0x00004b18   0x00004b18   0x00000018   Data   RO          240    .rodata.gDMA_CH0Config  ti_msp_dl_config.o
+    0x00004b30   0x00004b30   0x00000002   Data   RO          234    .rodata.gUART_DEBUGClockConfig  ti_msp_dl_config.o
+    0x00004b32   0x00004b32   0x0000000a   Data   RO          235    .rodata.gUART_DEBUGConfig  ti_msp_dl_config.o
+    0x00004b3c   0x00004b3c   0x00000002   Data   RO          226    .rodata.gVREFClockConfig  ti_msp_dl_config.o
+    0x00004b3e   0x00004b3e   0x00000002   PAD
+    0x00004b40   0x00004b40   0x0000000c   Data   RO          227    .rodata.gVREFConfig  ti_msp_dl_config.o
+    0x00004b4c   0x00004b4c   0x0000001e   Data   RO           60    .rodata.str1.1      main.o
+    0x00004b6a   0x00004b6a   0x00000335   Data   RO         1570    .rodata.str1.1      adc2chsample.o
+    0x00004e9f   0x00004e9f   0x0000002e   Data   RO         2139    .rodata.str1.1      low_power.o
+    0x00004ecd   0x00004ecd   0x00000003   PAD
+    0x00004ed0   0x00004ed0   0x00000020   Data   RO         2540    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM2 (Exec base: 0x20200000, Load base: 0x00004dc8, Size: 0x00001300, Max: 0x00008000, ABSOLUTE)
+    Execution Region RW_IRAM2 (Exec base: 0x20200000, Load base: 0x00004ef0, Size: 0x00001300, Max: 0x00008000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20200000   0x00004dc8   0x00000004   Data   RW         1568    .data.gADCSampleRateHz  adc2chsample.o
-    0x20200004   0x00004dcc   0x00000002   Data   RW         1567    .data.gADCSampleTimerPeriod  adc2chsample.o
-    0x20200006   0x00004dce   0x00000002   PAD
-    0x20200008   0x00004dd0   0x00000004   Data   RW         1560    .data.pADC_Buffer0  adc2chsample.o
-    0x2020000c   0x00004dd4   0x00000004   Data   RW         1562    .data.pADC_Buffer1  adc2chsample.o
-    0x20200010   0x00004dd8   0x00000002   Data   RW         1564    .data.per           adc2chsample.o
-    0x20200012   0x00004dda   0x00000006   PAD
-    0x20200018        -       0x00000060   Zero   RW         2377    .bss                c_p.l(libspace.o)
+    0x20200000   0x00004ef0   0x00000004   Data   RW         1568    .data.gADCSampleRateHz  adc2chsample.o
+    0x20200004   0x00004ef4   0x00000002   Data   RW         1567    .data.gADCSampleTimerPeriod  adc2chsample.o
+    0x20200006   0x00004ef6   0x00000002   PAD
+    0x20200008   0x00004ef8   0x00000004   Data   RW         1560    .data.pADC_Buffer0  adc2chsample.o
+    0x2020000c   0x00004efc   0x00000004   Data   RW         1562    .data.pADC_Buffer1  adc2chsample.o
+    0x20200010   0x00004f00   0x00000002   Data   RW         1564    .data.per           adc2chsample.o
+    0x20200012   0x00004f02   0x00000006   PAD
+    0x20200018        -       0x00000060   Zero   RW         2381    .bss                c_p.l(libspace.o)
     0x20200078        -       0x00000001   Zero   RW         1563    .bss.ADC_Finished   adc2chsample.o
     0x20200079        -       0x00000001   Zero   RW         1575    .bss.gADC0DMADone   adc2chsample.o
-    0x2020007a   0x00004dda   0x00000002   PAD
+    0x2020007a   0x00004f02   0x00000002   PAD
     0x2020007c        -       0x00000014   Zero   RW         1569    .bss.gADC12DebugInfo  adc2chsample.o
     0x20200090        -       0x00000001   Zero   RW         1576    .bss.gADC1DMADone   adc2chsample.o
     0x20200091        -       0x00000001   Zero   RW         1566    .bss.gADCSampleTimerPrescaler  adc2chsample.o
     0x20200092        -       0x00000864   Zero   RW         1559    .bss.gADC_Buffer0   adc2chsample.o
     0x202008f6        -       0x00000864   Zero   RW         1561    .bss.gADC_Buffer1   adc2chsample.o
-    0x2020115a        -       0x00000001   Zero   RW         1746    .bss.gDiscardLine   usr_uart.o
-    0x2020115b        -       0x00000001   Zero   RW         2134    .bss.gKey2Configured  low_power.o
-    0x2020115c        -       0x00000014   Zero   RW         2132    .bss.gLatestMeasurement  low_power.o
-    0x20201170        -       0x00000002   Zero   RW         1743    .bss.gLineLength    usr_uart.o
-    0x20201172        -       0x00000001   Zero   RW         1745    .bss.gLineOverflow  usr_uart.o
-    0x20201173        -       0x00000001   Zero   RW         1744    .bss.gLineReady     usr_uart.o
-    0x20201174        -       0x00000080   Zero   RW         1748    .bss.gRxBuffer      usr_uart.o
-    0x202011f4        -       0x00000001   Zero   RW         1742    .bss.gRxOverflow    usr_uart.o
-    0x202011f5   0x00004dda   0x00000001   PAD
-    0x202011f6        -       0x00000002   Zero   RW         1741    .bss.gRxReadIndex   usr_uart.o
-    0x202011f8        -       0x00000002   Zero   RW         1740    .bss.gRxWriteIndex  usr_uart.o
-    0x202011fa        -       0x00000001   Zero   RW         2130    .bss.gWakeReason    low_power.o
-    0x202011fb        -       0x00000001   Zero   RW         2133    .bss.gWakeTimerRunning  low_power.o
-    0x202011fc        -       0x00000004   Zero   RW         2131    .bss.gWakeTimerTicks  low_power.o
+    0x2020115a        -       0x00000001   Zero   RW         1750    .bss.gDiscardLine   usr_uart.o
+    0x2020115b        -       0x00000001   Zero   RW         2138    .bss.gKey2Configured  low_power.o
+    0x2020115c        -       0x00000014   Zero   RW         2136    .bss.gLatestMeasurement  low_power.o
+    0x20201170        -       0x00000002   Zero   RW         1747    .bss.gLineLength    usr_uart.o
+    0x20201172        -       0x00000001   Zero   RW         1749    .bss.gLineOverflow  usr_uart.o
+    0x20201173        -       0x00000001   Zero   RW         1748    .bss.gLineReady     usr_uart.o
+    0x20201174        -       0x00000080   Zero   RW         1752    .bss.gRxBuffer      usr_uart.o
+    0x202011f4        -       0x00000001   Zero   RW         1746    .bss.gRxOverflow    usr_uart.o
+    0x202011f5   0x00004f02   0x00000001   PAD
+    0x202011f6        -       0x00000002   Zero   RW         1745    .bss.gRxReadIndex   usr_uart.o
+    0x202011f8        -       0x00000002   Zero   RW         1744    .bss.gRxWriteIndex  usr_uart.o
+    0x202011fa        -       0x00000001   Zero   RW         2134    .bss.gWakeReason    low_power.o
+    0x202011fb        -       0x00000001   Zero   RW         2137    .bss.gWakeTimerRunning  low_power.o
+    0x202011fc        -       0x00000004   Zero   RW         2135    .bss.gWakeTimerTicks  low_power.o
     0x20201200        -       0x00000000   Zero   RW          251    HEAP                startup_mspm0g350x_uvision.o
     0x20201200        -       0x00000100   Zero   RW          250    STACK               startup_mspm0g350x_uvision.o
 
@@ -6001,18 +6024,18 @@ Image component sizes
        492        156          0          0          0      23446   dl_timer.o
        252          8          0          0          0      10673   dl_uart.o
         88          8          0          0          0       2477   dl_vref.o
-      2656        224         50          0         27      34458   low_power.o
-      1224         44         30          0          0      20028   main.o
+      2768        232         69          0         27      34523   low_power.o
+      1248         44         30          0          0      20094   main.o
       1298         24       1520          0          0       9135   oled.o
-       308          4          0          0          0       4320   serial_protocol.o
+       304          0          0          0          0       4320   serial_protocol.o
         44         18        192          0        256        688   startup_mspm0g350x_uvision.o
-      2110        180         81          0          0      47782   ti_msp_dl_config.o
-       416         52          0          0        138       9153   usr_uart.o
+      2114        184         81          0          0      47782   ti_msp_dl_config.o
+       556         60          0          0        138       9443   usr_uart.o
 
     ----------------------------------------------------------------------
-     12784        974       2732         20       4748     214215   Object Totals
+     13060        990       2752         20       4748     214636   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        22          0          6          4          7          0   (incl. Padding)
+        22          0          7          4          7          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -6075,15 +6098,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     17052       1106       2860         20       4844     215063   Grand Totals
-     17052       1106       2860         20       4844     215063   ELF Image Totals
-     17052       1106       2860         20          0          0   ROM Totals
+     17328       1122       2880         20       4844     215484   Grand Totals
+     17328       1122       2880         20       4844     215484   ELF Image Totals
+     17328       1122       2880         20          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                19912 (  19.45kB)
+    Total RO  Size (Code + RO Data)                20208 (  19.73kB)
     Total RW  Size (RW Data + ZI Data)              4864 (   4.75kB)
-    Total ROM Size (Code + RO Data + RW Data)      19932 (  19.46kB)
+    Total ROM Size (Code + RO Data + RW Data)      20228 (  19.75kB)
 
 ==============================================================================
 

@@ -10,6 +10,8 @@
 #define LP_ANALOG_SETTLE_CYCLES         (CPUCLK_FREQ / 50U)   /* about 20 ms */
 #define LP_WIRELESS_READY_CYCLES        (CPUCLK_FREQ / 100U)  /* about 10 ms */
 #define LP_UART_TX_TIMEOUT_CYCLES       (CPUCLK_FREQ / 10U)   /* about 100 ms */
+#define LP_WIRELESS_SLEEP_CMD           "ATON\r\nAT+SLEEP=1\r\n"
+#define LP_WIRELESS_AT_SLEEP_ENABLE     (1U)
 
 static volatile WakeReason gWakeReason = WAKE_REASON_NONE;
 static volatile uint32_t gWakeTimerTicks = 0U;
@@ -178,10 +180,32 @@ static void LowPower_WirelessWake(void)
 {
     LowPower_EnableUart();
     delay_cycles(LP_WIRELESS_READY_CYCLES);
+    USR_UART_sendByte(0x00U);
+    LowPower_WaitUartTxDone();
+    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
+    USR_UART_sendByte(0x00U);
+    LowPower_WaitUartTxDone();
+    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
+    USR_UART_sendByte(0x00U);
+    LowPower_WaitUartTxDone();
+    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
+    USR_UART_sendByte(0x00U);
+    LowPower_WaitUartTxDone();
+    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
+    USR_UART_sendByte(0x00U);
+    LowPower_WaitUartTxDone();
+    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
+    
+    
+    // delay_cycles(LP_WIRELESS_READY_CYCLES);
+
 }
 
 static void LowPower_WirelessSleep(void)
 {
+    delay_cycles(LP_WIRELESS_READY_CYCLES);
+    LowPower_WaitUartTxDone();
+    USR_UART_sendString(LP_WIRELESS_SLEEP_CMD);
     LowPower_WaitUartTxDone();
 }
 
