@@ -1,0 +1,207 @@
+version: "4.1"
+name: mspm0_damo
+type: ARM
+deviceName: null
+packDir: null
+srcDirs: []
+virtualFolder:
+  name: <virtual_root>
+  files: []
+  folders:
+    - name: main
+      files:
+        - path: ../main.c
+        - path: ../mspm0_g3507.syscfg
+        - path: ../ti_msp_dl_config.h
+        - path: ../ti_msp_dl_config.c
+        - path: startup_mspm0g350x_uvision.s
+      folders: []
+    - name: driverlib
+      files:
+        - path: ../source/ti/driverlib/dl_adc12.c
+        - path: ../source/ti/driverlib/dl_aes.c
+        - path: ../source/ti/driverlib/dl_aesadv.c
+        - path: ../source/ti/driverlib/dl_common.c
+        - path: ../source/ti/driverlib/dl_crc.c
+        - path: ../source/ti/driverlib/dl_crcp.c
+        - path: ../source/ti/driverlib/dl_dac12.c
+        - path: ../source/ti/driverlib/dl_dma.c
+        - path: ../source/ti/driverlib/dl_flashctl.c
+        - path: ../source/ti/driverlib/dl_i2c.c
+        - path: ../source/ti/driverlib/dl_keystorectl.c
+        - path: ../source/ti/driverlib/dl_lcd.c
+        - path: ../source/ti/driverlib/dl_lfss.c
+        - path: ../source/ti/driverlib/dl_mathacl.c
+        - path: ../source/ti/driverlib/dl_mcan.c
+        - path: ../source/ti/driverlib/dl_opa.c
+        - path: ../source/ti/driverlib/dl_rtc_common.c
+        - path: ../source/ti/driverlib/dl_spi.c
+        - path: ../source/ti/driverlib/dl_timer.c
+        - path: ../source/ti/driverlib/dl_trng.c
+        - path: ../source/ti/driverlib/dl_uart.c
+        - path: ../source/ti/driverlib/dl_vref.c
+        - path: ../source/ti/driverlib/m0p/dl_interrupt.c
+        - path: ../source/ti/driverlib/m0p/sysctl/dl_sysctl_mspm0g1x0x_g3x0x.c
+      folders: []
+    - name: usr
+      files:
+        - path: ../usr/src/adc2chSample.c
+        - path: ../usr/src/OLED.c
+        - path: ../usr/src/signalProcess.c
+        - path: ../usr/src/sysconfig.c
+        - path: ../usr/src/uart_debug.c
+        - path: ../usr/src/usr_uart.c
+        - path: ../usr/src/key.c
+        - path: ../usr/src/dac.c
+        - path: ../usr/src/ad9833.c
+        - path: ../usr/src/flash.c
+        - path: ../usr/src/addr_code.c
+        - path: ../usr/src/low_power.c
+        - path: ../usr/src/serial_protocol.c
+      folders: []
+dependenceList: []
+outDir: build
+miscInfo:
+  uid: edbf9a523b4b1c1a1048dac6caf7da10
+targets:
+  MSPM0G3507:
+    cppPreprocessAttrs:
+      defineList:
+        - __MSPM0G3507__
+      incList:
+        - ..
+        - ../source/third_party/CMSIS/Core/Include
+        - ../source/third_party/CMSIS/DSP/Include
+        - ../source
+        - ../usr/src
+        - ../usr/inc
+        - .cmsis/include
+        - RTE/_MSPM0G3507
+      libList: []
+    excludeList: []
+    settings:
+      debugger: cortex-debug
+    toolchain: AC6
+    toolchainConfigMap:
+      AC6:
+        archExtensions: ""
+        cpuType: Cortex-M0+
+        floatingPointHardware: none
+        options:
+          version: 3
+          afterBuildTasks: []
+          asm-compiler:
+            $use: asm-auto
+            defines: []
+            misc-controls: ""
+          beforeBuildTasks:
+            - name: cmd.exe /C "$P../../../../../../tools/keil/syscfg.bat '$P' mspm0_g3507.syscfg"
+              abortAfterFailed: true
+              command: cmd.exe /C "$P../../../../../../tools/keil/syscfg.bat '$P' mspm0_g3507.syscfg"
+              disable: true
+              stopBuildAfterFailed: true
+          c/cpp-compiler:
+            language-c: c99
+            language-cpp: c++11
+            link-time-optimization: false
+            one-elf-section-per-function: true
+            optimization: level-0
+            short-enums#wchar: true
+            warnings: misra-compatible
+          global:
+            output-debug-info: enable
+            use-microLIB: false
+          linker:
+            $outputTaskExcludes:
+              - .bin
+            misc-controls: --diag_suppress=L6329
+            output-format: elf
+            ro-base: ""
+            rw-base: ""
+            xo-base: ""
+        scatterFilePath: mspm0g3507.sct
+        storageLayout:
+          RAM:
+            - id: 1
+              isChecked: false
+              mem:
+                size: "0x8000"
+                startAddr: "0x20200000"
+              noInit: false
+              tag: RAM
+            - id: 2
+              isChecked: false
+              mem:
+                size: "0x8000"
+                startAddr: "0x20300000"
+              noInit: false
+              tag: RAM
+            - id: 3
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 1
+              isChecked: false
+              mem:
+                size: "0x8000"
+                startAddr: "0x20000000"
+              noInit: false
+              tag: IRAM
+            - id: 2
+              isChecked: false
+              mem:
+                size: "0x8000"
+                startAddr: "0x20100000"
+              noInit: false
+              tag: IRAM
+          ROM:
+            - id: 1
+              isChecked: false
+              isStartup: true
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 2
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 3
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 1
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x20000"
+                startAddr: "0x0"
+              tag: IROM
+            - id: 2
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x20000"
+                startAddr: "0x400000"
+              tag: IROM
+        useCustomScatterFile: true
+    uploadConfigMap:
+      JLink:
+        baseAddr: ""
+        bin: ""
+        cpuInfo:
+          cpuName: "null"
+          vendor: "null"
+        otherCmds: ""
+        proType: 1
+        speed: 8000
+    uploader: JLink
