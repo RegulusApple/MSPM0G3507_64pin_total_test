@@ -202,6 +202,7 @@ static void LowPower_DisableUnusedPeripheralsBeforeStandby(void)
     DL_TimerA_disablePower(DAC_TIMER_INST);
     DL_TimerA_stopCounter(PWM_0_INST);
     DL_TimerA_disablePower(PWM_0_INST);
+    DL_UART_Main_disablePower(UART_DEBUG_INST);
 }
 
 static void LowPower_WirelessWake(void)
@@ -214,7 +215,7 @@ static void LowPower_WirelessWake(void)
 
 static void LowPower_WirelessSleep(void)
 {
-    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
+    delay_cycles(LP_WIRELESS_READY_CYCLES);
     LowPower_WaitUartTxDone();
     LowPower_SetWirelessPower(false);
 }

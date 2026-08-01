@@ -47,6 +47,12 @@ static void App_PrepareForStandby(bool keepOledOn)
 {
     __disable_irq();
 
+    DL_UART_Main_disableInterrupt(UART_DEBUG_INST, DL_UART_MAIN_INTERRUPT_RX);
+    DL_UART_Main_clearInterruptStatus(UART_DEBUG_INST, DL_UART_MAIN_INTERRUPT_RX);
+    NVIC_ClearPendingIRQ(UART_DEBUG_INST_INT_IRQN);
+    DL_UART_Main_disable(UART_DEBUG_INST);
+    DL_UART_Main_disablePower(UART_DEBUG_INST);
+
     DL_TimerG_stopCounter(ADC_SAMPLE_TIMER_INST);
     DL_TimerG_disableInterrupt(ADC_SAMPLE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
     DL_TimerG_clearInterruptStatus(ADC_SAMPLE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
