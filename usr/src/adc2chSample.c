@@ -18,7 +18,7 @@
 #define ADC12_MASK_ADC1                (0x02U)
 #define ADC12_MASK_BOTH                (ADC12_MASK_ADC0 | ADC12_MASK_ADC1)
 
-#define ADC12_FFT_ADC_VREF             (2.5f)
+#define ADC12_FFT_ADC_VREF             (1.4f)
 #define ADC12_ADC_CODE_MAX             (4095.0f)
 #define ADC12_FFT_HARMONIC_COUNT       (5U)
 #define ADC12_FFT_SEARCH_MIN_BIN       (1U)

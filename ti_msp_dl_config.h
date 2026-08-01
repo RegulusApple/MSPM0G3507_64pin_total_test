@@ -164,6 +164,11 @@ extern "C" {
 #define GPIO_AD9833_SPI_PICO_PIN                                 DL_GPIO_PIN_14
 #define GPIO_AD9833_SPI_IOMUX_PICO                              (IOMUX_PINCM36)
 #define GPIO_AD9833_SPI_IOMUX_PICO_FUNC              IOMUX_PINCM36_PF_SPI0_PICO
+
+/* PA14 controls the external MOS switch for ADC sampling power/path. */
+#define ADC_MOS_SWITCH_PORT                                               GPIOA
+#define ADC_MOS_SWITCH_PIN                                        DL_GPIO_PIN_14
+#define ADC_MOS_SWITCH_IOMUX                                     (IOMUX_PINCM36)
 #define GPIO_AD9833_SPI_POCI_PORT                                         GPIOA
 #define GPIO_AD9833_SPI_POCI_PIN                                  DL_GPIO_PIN_4
 #define GPIO_AD9833_SPI_IOMUX_POCI                               (IOMUX_PINCM9)
@@ -186,7 +191,7 @@ extern "C" {
 #define ADC12_0_INST_INT_IRQN                                    (ADC0_INT_IRQn)
 #define ADC12_0_ADCMEM_0                                      DL_ADC12_MEM_IDX_0
 #define ADC12_0_ADCMEM_0_REF                   DL_ADC12_REFERENCE_VOLTAGE_INTREF
-#define ADC12_0_ADCMEM_0_REF_VOLTAGE_V                                       2.5
+#define ADC12_0_ADCMEM_0_REF_VOLTAGE_V                                       1.4
 #define ADC12_0_INST_SUB_CH                                                  (1)
 #define GPIO_ADC12_0_C0_PORT                                               GPIOA
 #define GPIO_ADC12_0_C0_PIN                                       DL_GPIO_PIN_22
@@ -198,7 +203,7 @@ extern "C" {
 #define ADC12_1_INST_INT_IRQN                                    (ADC1_INT_IRQn)
 #define ADC12_1_ADCMEM_0                                      DL_ADC12_MEM_IDX_0
 #define ADC12_1_ADCMEM_0_REF                   DL_ADC12_REFERENCE_VOLTAGE_INTREF
-#define ADC12_1_ADCMEM_0_REF_VOLTAGE_V                                       2.5
+#define ADC12_1_ADCMEM_0_REF_VOLTAGE_V                                       1.4
 #define ADC12_1_INST_SUB_CH                                                  (2)
 #define GPIO_ADC12_1_C1_PORT                                               GPIOA
 #define GPIO_ADC12_1_C1_PIN                                       DL_GPIO_PIN_21
@@ -207,7 +212,7 @@ extern "C" {
 
 
 /* Defines for VREF output pin */
-#define VREF_VOLTAGE_MV                                                     (2500U)
+#define VREF_VOLTAGE_MV                                                     (1400U)
 #define GPIO_VREF_VREFPOS_PORT                                             GPIOA
 #define GPIO_VREF_VREFPOS_PIN                                      DL_GPIO_PIN_23
 #define GPIO_VREF_IOMUX_VREFPOS                                    (IOMUX_PINCM53)

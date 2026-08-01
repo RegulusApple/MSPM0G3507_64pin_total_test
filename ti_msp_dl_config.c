@@ -194,6 +194,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     // DL_GPIO_initPeripheralOutputFunction(
     //     GPIO_AD9833_SPI_IOMUX_CS0, GPIO_AD9833_SPI_IOMUX_CS0_FUNC);
 
+    DL_GPIO_initDigitalOutput(ADC_MOS_SWITCH_IOMUX);
+    DL_GPIO_clearPins(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
+    DL_GPIO_enableOutput(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
+
     DL_GPIO_initPeripheralAnalogFunction(GPIO_ADC12_0_C0_IOMUX);
     // DL_GPIO_initPeripheralAnalogFunction(GPIO_ADC12_1_C1_IOMUX);
     // DL_GPIO_initPeripheralAnalogFunction(GPIO_DAC12_IOMUX_OUT);
@@ -244,7 +248,7 @@ static const DL_VREF_ClockConfig gVREFClockConfig = {
 
 static const DL_VREF_Config gVREFConfig = {
     .vrefEnable     = DL_VREF_ENABLE_ENABLE,
-    .bufConfig      = DL_VREF_BUFCONFIG_OUTPUT_2_5V,
+    .bufConfig      = DL_VREF_BUFCONFIG_OUTPUT_1_4V,
     .shModeEnable   = DL_VREF_SHMODE_DISABLE,
     .shCycleCount   = 0U,
     .holdCycleCount = 0U,

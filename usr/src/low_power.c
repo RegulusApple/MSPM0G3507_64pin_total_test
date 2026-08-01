@@ -91,6 +91,15 @@ static bool LowPower_IsKey2Pressed(void)
     return ((DL_GPIO_readPins(KEY_KEY2_PORT, KEY_KEY2_PIN) & KEY_KEY2_PIN) == 0U);
 }
 
+static void LowPower_SetAdcMosSwitch(bool enabled)
+{
+    if (enabled == true) {
+        DL_GPIO_setPins(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
+    } else {
+        DL_GPIO_clearPins(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
+    }
+}
+
 static void LowPower_RestoreAdcTimer(void)
 {
     DL_TimerG_stopCounter(ADC_SAMPLE_TIMER_INST);
@@ -102,14 +111,26 @@ static void LowPower_RestoreAdcTimer(void)
     ADC12_SetSampleRateHz(ADC_SAMPLE_RATE_DEFAULT_HZ);
 }
 
-static void LowPower_EnableMeasurementPeripherals(void)
+static void LowPower_EnableVref(void)
 {
     DL_VREF_enablePower(VREF);
+    delay_cycles(POWER_STARTUP_DELAY);
+    SYSCFG_DL_VREF_init();
+}
+
+static void LowPower_DisableVref(void)
+{
+    DL_VREF_disableInternalRef(VREF);
+    DL_VREF_reset(VREF);
+    DL_VREF_disablePower(VREF);
+}
+
+static void LowPower_EnableMeasurementPeripherals(void)
+{
     DL_ADC12_enablePower(ADC12_0_INST);
     DL_TimerG_enablePower(ADC_SAMPLE_TIMER_INST);
     delay_cycles(POWER_STARTUP_DELAY);
 
-    SYSCFG_DL_VREF_init();
     SYSCFG_DL_ADC12_0_init();
     SYSCFG_DL_DMA_init();
     LowPower_RestoreAdcTimer();
@@ -141,9 +162,6 @@ static void LowPower_DisableMeasurementPeripherals(void)
     DL_ADC12_reset(ADC12_0_INST);
     DL_ADC12_disablePower(ADC12_0_INST);
     DL_ADC12_disablePower(ADC12_1_INST);
-    DL_VREF_disableInternalRef(VREF);
-    DL_VREF_reset(VREF);
-    DL_VREF_disablePower(VREF);
     DL_TimerG_disablePower(ADC1_STAGGER_TIMER_INST);
 }
 
@@ -227,15 +245,20 @@ static bool LowPower_DoMeasurement(void)
     uint8_t addrCode;
 
     addrCode = AddrCode_Read();
+    LowPower_EnableVref();
+    LowPower_SetAdcMosSwitch(true);
     LowPower_EnableMeasurementPeripherals();
 
     if (ADC12_SampleADC0() == false) {
+        LowPower_SetAdcMosSwitch(false);
         LowPower_DisableMeasurementPeripherals();
+        LowPower_DisableVref();
         return false;
     }
-
+    LowPower_SetAdcMosSwitch(false);
     if (ADC12_CalcRms(ADC12_CHANNEL_0, &rms) == false) {
         LowPower_DisableMeasurementPeripherals();
+        LowPower_DisableVref();
         return false;
     }
 
@@ -247,6 +270,8 @@ static bool LowPower_DoMeasurement(void)
     gLatestMeasurement.valid = true;
 
     LowPower_DisableMeasurementPeripherals();
+    LowPower_DisableVref();
+    
     return true;
 }
 

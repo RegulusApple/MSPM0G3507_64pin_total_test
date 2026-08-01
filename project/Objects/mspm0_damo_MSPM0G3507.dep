@@ -1,7 +1,7 @@
 Dependencies for Project 'mspm0_damo', Target 'MSPM0G3507': (DO NOT MODIFY !)
 CompilerVersion: 6230000::V6.23::ARMCLANG
 F (..\main.c)(0x6A6D6285)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/main.o -MMD)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -78,9 +78,9 @@ I (..\usr\inc\low_power.h)(0x6A6C6A1E)
 I (..\usr\inc\OLED.h)(0x6A6C4456)
 I (..\usr\inc\gain_calibration.h)(0x6A6D6204)
 F (..\mspm0_g3507.syscfg)(0x6A6ACF8C)()
-F (../ti_msp_dl_config.h)(0x6A6C6C1B)()
-F (../ti_msp_dl_config.c)(0x6A6C6C1C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/ti_msp_dl_config.o -MMD)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+F (../ti_msp_dl_config.h)(0x6A6DDD81)()
+F (../ti_msp_dl_config.c)(0x6A6DB7B5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/ti_msp_dl_config.o -MMD)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -956,10 +956,10 @@ I (..\source\ti\devices\msp\peripherals\m0p\sysctl\hw_sysctl_mspm0g1x0x_g3x0x.h)
 I (..\source\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0g1x0x_g3x0x.h)(0x66A60270)
 I (..\source\ti\driverlib\dl_common.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_factoryregion.h)(0x66631CE6)
-F (..\usr\src\adc2chSample.c)(0x6A6D627A)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/adc2chsample.o -MMD)
+F (..\usr\src\adc2chSample.c)(0x6A6DDD8C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/adc2chsample.o -MMD)
 I (..\usr\inc\adc2chSample.h)(0x6A6D6253)
 I (..\usr\inc\sysconfig.h)(0x6A601E8C)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1036,7 +1036,7 @@ I (..\usr\inc\signalProcess.h)(0x6A6810C6)
 I (..\usr\inc\uart_debug.h)(0x6A601EE4)
 I (..\usr\inc\usr_uart.h)(0x6A603736)
 F (..\usr\src\OLED.c)(0x6A6C4458)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/oled.o -MMD)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1114,7 +1114,7 @@ F (..\usr\src\signalProcess.c)(0x66ADE208)(-xc -std=c99 --target=arm-arm-none-ea
 I (..\usr\inc\signalProcess.h)(0x6A6810C6)
 I (..\usr\inc\adc2chSample.h)(0x6A6D6253)
 I (..\usr\inc\sysconfig.h)(0x6A601E8C)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1190,7 +1190,7 @@ I (..\source\ti\driverlib\m0p\dl_systick.h)(0x66631CE6)
 I (..\usr\inc\uart_debug.h)(0x6A601EE4)
 F (..\usr\src\sysconfig.c)(0x6A601E8C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/sysconfig.o -MMD)
 I (..\usr\inc\sysconfig.h)(0x6A601E8C)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1265,7 +1265,7 @@ I (..\source\ti\driverlib\m0p\dl_interrupt.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_systick.h)(0x66631CE6)
 F (..\usr\src\uart_debug.c)(0x6A601EE4)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/uart_debug.o -MMD)
 I (..\usr\inc\uart_debug.h)(0x6A601EE4)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1340,7 +1340,7 @@ I (..\source\ti\driverlib\m0p\dl_interrupt.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_systick.h)(0x66631CE6)
 F (..\usr\src\usr_uart.c)(0x6A6CB53F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/usr_uart.o -MMD)
 I (..\usr\inc\usr_uart.h)(0x6A603736)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1415,7 +1415,7 @@ I (..\source\ti\driverlib\m0p\dl_interrupt.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_systick.h)(0x66631CE6)
 F (..\usr\src\key.c)(0x6A671626)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/key.o -MMD)
 I (..\usr\inc\key.h)(0x6A671624)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1490,7 +1490,7 @@ I (..\source\ti\driverlib\m0p\dl_interrupt.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_systick.h)(0x66631CE6)
 F (..\usr\src\dac.c)(0x6A6347BA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/dac.o -MMD)
 I (..\usr\inc\dac.h)(0x6A6313C8)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1566,7 +1566,7 @@ I (..\source\ti\driverlib\m0p\dl_systick.h)(0x66631CE6)
 I (..\usr\inc\usr_uart.h)(0x6A603736)
 F (..\usr\src\ad9833.c)(0x6A69AF8F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/ad9833.o -MMD)
 I (..\usr\inc\ad9833.h)(0x6A631A06)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1679,7 +1679,7 @@ I (..\source\ti\driverlib\m0p\dl_sysctl.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0g1x0x_g3x0x.h)(0x66A60270)
 F (..\usr\src\addr_code.c)(0x6A6A0BE5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/addr_code.o -MMD)
 I (..\usr\inc\addr_code.h)(0x6A6A0BD2)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1753,7 +1753,7 @@ I (..\source\ti\driverlib\dl_wwdt.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_interrupt.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_systick.h)(0x66631CE6)
 I (..\usr\inc\usr_uart.h)(0x6A603736)
-F (..\usr\src\low_power.c)(0x6A6D4A03)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/low_power.o -MMD)
+F (..\usr\src\low_power.c)(0x6A6DDCC5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/low_power.o -MMD)
 I (..\usr\inc\low_power.h)(0x6A6C6A1E)
 I (..\source\ti\driverlib\m0p\dl_interrupt.h)(0x66631CE6)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
@@ -1786,7 +1786,7 @@ I (..\source\ti\devices\msp\peripherals\m0p\hw_cpuss.h)(0x66631CE6)
 I (..\source\ti\devices\msp\peripherals\m0p\hw_debugss.h)(0x66631CE6)
 I (..\source\ti\devices\msp\peripherals\m0p\hw_sysctl.h)(0x66631CE6)
 I (..\source\ti\devices\msp\peripherals\m0p\sysctl\hw_sysctl_mspm0g1x0x_g3x0x.h)(0x66631CE6)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\driverlib\driverlib.h)(0x66631CE6)
 I (..\source\ti\driverlib\dl_adc12.h)(0x66631CE6)
 I (..\source\ti\driverlib\dl_common.h)(0x66631CE6)
@@ -1836,7 +1836,7 @@ I (..\usr\inc\usr_uart.h)(0x6A603736)
 F (..\usr\src\serial_protocol.c)(0x6A6B3620)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/serial_protocol.o -MMD)
 I (..\usr\inc\serial_protocol.h)(0x6A6B2BAF)
 I (..\usr\inc\usr_uart.h)(0x6A603736)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
@@ -1909,12 +1909,12 @@ I (..\source\ti\driverlib\dl_vref.h)(0x66631CE6)
 I (..\source\ti\driverlib\dl_wwdt.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_interrupt.h)(0x66631CE6)
 I (..\source\ti\driverlib\m0p\dl_systick.h)(0x66631CE6)
-F (..\usr\src\gain_calibration.c)(0x6A6D62C6)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/gain_calibration.o -MMD)
+F (..\usr\src\gain_calibration.c)(0x6A6D6AF6)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-covered-switch-default -Wno-unreachable-code-break -I .. -I ../source/third_party/CMSIS/Core/Include -I ../source/third_party/CMSIS/DSP/Include -I ../source -I ../usr/src -I ../usr/inc-D__UVISION_VERSION="542" -D__MSPM0G3507__ -D__MSPM0G3507__-o ./objects/gain_calibration.o -MMD)
 I (..\usr\inc\gain_calibration.h)(0x6A6D6204)
 I (..\usr\inc\OLED.h)(0x6A6C4456)
 I (..\usr\inc\adc2chSample.h)(0x6A6D6253)
 I (..\usr\inc\sysconfig.h)(0x6A601E8C)
-I (..\ti_msp_dl_config.h)(0x6A6C6C1B)
+I (..\ti_msp_dl_config.h)(0x6A6DDD81)
 I (..\source\ti\devices\msp\msp.h)(0x66631CE6)
 I (..\source\ti\devices\DeviceFamily.h)(0x66631CE6)
 I (..\source\ti\devices\msp\m0p\mspm0g350x.h)(0x66631CE6)
