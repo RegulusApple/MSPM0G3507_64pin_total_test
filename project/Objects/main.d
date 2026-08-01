@@ -1,4 +1,4 @@
-./objects/main.o: ..\main.c ..\ti_msp_dl_config.h \
+./objects/main.o: ..\main.c ..\usr\inc\sysconfig.h ..\ti_msp_dl_config.h \
   ..\source\ti\devices\msp\msp.h ..\source\ti\devices\DeviceFamily.h \
   ..\source\ti\devices\msp\m0p\mspm0g350x.h \
   ..\source\third_party\CMSIS\Core\Include\core_cm0plus.h \
@@ -54,5 +54,7 @@
   ..\source\ti\driverlib\dl_uart.h ..\source\ti\driverlib\dl_uart_main.h \
   ..\source\ti\driverlib\dl_vref.h ..\source\ti\driverlib\dl_wwdt.h \
   ..\source\ti\driverlib\m0p\dl_interrupt.h \
-  ..\source\ti\driverlib\m0p\dl_systick.h ..\usr\inc\low_power.h \
-  ..\usr\inc\OLED.h ..\usr\inc\gain_calibration.h
+  ..\source\ti\driverlib\m0p\dl_systick.h ..\usr\inc\OLED.h \
+  ..\usr\inc\adc2chSample.h ..\usr\inc\analog_measure.h \
+  ..\usr\inc\freq_meter.h ..\usr\inc\psu_control.h \
+  ..\usr\inc\system_time.h ..\usr\inc\usr_rtc.h ..\usr\inc\usr_uart.h

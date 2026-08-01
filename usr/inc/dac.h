@@ -27,4 +27,12 @@ uint32_t DAC_GetSineSampleRateHz(void);
 uint16_t DAC_GetSineTableLen(void);
 void DAC_PrintDebug(const char *tag);
 
+/* Sine sweep helper: steps frequencyHz from startHz to stopHz (multiply by
+ * stepRatio, e.g. 1.26 for ~1/3-octave steps), dwellMs per point.  Calls
+ * callback(startHz, stopHz, steps, dwellMs) with the chosen parameters.
+ * Returns the number of points actually run (0 on invalid input). */
+typedef void (*DacSweepPointFn)(uint32_t frequencyHz, uint32_t pointIndex);
+uint32_t DAC_SweepSine(uint32_t startHz, uint32_t stopHz, float stepRatio,
+    uint32_t dwellMs, DacSweepPointFn pointFn);
+
 #endif

@@ -10,7 +10,8 @@
       <TargetName>MSPM0G3507</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
+      <pArmCC>6220000::V6.22::ARMCLANG</pArmCC>
+      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -550,6 +551,11 @@
               <FilePath>..\usr\src\OLED.c</FilePath>
             </File>
             <File>
+              <FileName>soft_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\soft_i2c.c</FilePath>
+            </File>
+            <File>
               <FileName>signalProcess.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\usr\src\signalProcess.c</FilePath>
@@ -608,6 +614,86 @@
               <FileName>gain_calibration.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\usr\src\gain_calibration.c</FilePath>
+            </File>
+            <File>
+              <FileName>signalProcess_ext.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\signalProcess_ext.c</FilePath>
+            </File>
+            <File>
+              <FileName>analog_measure.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\analog_measure.c</FilePath>
+            </File>
+            <File>
+              <FileName>analog_calibration.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\analog_calibration.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\pid_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave_gen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\wave_gen.c</FilePath>
+            </File>
+            <File>
+              <FileName>contest_selftest.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\contest_selftest.c</FilePath>
+            </File>
+            <File>
+              <FileName>board_key_led_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\board_key_led_test.c</FilePath>
+            </File>
+            <File>
+              <FileName>ad9850.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\ad9850.c</FilePath>
+            </File>
+            <File>
+              <FileName>freq_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\freq_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>square_gen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\square_gen.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwm_out.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\pwm_out.c</FilePath>
+            </File>
+            <File>
+              <FileName>psu_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\psu_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>usr_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\usr_rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usr_opa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\usr_opa.c</FilePath>
+            </File>
+            <File>
+              <FileName>usr_comp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\usr_comp.c</FilePath>
             </File>
           </Files>
         </Group>

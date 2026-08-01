@@ -8,7 +8,6 @@
 #define ADC_SAMPLE_RATE_MAX_HZ      (4000000U)
 #define ADC_SAMPLE_RATE_DEFAULT_HZ  (12800U)
 #define ADC_SAMPLE_RATE             ((float) ADC_SAMPLE_RATE_DEFAULT_HZ)
-#define ADC_CH2_DELAY               (0.00006f)
 #define ADC_BUFFER_LEN              (1074U)
 #define ADC_DISCARD_LEN             (50U)
 #define ADC_VALID_LEN               (1024U)
@@ -18,7 +17,6 @@
 #define ADC_FRONTEND_GAIN_DEFAULT   (5.56f)
 #define ADC_FRONTEND_GAIN           ADC_FRONTEND_GAIN_DEFAULT
 #define CHANNEL_SIZE                (2U)
-#define INT_VREF_1_5_REAL           (1.501f)
 
 #define ADC12_CHANNEL_0             (0U)
 #define ADC12_CHANNEL_1             (1U)
@@ -28,7 +26,6 @@
 extern uint16_t *pADC_Buffer0;
 extern uint16_t *pADC_Buffer1;
 extern volatile bool ADC_Finished;
-extern uint16_t per;
 
 typedef struct {
     uint16_t sampleIndex;
@@ -63,9 +60,23 @@ bool ADC12_SampleADC1(void);
 bool ADC12_SampleADC0ADC1(void);
 void ADC12_UpFrame(uint8_t channelSize, uint8_t channel);
 bool ADC12_CalcRms(uint8_t channel, ADC12_RmsResult *result);
+bool ADC12_IsClipped(uint8_t channel);
+bool ADC12_CheckSampleRate(float *actualRateHz);
+bool ADC12_CalcMean(uint8_t channel, float *meanCode);
+bool ADC12_CalcPeakToPeak(uint8_t channel, float *peakToPeakMv);
+bool ADC12_CalcFrequency(uint8_t channel, float *frequencyHz);
+bool ADC12_CalcPhase(uint8_t channel0, uint8_t channel1, float *phaseDeg);
 void ADC12_FFTSHOW(uint8_t channel);
 
-float ADC12_GetAVCC_Voltage(void);
+/* High-speed single-frame capture helper: temporarily switches the sample
+ * timer to rateHz, captures one frame on the given channel(s), restores the
+ * previous rate, and returns the valid-sample window.  Useful for verifying
+ * elevated ADC rates (e.g. 100 kHz..1 Msps) without changing the default
+ * 12.8 kHz configuration. */
+bool ADC12_CaptureFrameHighRate(uint8_t channel, uint32_t rateHz,
+    uint16_t *outValidCount);
+
+float ADC12_GetReferenceVoltage(void);
 void ADC12_PrintDebug(const char *tag);
 
 #endif

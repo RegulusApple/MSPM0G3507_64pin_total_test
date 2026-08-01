@@ -2,7 +2,9 @@
 
 #include <stdarg.h>
 
-#define USR_UART_TX_TIMEOUT_CYCLES (CPUCLK_FREQ / 10U)
+#include "system_time.h"
+
+#define USR_UART_TX_TIMEOUT_MS (100U)
 
 static volatile uint8_t gRxBuffer[USR_UART_RX_BUFFER_SIZE];
 static volatile uint16_t gRxWriteIndex;
@@ -115,9 +117,7 @@ static int USR_UART_printFloat(double value, uint8_t precision)
     uint32_t fractionPart;
     uint32_t i;
 
-    /* 闂傚嫭鍔曢崺妤冧焊韫囨梹娈跺ù锝呯▌缁辨繃绌卞┑濠勬 10^precision 闁告瑯鍨禍鎺斺偓鐟邦槸閸欏繘寮ㄩ幆褍寮� uint32_t闁靛棴鎷�
-     * 6 濞达絽绉撮惃顒勫极閺夊灝鍤掔紓浣哥箺閸愮粯寰勯悢鐑樻殢濞存粌娴烽弫鎼佸储鐎ｃ劉鍋撴笟鈧。鍫曟偝閸モ晝鎼奸悹瀣暢閻︻垱娼忛幘鍐叉瘔闁靛棴鎷�
-     */
+    /* Keep 10^precision inside uint32_t and bound conversion cost. */
     if (precision > 6U) {
         precision = 6U;
     }
@@ -184,9 +184,9 @@ static void USR_UART_storeLine(void)
 
 static void USR_UART_waitTxDone(void)
 {
-    uint32_t timeout = USR_UART_TX_TIMEOUT_CYCLES;
+    uint32_t timeout = SystemTime_CyclesFromMs(USR_UART_TX_TIMEOUT_MS);
 
-    while ((DL_UART_Main_isBusy(UART_0_INST) == true) && (timeout > 0U)) {
+    while ((DL_UART_Main_isBusy(UART_DEBUG_INST) == true) && (timeout > 0U)) {
         timeout--;
     }
 }
@@ -201,7 +201,7 @@ void USR_UART_init(void)
     gLineOverflow = false;
     gDiscardLine  = false;
 
-    DL_UART_Main_clearInterruptStatus(UART_0_INST,
+    DL_UART_Main_clearInterruptStatus(UART_DEBUG_INST,
         DL_UART_MAIN_INTERRUPT_RX | DL_UART_MAIN_INTERRUPT_RX_TIMEOUT_ERROR |
             DL_UART_MAIN_INTERRUPT_OVERRUN_ERROR | DL_UART_MAIN_INTERRUPT_BREAK_ERROR |
             DL_UART_MAIN_INTERRUPT_PARITY_ERROR | DL_UART_MAIN_INTERRUPT_FRAMING_ERROR);
@@ -209,7 +209,7 @@ void USR_UART_init(void)
 
 void USR_UART_sendByte(uint8_t data)
 {
-    DL_UART_Main_transmitDataBlocking(UART_0_INST, data);
+    DL_UART_Main_transmitDataBlocking(UART_DEBUG_INST, data);
 }
 
 void USR_UART_sendBytes(const uint8_t *data, uint16_t length)
@@ -247,9 +247,7 @@ int USR_UART_printf(const char *format, ...)
         return 0;
     }
 
-    /* 闁哄牜鍓濊闁哄鍔曞▍鎺楀矗椤忓懏鏆滈柟闀愮娴兼劗绮欑€ｂ晞鍘悽顖氭憸閺併倝鎯冮崟顒傚鐎殿喖绻堥埀顒婃嫹
-     * 濞戞挸绉烽惃鐔兼偨閵婏妇鍨奸柛鎴嫹 printf/vsnprintf闁挎稑鐭傛导鈺呭礂瀹ュ懐绌块柛蹇嬪劥缁诲秶鎮扮仦鐣屾皑閻庝絻澹堥崵褎绋夌€ｎ厽绁伴柟瀛樼墳閻ㄧ喓鎷犻弴姘辩憹缂佸鍟块悾楣冨Υ閿燂拷
-     */
+    /* Minimal formatter avoids pulling printf/vsnprintf into the firmware. */
     va_start(args, format);
 
     while (*format != '\0') {
@@ -377,8 +375,8 @@ void USR_UART_process(void)
 {
     uint8_t data;
 
-    while (DL_UART_Main_isRXFIFOEmpty(UART_0_INST) == false) {
-        data = DL_UART_Main_receiveData(UART_0_INST);
+    while (DL_UART_Main_isRXFIFOEmpty(UART_DEBUG_INST) == false) {
+        data = DL_UART_Main_receiveData(UART_DEBUG_INST);
         USR_UART_storeRxByte(data);
     }
 
@@ -422,18 +420,18 @@ void USR_UART_process(void)
 
 void USR_UART_IRQHandler(void)
 {
-    switch (DL_UART_Main_getPendingInterrupt(UART_0_INST)) {
+    switch (DL_UART_Main_getPendingInterrupt(UART_DEBUG_INST)) {
         case DL_UART_MAIN_IIDX_RX:
         case DL_UART_MAIN_IIDX_RX_TIMEOUT_ERROR:
-            while (DL_UART_Main_isRXFIFOEmpty(UART_0_INST) == false) {
-                USR_UART_storeRxByte(DL_UART_Main_receiveData(UART_0_INST));
+            while (DL_UART_Main_isRXFIFOEmpty(UART_DEBUG_INST) == false) {
+                USR_UART_storeRxByte(DL_UART_Main_receiveData(UART_DEBUG_INST));
             }
             break;
         case DL_UART_MAIN_IIDX_OVERRUN_ERROR:
         case DL_UART_MAIN_IIDX_BREAK_ERROR:
         case DL_UART_MAIN_IIDX_PARITY_ERROR:
         case DL_UART_MAIN_IIDX_FRAMING_ERROR:
-            DL_UART_Main_clearInterruptStatus(UART_0_INST,
+            DL_UART_Main_clearInterruptStatus(UART_DEBUG_INST,
                 DL_UART_MAIN_INTERRUPT_OVERRUN_ERROR | DL_UART_MAIN_INTERRUPT_BREAK_ERROR |
                     DL_UART_MAIN_INTERRUPT_PARITY_ERROR | DL_UART_MAIN_INTERRUPT_FRAMING_ERROR);
             break;
@@ -442,7 +440,7 @@ void USR_UART_IRQHandler(void)
     }
 }
 
-void UART_0_INST_IRQHandler(void)
+void UART_DEBUG_INST_IRQHandler(void)
 {
     USR_UART_IRQHandler();
 }

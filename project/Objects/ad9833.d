@@ -1,6 +1,6 @@
 ./objects/ad9833.o: ..\usr\src\ad9833.c ..\usr\inc\ad9833.h \
-  ..\ti_msp_dl_config.h ..\source\ti\devices\msp\msp.h \
-  ..\source\ti\devices\DeviceFamily.h \
+  ..\usr\inc\board_config.h ..\ti_msp_dl_config.h \
+  ..\source\ti\devices\msp\msp.h ..\source\ti\devices\DeviceFamily.h \
   ..\source\ti\devices\msp\m0p\mspm0g350x.h \
   ..\source\third_party\CMSIS\Core\Include\core_cm0plus.h \
   ..\source\ti\devices\msp\peripherals\hw_adc12.h \

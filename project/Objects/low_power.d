@@ -56,4 +56,6 @@
   ..\source\ti\driverlib\dl_vref.h ..\source\ti\driverlib\dl_wwdt.h \
   ..\source\ti\driverlib\m0p\dl_systick.h ..\usr\inc\adc2chSample.h \
   ..\usr\inc\sysconfig.h ..\usr\inc\addr_code.h \
-  ..\usr\inc\serial_protocol.h ..\usr\inc\usr_uart.h
+  ..\usr\inc\board_config.h ..\usr\inc\serial_protocol.h \
+  ..\usr\inc\analog_measure.h ..\usr\inc\system_time.h \
+  ..\usr\inc\usr_uart.h

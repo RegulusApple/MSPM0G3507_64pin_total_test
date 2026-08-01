@@ -1,0 +1,229 @@
+#include "ti_msp_dl_config.h"
+#include "low_power.h"
+#include "OLED.h"
+#include "gain_calibration.h"
+#define BOARD_KEY_LED_TEST (0U)
+#if (BOARD_KEY_LED_TEST != 0U)
+#include "board_key_led_test.h"
+#endif
+#if defined(CONTEST_CORE_SELF_TEST)
+#include "contest_selftest.h"
+#endif
+#if defined(CONTEST_ADC_SELF_TEST)
+#include "analog_measure.h"
+#include "adc2chSample.h"
+#include "usr_uart.h"
+#endif
+
+#define APP_OLED_MIN_SECONDS 5U
+#define APP_TIMER_TICKS_PER_SECOND 2U
+#define APP_OLED_HOLD_TICKS  ((APP_OLED_MIN_SECONDS * APP_TIMER_TICKS_PER_SECOND) + 1U)
+#define APP_TIMER_SEND_DIVIDER 13U
+#define APP_LOW_POWER_MODE_ENABLE 0U
+#define APP_GAIN_CALIBRATION_ENABLE 0U
+
+#define OLED_STATUS_LED_PORT       (GPIOB)
+#define OLED_STATUS_LED_PIN        (DL_GPIO_PIN_14)
+#define OLED_STATUS_LED_IOMUX      (IOMUX_PINCM31)
+#define OLED_STATUS_FAST_CYCLES    (CPUCLK_FREQ / 10U)
+#define OLED_STATUS_SLOW_CYCLES    (CPUCLK_FREQ / 2U)
+
+static void App_InitOledStatusLed(void)
+{
+    DL_GPIO_initDigitalOutput(OLED_STATUS_LED_IOMUX);
+    DL_GPIO_clearPins(OLED_STATUS_LED_PORT, OLED_STATUS_LED_PIN);
+    DL_GPIO_enableOutput(OLED_STATUS_LED_PORT, OLED_STATUS_LED_PIN);
+}
+
+static void App_BlinkOledStatus(uint32_t delayCycles)
+{
+    while (1) {
+        DL_GPIO_togglePins(OLED_STATUS_LED_PORT, OLED_STATUS_LED_PIN);
+        delay_cycles(delayCycles);
+    }
+}
+
+static void App_ShowLatestMeasurement(void)
+{
+    const LowPowerMeasurement *measurement = LowPower_GetLatestMeasurement();
+    uint32_t currentMa;
+
+    OLED_DisplayOn();
+    OLED_Clear();
+
+    if ((measurement == 0) || (measurement->valid == false)) {
+        OLED_ShowString(1, 1, "NO DATA");
+    } else {
+        currentMa = (uint32_t) (measurement->currentMa + 0.5f);
+        OLED_ShowString(1, 1, "CUR:");
+        OLED_ShowNum(1, 6, currentMa, 5);
+        OLED_ShowString(1, 12, "mA");
+        OLED_ShowString(2, 1, "SEQ:");
+        OLED_ShowNum(2, 6, measurement->sequence, 5);
+    }
+}
+
+static void App_ServiceOledTimerTick(bool *oledActive, uint32_t *oledTicksLeft)
+{
+    if (*oledActive == false) {
+        return;
+    }
+
+    if (*oledTicksLeft > 0U) {
+        (*oledTicksLeft)--;
+    }
+
+    if (*oledTicksLeft == 0U) {
+        OLED_DisplayOff();
+        *oledActive = false;
+    }
+}
+
+static void App_PrepareForStandby(bool keepOledOn)
+{
+    __disable_irq();
+
+    DL_UART_Main_disableInterrupt(UART_DEBUG_INST, DL_UART_MAIN_INTERRUPT_RX);
+    DL_UART_Main_clearInterruptStatus(UART_DEBUG_INST, DL_UART_MAIN_INTERRUPT_RX);
+    NVIC_ClearPendingIRQ(UART_DEBUG_INST_INT_IRQN);
+    DL_UART_Main_disable(UART_DEBUG_INST);
+    DL_UART_Main_disablePower(UART_DEBUG_INST);
+
+    DL_TimerG_stopCounter(ADC_SAMPLE_TIMER_INST);
+    DL_TimerG_disableInterrupt(ADC_SAMPLE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
+    DL_TimerG_clearInterruptStatus(ADC_SAMPLE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
+    DL_TimerG_disablePower(ADC_SAMPLE_TIMER_INST);
+
+    DL_DMA_disableChannel(DMA, DMA_CH0_CHAN_ID);
+    DL_DMA_disableChannel(DMA, DMA_CH1_CHAN_ID);
+    DL_DMA_disableChannel(DMA, DMA_DAC_CHAN_ID);
+    DL_ADC12_stopConversion(ADC12_0_INST);
+    DL_ADC12_disableConversions(ADC12_0_INST);
+    DL_ADC12_disableDMA(ADC12_0_INST);
+    DL_ADC12_disableDMATrigger(ADC12_0_INST, DL_ADC12_DMA_MEM0_RESULT_LOADED);
+    DL_ADC12_disableInterrupt(ADC12_0_INST, DL_ADC12_INTERRUPT_DMA_DONE);
+    DL_ADC12_clearInterruptStatus(ADC12_0_INST, 0xFFFFFFFFU);
+    NVIC_DisableIRQ(ADC12_0_INST_INT_IRQN);
+    NVIC_ClearPendingIRQ(ADC12_0_INST_INT_IRQN);
+    DL_ADC12_reset(ADC12_0_INST);
+    DL_ADC12_disablePower(ADC12_0_INST);
+    DL_VREF_disableInternalRef(VREF);
+    DL_VREF_reset(VREF);
+    DL_VREF_disablePower(VREF);
+
+    if (keepOledOn == false) {
+        OLED_DisplayOff();
+    }
+
+    DL_SYSCTL_disableHFXT();
+    DL_SYSCTL_disableSYSPLL();
+    DL_SYSCTL_disableMFPCLK();
+}
+
+int main(void)
+{
+#if (APP_LOW_POWER_MODE_ENABLE != 0U)
+    bool oledActive = false;
+    uint32_t oledTicksLeft = 0U;
+    uint32_t timerSendDivider = 0U;
+#endif
+
+    SYSCFG_DL_initPower();
+    SYSCFG_DL_GPIO_init();
+    SYSCFG_DL_SYSCTL_init();
+    App_InitOledStatusLed();
+#if (BOARD_KEY_LED_TEST != 0U)
+    BoardKeyLedTest_Run();
+#endif
+    SYSCFG_DL_ADC_SAMPLE_TIMER_init();
+    SYSCFG_DL_UART_DEBUG_init();
+#if defined(CONTEST_CORE_SELF_TEST)
+    (void) ContestSelfTest_Run();
+    while (1) {
+        __WFI();
+    }
+#endif
+    SYSCFG_DL_VREF_init();
+    SYSCFG_DL_ADC12_0_init();
+    SYSCFG_DL_DMA_init();
+#if defined(CONTEST_ADC_SELF_TEST)
+    {
+        AnalogResult testResult = {0};
+        uint32_t testSequence = 0U;
+
+        ADC12_Init();
+        ADC12_SetFrontendGain(1.0f);
+        USR_UART_printf("ADC_TEST,BEGIN,CH=PA22,FS=12800,N=1024\r\n");
+        while (1) {
+            AnalogStatus status = Analog_CaptureAndAnalyze(
+                ADC12_CHANNEL_0, ADC_SAMPLE_RATE_DEFAULT_HZ, &testResult);
+
+            testSequence++;
+            if ((status == ANALOG_ERR_TIMEOUT) ||
+                (status == ANALOG_ERR_PARAM)) {
+                USR_UART_printf("ADC_TEST,SEQ=%lu,STATUS=%u\r\n",
+                    (unsigned long) testSequence, (uint8_t) status);
+            } else {
+                USR_UART_printf("ADC_TEST,SEQ=%lu,STATUS=%u,DC_MV=%.3f,"
+                    "RMS_MV=%.3f,PEAK_MV=%.3f,VPP_MV=%.3f,FREQ_HZ=%.4f,"
+                    "THD_PCT=%.3f,FREQ_VALID=%u,THD_VALID=%u,CLIPPED=%u\r\n",
+                    (unsigned long) testSequence, (uint8_t) status,
+                    testResult.dcMv, testResult.rmsMv, testResult.peakMv,
+                    testResult.peakToPeakMv, testResult.frequencyHz,
+                    testResult.thdPercent,
+                    (uint8_t) testResult.frequencyValid,
+                    (uint8_t) testResult.thdValid,
+                    (uint8_t) testResult.clipped);
+            }
+            delay_cycles(CPUCLK_FREQ);
+        }
+    }
+#endif
+    OLED_Init();
+#if (APP_GAIN_CALIBRATION_ENABLE != 0U)
+    GainCalibration_BootSelect();
+#endif
+
+    if (OLED_IsPresent() == false) {
+        /* Fast user-LED blink: no ACK at either 0x3C or 0x3D. */
+        App_BlinkOledStatus(OLED_STATUS_FAST_CYCLES);
+    }
+
+    OLED_Clear();
+    OLED_ShowString(1, 1, "EXT OLED OK");
+    OLED_ShowString(2, 1, "ADDR: 0x");
+    OLED_ShowHexNum(2, 9, OLED_GetAddress(), 2U);
+    OLED_ShowString(3, 1, "SDA PA0 J2-23");
+    OLED_ShowString(4, 1, "SCL PA1 J2-24");
+    OLED_DisplayOn();
+
+#if (APP_LOW_POWER_MODE_ENABLE != 0U)
+    OLED_DisplayOff();
+    LowPower_Init();
+
+    while (1) {
+        App_PrepareForStandby(oledActive);
+        LowPower_EnterStandby1();
+
+        if (LowPower_GetWakeReason() == WAKE_REASON_TIMER) {
+            LowPower_ClearWakeReason();
+            timerSendDivider++;
+            if (timerSendDivider >= APP_TIMER_SEND_DIVIDER) {
+                timerSendDivider = 0U;
+                LowPower_RunTimerWakeFlow();
+            }
+            App_ServiceOledTimerTick(&oledActive, &oledTicksLeft);
+        } else if (LowPower_GetWakeReason() == WAKE_REASON_EXTERNAL) {
+            LowPower_ClearWakeReason();
+            App_ShowLatestMeasurement();
+            oledActive = true;
+            oledTicksLeft = APP_OLED_HOLD_TICKS;
+        } else {
+            LowPower_ClearWakeReason();
+        }
+    }
+#else
+    /* Slow user-LED blink: OLED acknowledged and initialization completed. */
+    App_BlinkOledStatus(OLED_STATUS_SLOW_CYCLES);
+#endif
+}

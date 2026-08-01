@@ -1,7 +1,7 @@
 ./objects/serial_protocol.o: ..\usr\src\serial_protocol.c \
-  ..\usr\inc\serial_protocol.h ..\usr\inc\usr_uart.h \
-  ..\ti_msp_dl_config.h ..\source\ti\devices\msp\msp.h \
-  ..\source\ti\devices\DeviceFamily.h \
+  ..\usr\inc\serial_protocol.h ..\usr\inc\analog_measure.h \
+  ..\usr\inc\usr_uart.h ..\ti_msp_dl_config.h \
+  ..\source\ti\devices\msp\msp.h ..\source\ti\devices\DeviceFamily.h \
   ..\source\ti\devices\msp\m0p\mspm0g350x.h \
   ..\source\third_party\CMSIS\Core\Include\core_cm0plus.h \
   ..\source\ti\devices\msp\peripherals\hw_adc12.h \
@@ -56,4 +56,4 @@
   ..\source\ti\driverlib\dl_uart.h ..\source\ti\driverlib\dl_uart_main.h \
   ..\source\ti\driverlib\dl_vref.h ..\source\ti\driverlib\dl_wwdt.h \
   ..\source\ti\driverlib\m0p\dl_interrupt.h \
-  ..\source\ti\driverlib\m0p\dl_systick.h
+  ..\source\ti\driverlib\m0p\dl_systick.h ..\usr\inc\system_time.h

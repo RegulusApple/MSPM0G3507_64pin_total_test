@@ -1,99 +1,16 @@
-﻿#include "ti_msp_dl_config.h"
+#include "ti_msp_dl_config.h"
+#include "OLED.h"
 #include "OLED_Font.h"
+#include "soft_i2c.h"
 
-#define OLED_PORT (GPIOA)
+#include "system_time.h"
 
-#define OLED_SDA_PIN (DL_GPIO_PIN_3)
-#define OLED_SDA_IOMUX (IOMUX_PINCM8)
-#define OLED_SCL_PIN (DL_GPIO_PIN_4)
-#define OLED_SCL_IOMUX (IOMUX_PINCM9)
+#define OLED_I2C_ADDRESS_PRIMARY   (0x3CU)
+#define OLED_I2C_ADDRESS_SECONDARY (0x3DU)
+#define OLED_POWER_ON_DELAY_MS     (100U)
 
-/*引脚配置*/
-void OLED_W_SCL(uint8_t data)
-{
-	if (data)
-	{
-		DL_GPIO_setPins(OLED_PORT, OLED_SCL_PIN);
-	}
-	else
-	{
-		DL_GPIO_clearPins(OLED_PORT, OLED_SCL_PIN);
-	}
-	delay_cycles(8);
-}
-
-void OLED_W_SDA(uint8_t data)
-{
-	if (data)
-	{
-		DL_GPIO_setPins(OLED_PORT, OLED_SDA_PIN);
-	}
-	else
-	{
-		DL_GPIO_clearPins(OLED_PORT, OLED_SDA_PIN);
-	}
-	delay_cycles(8);
-}
-
-/*引脚初始化*/
-void OLED_I2C_Init(void)
-{
-	// DL_GPIO_reset(OLED_PORT);
-	// DL_GPIO_enablePower(OLED_PORT);
-	// Power_Delay();
-
-	DL_GPIO_initDigitalOutput(OLED_SDA_IOMUX);
-	DL_GPIO_initDigitalOutput(OLED_SCL_IOMUX);
-	// 拉低输出电平
-	DL_GPIO_clearPins(OLED_PORT, OLED_SDA_PIN | OLED_SCL_PIN);
-	// 使能输出模式
-	DL_GPIO_enableOutput(OLED_PORT, OLED_SDA_PIN | OLED_SCL_PIN);
-	OLED_W_SCL(1);
-	OLED_W_SDA(1);
-}
-
-/**
- * @brief  I2C开始
- * @param  无
- * @retval 无
- */
-void OLED_I2C_Start(void)
-{
-	OLED_W_SDA(1);
-	OLED_W_SCL(1);
-	OLED_W_SDA(0);
-	OLED_W_SCL(0);
-}
-
-/**
- * @brief  I2C停止
- * @param  无
- * @retval 无
- */
-void OLED_I2C_Stop(void)
-{
-	OLED_W_SDA(0);
-	OLED_W_SCL(1);
-	OLED_W_SDA(1);
-}
-
-/**
- * @brief  I2C发送一个字节
- * @param  Byte 要发送的一个字节
- * @retval 无
- */
-void OLED_I2C_SendByte(uint8_t Byte)
-{
-	uint8_t i;
-	for (i = 0; i < 8; i++)
-	{
-		OLED_W_SDA(Byte & (0x80 >> i));
-		OLED_W_SCL(1);
-		OLED_W_SCL(0);
-	}
-	OLED_W_SCL(1); // 额外的一个时钟，不处理应答信号
-	OLED_W_SCL(0);
-}
+static bool gOledPresent;
+static uint8_t gOledAddress;
 
 /**
  * @brief  OLED写命令
@@ -102,11 +19,13 @@ void OLED_I2C_SendByte(uint8_t Byte)
  */
 void OLED_WriteCommand(uint8_t Command)
 {
-	OLED_I2C_Start();
-	OLED_I2C_SendByte(0x78); // 从机地址
-	OLED_I2C_SendByte(0x00); // 写命令
-	OLED_I2C_SendByte(Command);
-	OLED_I2C_Stop();
+    uint8_t frame[2] = {0x00U, Command};
+
+    if (gOledPresent &&
+        (SoftI2C_Write(gOledAddress, frame, 2U) != SOFT_I2C_OK))
+    {
+        gOledPresent = false;
+    }
 }
 
 /**
@@ -116,11 +35,13 @@ void OLED_WriteCommand(uint8_t Command)
  */
 void OLED_WriteData(uint8_t Data)
 {
-	OLED_I2C_Start();
-	OLED_I2C_SendByte(0x78); // 从机地址
-	OLED_I2C_SendByte(0x40); // 写数据
-	OLED_I2C_SendByte(Data);
-	OLED_I2C_Stop();
+    uint8_t frame[2] = {0x40U, Data};
+
+    if (gOledPresent &&
+        (SoftI2C_Write(gOledAddress, frame, 2U) != SOFT_I2C_OK))
+    {
+        gOledPresent = false;
+    }
 }
 
 /**
@@ -131,9 +52,9 @@ void OLED_WriteData(uint8_t Data)
  */
 void OLED_SetCursor(uint8_t Y, uint8_t X)
 {
-	OLED_WriteCommand(0xB0 | Y);				 // 设置Y位置
-	OLED_WriteCommand(0x10 | ((X & 0xF0) >> 4)); // 设置X位置高4位
-	OLED_WriteCommand(0x00 | (X & 0x0F));		 // 设置X位置低4位
+    OLED_WriteCommand(0xB0U | Y);
+    OLED_WriteCommand(0x10U | ((X & 0xF0U) >> 4U));
+    OLED_WriteCommand(0x00U | (X & 0x0FU));
 }
 
 /**
@@ -143,15 +64,17 @@ void OLED_SetCursor(uint8_t Y, uint8_t X)
  */
 void OLED_Clear(void)
 {
-	uint8_t i, j;
-	for (j = 0; j < 8; j++)
-	{
-		OLED_SetCursor(j, 0);
-		for (i = 0; i < 128; i++)
-		{
-			OLED_WriteData(0x00);
-		}
-	}
+    uint8_t i;
+    uint8_t j;
+
+    for (j = 0U; j < 8U; j++)
+    {
+        OLED_SetCursor(j, 0U);
+        for (i = 0U; i < 128U; i++)
+        {
+            OLED_WriteData(0x00U);
+        }
+    }
 }
 
 /**
@@ -163,17 +86,31 @@ void OLED_Clear(void)
  */
 void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char)
 {
-	uint8_t i;
-	OLED_SetCursor((Line - 1) * 2, (Column - 1) * 8); // 设置光标位置在上半部分
-	for (i = 0; i < 8; i++)
-	{
-		OLED_WriteData(OLED_F8x16[Char - ' '][i]); // 显示上半部分内容
-	}
-	OLED_SetCursor((Line - 1) * 2 + 1, (Column - 1) * 8); // 设置光标位置在下半部分
-	for (i = 0; i < 8; i++)
-	{
-		OLED_WriteData(OLED_F8x16[Char - ' '][i + 8]); // 显示下半部分内容
-	}
+    uint8_t i;
+
+    if ((Line < 1U) || (Line > 4U) ||
+        (Column < 1U) || (Column > 16U))
+    {
+        return;
+    }
+    if ((Char < ' ') || (Char > '~'))
+    {
+        Char = '?';
+    }
+
+    OLED_SetCursor((uint8_t) ((Line - 1U) * 2U),
+        (uint8_t) ((Column - 1U) * 8U));
+    for (i = 0U; i < 8U; i++)
+    {
+        OLED_WriteData(OLED_F8x16[Char - ' '][i]);
+    }
+
+    OLED_SetCursor((uint8_t) (((Line - 1U) * 2U) + 1U),
+        (uint8_t) ((Column - 1U) * 8U));
+    for (i = 0U; i < 8U; i++)
+    {
+        OLED_WriteData(OLED_F8x16[Char - ' '][i + 8U]);
+    }
 }
 
 /**
@@ -183,13 +120,21 @@ void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char)
  * @param  String 要显示的字符串，范围：ASCII可见字符
  * @retval 无
  */
-void OLED_ShowString(uint8_t Line, uint8_t Column, char *String)
+void OLED_ShowString(uint8_t Line, uint8_t Column, const char *String)
 {
-	uint8_t i;
-	for (i = 0; String[i] != '\0'; i++)
-	{
-		OLED_ShowChar(Line, Column + i, String[i]);
-	}
+    uint8_t i;
+
+    if (String == NULL)
+    {
+        return;
+    }
+
+    for (i = 0U;
+         (String[i] != '\0') && ((uint16_t) Column + i <= 16U);
+         i++)
+    {
+        OLED_ShowChar(Line, (uint8_t) (Column + i), String[i]);
+    }
 }
 
 /**
@@ -198,115 +143,184 @@ void OLED_ShowString(uint8_t Line, uint8_t Column, char *String)
  */
 uint32_t OLED_Pow(uint32_t X, uint32_t Y)
 {
-	uint32_t Result = 1;
-	while (Y--)
-	{
-		Result *= X;
-	}
-	return Result;
+    uint32_t Result = 1U;
+
+    while (Y--)
+    {
+        Result *= X;
+    }
+    return Result;
 }
 
 /**
  * @brief  OLED显示数字（十进制，正数）
- * @param  Line 起始行位置，范围：1~4
- * @param  Column 起始列位置，范围：1~16
- * @param  Number 要显示的数字，范围：0~4294967295
- * @param  Length 要显示数字的长度，范围：1~10
- * @retval 无
  */
 void OLED_ShowNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length)
 {
-	uint8_t i;
-	for (i = 0; i < Length; i++)
-	{
-		OLED_ShowChar(Line, Column + i, Number / OLED_Pow(10, Length - i - 1) % 10 + '0');
-	}
+    uint8_t i;
+
+    for (i = 0U; i < Length; i++)
+    {
+        OLED_ShowChar(Line, (uint8_t) (Column + i),
+            (char) (Number / OLED_Pow(10U, Length - i - 1U) % 10U + '0'));
+    }
 }
 
 /**
  * @brief  OLED显示数字（十进制，带符号数）
- * @param  Line 起始行位置，范围：1~4
- * @param  Column 起始列位置，范围：1~16
- * @param  Number 要显示的数字，范围：-2147483648~2147483647
- * @param  Length 要显示数字的长度，范围：1~10
- * @retval 无
  */
-void OLED_ShowSignedNum(uint8_t Line, uint8_t Column, int32_t Number, uint8_t Length)
+void OLED_ShowSignedNum(uint8_t Line, uint8_t Column, int32_t Number,
+    uint8_t Length)
 {
-	uint8_t i;
-	uint32_t Number1;
-	if (Number >= 0)
-	{
-		OLED_ShowChar(Line, Column, '+');
-		Number1 = Number;
-	}
-	else
-	{
-		OLED_ShowChar(Line, Column, '-');
-		Number1 = -Number;
-	}
-	for (i = 0; i < Length; i++)
-	{
-		OLED_ShowChar(Line, Column + i + 1, Number1 / OLED_Pow(10, Length - i - 1) % 10 + '0');
-	}
+    uint8_t i;
+    uint32_t magnitude;
+
+    if (Number >= 0)
+    {
+        OLED_ShowChar(Line, Column, '+');
+        magnitude = (uint32_t) Number;
+    }
+    else
+    {
+        OLED_ShowChar(Line, Column, '-');
+        magnitude = (uint32_t) (-(int64_t) Number);
+    }
+
+    for (i = 0U; i < Length; i++)
+    {
+        OLED_ShowChar(Line, (uint8_t) (Column + i + 1U),
+            (char) (magnitude / OLED_Pow(10U, Length - i - 1U) % 10U + '0'));
+    }
 }
 
 /**
  * @brief  OLED显示数字（十六进制，正数）
- * @param  Line 起始行位置，范围：1~4
- * @param  Column 起始列位置，范围：1~16
- * @param  Number 要显示的数字，范围：0~0xFFFFFFFF
- * @param  Length 要显示数字的长度，范围：1~8
- * @retval 无
  */
-void OLED_ShowHexNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length)
+void OLED_ShowHexNum(uint8_t Line, uint8_t Column, uint32_t Number,
+    uint8_t Length)
 {
-	uint8_t i, SingleNumber;
-	for (i = 0; i < Length; i++)
-	{
-		SingleNumber = Number / OLED_Pow(16, Length - i - 1) % 16;
-		if (SingleNumber < 10)
-		{
-			OLED_ShowChar(Line, Column + i, SingleNumber + '0');
-		}
-		else
-		{
-			OLED_ShowChar(Line, Column + i, SingleNumber - 10 + 'A');
-		}
-	}
+    uint8_t i;
+    uint8_t digit;
+
+    for (i = 0U; i < Length; i++)
+    {
+        digit = (uint8_t) (Number /
+            OLED_Pow(16U, Length - i - 1U) % 16U);
+        if (digit < 10U)
+        {
+            OLED_ShowChar(Line, (uint8_t) (Column + i),
+                (char) (digit + '0'));
+        }
+        else
+        {
+            OLED_ShowChar(Line, (uint8_t) (Column + i),
+                (char) (digit - 10U + 'A'));
+        }
+    }
 }
 
 /**
  * @brief  OLED显示数字（二进制，正数）
- * @param  Line 起始行位置，范围：1~4
- * @param  Column 起始列位置，范围：1~16
- * @param  Number 要显示的数字，范围：0~1111 1111 1111 1111
- * @param  Length 要显示数字的长度，范围：1~16
- * @retval 无
  */
-void OLED_ShowBinNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length)
+void OLED_ShowBinNum(uint8_t Line, uint8_t Column, uint32_t Number,
+    uint8_t Length)
 {
-	uint8_t i;
-	for (i = 0; i < Length; i++)
-	{
-		OLED_ShowChar(Line, Column + i, Number / OLED_Pow(2, Length - i - 1) % 2 + '0');
-	}
+    uint8_t i;
+
+    for (i = 0U; i < Length; i++)
+    {
+        OLED_ShowChar(Line, (uint8_t) (Column + i),
+            (char) (Number / OLED_Pow(2U, Length - i - 1U) % 2U + '0'));
+    }
+}
+
+void OLED_ShowFloat(uint8_t Line, uint8_t Column, float Value,
+    uint8_t DecimalPlaces)
+{
+    uint32_t scale = 1U;
+    uint32_t scaled;
+    uint32_t integerPart;
+    uint32_t fractionPart;
+    uint32_t temporary;
+    uint8_t integerDigits = 1U;
+    uint8_t i;
+
+    if ((Line < 1U) || (Line > 4U) ||
+        (Column < 1U) || (Column > 16U))
+    {
+        return;
+    }
+    if (DecimalPlaces > 6U)
+    {
+        DecimalPlaces = 6U;
+    }
+    for (i = 0U; i < DecimalPlaces; i++)
+    {
+        scale *= 10U;
+    }
+
+    if (Value < 0.0f)
+    {
+        OLED_ShowChar(Line, Column++, '-');
+        Value = -Value;
+    }
+    else
+    {
+        OLED_ShowChar(Line, Column++, '+');
+    }
+
+    if (Value > ((float) UINT32_MAX / (float) scale))
+    {
+        OLED_ShowString(Line, Column, "OVF");
+        return;
+    }
+
+    scaled = (uint32_t) ((Value * (float) scale) + 0.5f);
+    integerPart = scaled / scale;
+    fractionPart = scaled % scale;
+    temporary = integerPart;
+    while (temporary >= 10U)
+    {
+        temporary /= 10U;
+        integerDigits++;
+    }
+
+    OLED_ShowNum(Line, Column, integerPart, integerDigits);
+    Column = (uint8_t) (Column + integerDigits);
+    if ((DecimalPlaces > 0U) && (Column <= 16U))
+    {
+        OLED_ShowChar(Line, Column++, '.');
+        OLED_ShowNum(Line, Column, fractionPart, DecimalPlaces);
+    }
+}
+
+void OLED_ShowProgress(uint8_t Line, uint8_t Column, uint8_t Percent)
+{
+    if (Percent > 100U)
+    {
+        Percent = 100U;
+    }
+    OLED_ShowNum(Line, Column, Percent, 3U);
+    OLED_ShowChar(Line, (uint8_t) (Column + 3U), '%');
 }
 
 void OLED_DisplayOff(void)
 {
-	OLED_WriteCommand(0xAE);
-	OLED_WriteCommand(0x8D);
-	OLED_WriteCommand(0x10);
-	OLED_W_SCL(1);
-	OLED_W_SDA(1);
+    OLED_WriteCommand(0xAEU);
+    OLED_WriteCommand(0x8DU);
+    OLED_WriteCommand(0x10U);
 }
 
 void OLED_DisplayOn(void)
 {
-	OLED_WriteCommand(0x8D);
-	OLED_WriteCommand(0x14);
-	OLED_WriteCommand(0xAF);
+    OLED_WriteCommand(0x8DU);
+    OLED_WriteCommand(0x14U);
+    OLED_WriteCommand(0xAFU);
+}
+
+void OLED_SetAllPixels(bool enabled)
+{
+    OLED_WriteCommand(enabled ? 0xA5U : 0xA4U);
 }
 
 /**
@@ -316,53 +330,54 @@ void OLED_DisplayOn(void)
  */
 void OLED_Init(void)
 {
-	uint32_t i, j;
+    SystemTime_DelayMs(OLED_POWER_ON_DELAY_MS);
 
-	for (i = 0; i < 1000; i++) // 上电延时
-	{
-		for (j = 0; j < 1000; j++)
-			;
-	}
+    SoftI2C_Init();
+    gOledAddress = OLED_I2C_ADDRESS_PRIMARY;
+    gOledPresent = (SoftI2C_Probe(gOledAddress) == SOFT_I2C_OK);
+    if (!gOledPresent)
+    {
+        gOledAddress = OLED_I2C_ADDRESS_SECONDARY;
+        gOledPresent = (SoftI2C_Probe(gOledAddress) == SOFT_I2C_OK);
+    }
+    if (!gOledPresent)
+    {
+        gOledAddress = 0U;
+        return;
+    }
 
-	OLED_I2C_Init(); // 端口初始化
+    OLED_WriteCommand(0xAEU);
+    OLED_WriteCommand(0xD5U);
+    OLED_WriteCommand(0x80U);
+    OLED_WriteCommand(0xA8U);
+    OLED_WriteCommand(0x3FU);
+    OLED_WriteCommand(0xD3U);
+    OLED_WriteCommand(0x00U);
+    OLED_WriteCommand(0x40U);
+    OLED_WriteCommand(0xA1U);
+    OLED_WriteCommand(0xC8U);
+    OLED_WriteCommand(0xDAU);
+    OLED_WriteCommand(0x12U);
+    OLED_WriteCommand(0x81U);
+    OLED_WriteCommand(0xCFU);
+    OLED_WriteCommand(0xD9U);
+    OLED_WriteCommand(0xF1U);
+    OLED_WriteCommand(0xDBU);
+    OLED_WriteCommand(0x30U);
+    OLED_WriteCommand(0xA4U);
+    OLED_WriteCommand(0xA6U);
+    OLED_WriteCommand(0x8DU);
+    OLED_WriteCommand(0x14U);
+    OLED_DisplayOn();
+    OLED_Clear();
+}
 
-	OLED_WriteCommand(0xAE); // 关闭显示
+bool OLED_IsPresent(void)
+{
+    return gOledPresent;
+}
 
-	OLED_WriteCommand(0xD5); // 设置显示时钟分频比/振荡器频率
-	OLED_WriteCommand(0x80);
-
-	OLED_WriteCommand(0xA8); // 设置多路复用率
-	OLED_WriteCommand(0x3F);
-
-	OLED_WriteCommand(0xD3); // 设置显示偏移
-	OLED_WriteCommand(0x00);
-
-	OLED_WriteCommand(0x40); // 设置显示开始行
-
-	OLED_WriteCommand(0xA1); // 设置左右方向，0xA1正常 0xA0左右反置
-
-	OLED_WriteCommand(0xC8); // 设置上下方向，0xC8正常 0xC0上下反置
-
-	OLED_WriteCommand(0xDA); // 设置COM引脚硬件配置
-	OLED_WriteCommand(0x12);
-
-	OLED_WriteCommand(0x81); // 设置对比度控制
-	OLED_WriteCommand(0xCF);
-
-	OLED_WriteCommand(0xD9); // 设置预充电周期
-	OLED_WriteCommand(0xF1);
-
-	OLED_WriteCommand(0xDB); // 设置VCOMH取消选择级别
-	OLED_WriteCommand(0x30);
-
-	OLED_WriteCommand(0xA4); // 设置整个显示打开/关闭
-
-	OLED_WriteCommand(0xA6); // 设置正常/倒转显示
-
-	OLED_WriteCommand(0x8D); // 设置充电泵
-	OLED_WriteCommand(0x14);
-
-	OLED_DisplayOn(); // 开启显示
-
-	OLED_Clear(); // OLED清屏
+uint8_t OLED_GetAddress(void)
+{
+    return gOledAddress;
 }

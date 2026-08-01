@@ -1,5 +1,6 @@
 #include "adc2chSample.h"
 #include "signalProcess.h"
+#include "system_time.h"
 #include "usr_uart.h"
 #include <math.h>
 
@@ -18,11 +19,12 @@
 #define ADC12_MASK_ADC1                (0x02U)
 #define ADC12_MASK_BOTH                (ADC12_MASK_ADC0 | ADC12_MASK_ADC1)
 
-#define ADC12_FFT_ADC_VREF             (1.4f)
 #define ADC12_ADC_CODE_MAX             (4095.0f)
 #define ADC12_FFT_HARMONIC_COUNT       (5U)
 #define ADC12_FFT_SEARCH_MIN_BIN       (1U)
 #define ADC12_FFT_SEARCH_MAX_BIN       (FFT_LEN / 2U)
+#define ADC12_CLIP_LOW_CODE            (8U)
+#define ADC12_CLIP_HIGH_CODE           (4087U)
 
 static uint16_t gADC_Buffer0[ADC_BUFFER_LEN];
 static uint16_t gADC_Buffer1[ADC_BUFFER_LEN];
@@ -34,13 +36,12 @@ static float gADC12FFTAngle[ADC12_FFT_HARMONIC_COUNT];
 uint16_t *pADC_Buffer0 = gADC_Buffer0;
 uint16_t *pADC_Buffer1 = gADC_Buffer1;
 volatile bool ADC_Finished = false;
-uint16_t per = 15625U;
 
 static volatile bool gADC0DMADone;
 static volatile bool gADC1DMADone;
 static uint32_t gADCSampleRateHz = ADC_SAMPLE_RATE_DEFAULT_HZ;
-static uint16_t gADCSampleTimerPeriod = ADC_SAMPLE_TIMER_DEFAULT_LOAD_VALUE;
-static uint8_t gADCSampleTimerPrescaler = ADC_SAMPLE_TIMER_DEFAULT_PRESCALE;
+static uint16_t gADCSampleTimerPeriod = ADC_SAMPLE_TIMER_INST_LOAD_VALUE;
+static uint8_t gADCSampleTimerPrescaler = 0U;
 static float gADCFrontendGain = ADC_FRONTEND_GAIN_DEFAULT;
 static ADC12_DebugInfo gADC12DebugInfo;
 
@@ -123,7 +124,6 @@ void ADC12_SetSampleRateHz(uint32_t sampleRateHz)
     gADCSampleTimerPrescaler = (uint8_t) (prescalePlus1 - 1U);
     gADCSampleTimerPeriod = (uint16_t) (periodPlus1 - 1U);
     gADCSampleRateHz = CPUCLK_FREQ / (prescalePlus1 * periodPlus1);
-    per = gADCSampleTimerPeriod;
 
     DL_TimerG_stopCounter(ADC_SAMPLE_TIMER_INST);
     clockConfig.prescale = gADCSampleTimerPrescaler;
@@ -131,14 +131,6 @@ void ADC12_SetSampleRateHz(uint32_t sampleRateHz)
     DL_TimerG_setLoadValue(ADC_SAMPLE_TIMER_INST, gADCSampleTimerPeriod);
     DL_TimerG_setTimerCount(ADC_SAMPLE_TIMER_INST, gADCSampleTimerPeriod);
 
-    /* Mirror to stagger timer for ADC1 — same period, counter offset by delay */
-    DL_TimerG_stopCounter(ADC1_STAGGER_TIMER_INST);
-    clockConfig.prescale = gADCSampleTimerPrescaler;
-    DL_TimerG_setClockConfig(ADC1_STAGGER_TIMER_INST, &clockConfig);
-    DL_TimerG_setLoadValue(ADC1_STAGGER_TIMER_INST, gADCSampleTimerPeriod);
-    /* Counter set higher so ADC1 fires ADC_STAGGER_DELAY_TICKS after ADC0 */
-    DL_TimerG_setTimerCount(ADC1_STAGGER_TIMER_INST,
-        gADCSampleTimerPeriod + ADC_STAGGER_DELAY_TICKS);
 }
 
 uint32_t ADC12_GetSampleRateHz(void)
@@ -210,11 +202,11 @@ static uint32_t ADC12_getFrameTimeoutLoops(void)
     uint32_t frameMs;
 
     if (gADCSampleRateHz == 0U) {
-        return CPUCLK_FREQ;
+        return SystemTime_CyclesFromMs(1000U);
     }
 
     frameMs = (ADC_BUFFER_LEN * 1000U) / gADCSampleRateHz;
-    return (CPUCLK_FREQ / 1000U) * (frameMs + ADC12_FRAME_TIMEOUT_MARGIN_MS);
+    return SystemTime_CyclesFromMs(frameMs + ADC12_FRAME_TIMEOUT_MARGIN_MS);
 }
 
 static void ADC12_prepareFrame(uint8_t channelMask)
@@ -228,7 +220,6 @@ static void ADC12_prepareFrame(uint8_t channelMask)
 
     /* --- 1. Stop timers --- */
     DL_TimerG_stopCounter(ADC_SAMPLE_TIMER_INST);
-    DL_TimerG_stopCounter(ADC1_STAGGER_TIMER_INST);
 
     /* --- 2. Disable ADC triggers --- */
     DL_ADC12_stopConversion(ADC12_0_INST);
@@ -267,8 +258,6 @@ static void ADC12_prepareFrame(uint8_t channelMask)
 
     /* --- 6. Reset timer counters --- */
     DL_TimerG_setTimerCount(ADC_SAMPLE_TIMER_INST, gADCSampleTimerPeriod);
-    DL_TimerG_setTimerCount(ADC1_STAGGER_TIMER_INST,
-        gADCSampleTimerPeriod + ADC_STAGGER_DELAY_TICKS);
 
     /* --- 7. Enable ADC + stabilization delay --- */
     if ((channelMask & ADC12_MASK_ADC0) != 0U) {
@@ -277,7 +266,7 @@ static void ADC12_prepareFrame(uint8_t channelMask)
     if ((channelMask & ADC12_MASK_ADC1) != 0U) {
         DL_ADC12_enableConversions(ADC12_1_INST);
     }
-    delay_cycles(8U);  /* approx 1 us stabilization at 8 MHz MCLK */
+    SystemTime_DelayUs(1U);
 
     /* --- 8. Arm DMA (AFTER ADC ready, no stale triggers) --- */
     if ((channelMask & ADC12_MASK_ADC0) != 0U) {
@@ -305,7 +294,6 @@ static void ADC12_prepareFrame(uint8_t channelMask)
 
 static void ADC12_startFrame(uint8_t channelMask)
 {
-    DL_GPIO_clearPins(ADC_SAMPLE_PROBE_PORT, ADC_SAMPLE_PROBE_PIN);
     DL_TimerG_clearInterruptStatus(ADC_SAMPLE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
 
     if ((channelMask & ADC12_MASK_ADC0) != 0U) {
@@ -323,11 +311,8 @@ static void ADC12_startFrame(uint8_t channelMask)
     }
 
     /* --- 9. Start timer triggers (last, after everything is armed) --- */
-    if ((channelMask & ADC12_MASK_ADC0) != 0U) {
+    if ((channelMask & ADC12_MASK_BOTH) != 0U) {
         DL_TimerG_startCounter(ADC_SAMPLE_TIMER_INST);
-    }
-    if ((channelMask & ADC12_MASK_ADC1) != 0U) {
-        DL_TimerG_startCounter(ADC1_STAGGER_TIMER_INST);
     }
     ADC12_setDebugInfo(0U, 0U, ADC12_DBG_STAGE_TIMER_STARTED, ADC12_getRegs(ADC12_CHANNEL_0));
 }
@@ -358,9 +343,7 @@ static bool ADC12_isFrameDone(uint8_t channelMask)
 static void ADC12_stopFrame(uint8_t channelMask)
 {
     DL_TimerG_stopCounter(ADC_SAMPLE_TIMER_INST);
-    DL_TimerG_stopCounter(ADC1_STAGGER_TIMER_INST);
     DL_TimerG_clearInterruptStatus(ADC_SAMPLE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
-    DL_GPIO_clearPins(ADC_SAMPLE_PROBE_PORT, ADC_SAMPLE_PROBE_PIN);
 
     if ((channelMask & ADC12_MASK_ADC0) != 0U) {
         DL_ADC12_stopConversion(ADC12_0_INST);
@@ -393,13 +376,18 @@ static bool ADC12_sample(uint8_t channelMask, const char *tag)
         if (timeout == 0U) {
             ADC12_stopFrame(channelMask);
             ADC12_setDebugInfo(0U,
-                ((channelMask & ADC12_MASK_ADC0) != 0U) ? 0U : 1U,
+                (uint8_t) (((channelMask & ADC12_MASK_ADC0) != 0U) ? 0U : 1U),
                 ADC12_DBG_STAGE_TIMEOUT,
                 ((channelMask & ADC12_MASK_ADC0) != 0U) ? ADC12_0_INST : ADC12_1_INST);
             return false;
         }
         timeout--;
-        __WFI();
+        /*
+         * Keep polling so the loop count remains a bounded fault timeout.
+         * WFI made the counter advance only after an interrupt and could
+         * therefore block forever when the trigger path itself had failed.
+         */
+        __NOP();
     }
 
     ADC12_stopFrame(channelMask);
@@ -456,10 +444,108 @@ bool ADC12_CalcRms(uint8_t channel, ADC12_RmsResult *result)
     result->sampleCount = ADC_VALID_LEN;
     result->dcCode = (float) mean;
     result->rmsCode = (float) rmsCode;
-    result->rmsMv = (float) ((rmsCode * (double) ADC12_GetAVCC_Voltage() * 1000.0) /
+    result->rmsMv = (float) ((rmsCode * (double) ADC12_GetReferenceVoltage() * 1000.0) /
         ((double) ADC12_ADC_CODE_MAX * (double) ADC12_GetFrontendGain()));
 
     return true;
+}
+
+bool ADC12_IsClipped(uint8_t channel)
+{
+    uint16_t i;
+    uint16_t *buffer;
+
+    if ((channel != ADC12_CHANNEL_0) && (channel != ADC12_CHANNEL_1)) {
+        return false;
+    }
+    buffer = ADC12_getBuffer(channel);
+    for (i = ADC_DISCARD_LEN; i < ADC_BUFFER_LEN; i++) {
+        if ((buffer[i] <= ADC12_CLIP_LOW_CODE) ||
+            (buffer[i] >= ADC12_CLIP_HIGH_CODE)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool ADC12_CheckSampleRate(float *actualRateHz)
+{
+    uint32_t divider;
+    uint32_t actual;
+
+    if (actualRateHz == NULL) {
+        return false;
+    }
+    divider = ((uint32_t) gADCSampleTimerPrescaler + 1U) *
+        ((uint32_t) gADCSampleTimerPeriod + 1U);
+    if (divider == 0U) {
+        *actualRateHz = 0.0f;
+        return false;
+    }
+    actual = CPUCLK_FREQ / divider;
+    *actualRateHz = (float) actual;
+    return actual == gADCSampleRateHz;
+}
+
+bool ADC12_CalcMean(uint8_t channel, float *meanCode)
+{
+    SP_BasicStats stats;
+
+    if ((meanCode == NULL) ||
+        ((channel != ADC12_CHANNEL_0) && (channel != ADC12_CHANNEL_1))) {
+        return false;
+    }
+    if (SP_CalcBasicStatsU16(&ADC12_getBuffer(channel)[ADC_DISCARD_LEN],
+            ADC_VALID_LEN, &stats) == false) {
+        return false;
+    }
+    *meanCode = stats.mean;
+    return true;
+}
+
+bool ADC12_CalcPeakToPeak(uint8_t channel, float *peakToPeakMv)
+{
+    SP_BasicStats stats;
+
+    if ((peakToPeakMv == NULL) ||
+        ((channel != ADC12_CHANNEL_0) && (channel != ADC12_CHANNEL_1))) {
+        return false;
+    }
+    if (SP_CalcBasicStatsU16(&ADC12_getBuffer(channel)[ADC_DISCARD_LEN],
+            ADC_VALID_LEN, &stats) == false) {
+        return false;
+    }
+    *peakToPeakMv = stats.peakToPeak * ADC12_GetReferenceVoltage() * 1000.0f /
+        (ADC12_ADC_CODE_MAX * ADC12_GetFrontendGain());
+    return true;
+}
+
+bool ADC12_CalcFrequency(uint8_t channel, float *frequencyHz)
+{
+    if ((frequencyHz == NULL) ||
+        ((channel != ADC12_CHANNEL_0) && (channel != ADC12_CHANNEL_1))) {
+        return false;
+    }
+    return SP_EstimateFrequencyU16(
+        &ADC12_getBuffer(channel)[ADC_DISCARD_LEN], ADC_VALID_LEN,
+        (float) ADC12_GetSampleRateHz(), frequencyHz);
+}
+
+bool ADC12_CalcPhase(uint8_t channel0, uint8_t channel1, float *phaseDeg)
+{
+    float frequencyHz;
+
+    if ((phaseDeg == NULL) || (channel0 == channel1) ||
+        ((channel0 != ADC12_CHANNEL_0) && (channel0 != ADC12_CHANNEL_1)) ||
+        ((channel1 != ADC12_CHANNEL_0) && (channel1 != ADC12_CHANNEL_1)) ||
+        (ADC12_CalcFrequency(channel0, &frequencyHz) == false)) {
+        return false;
+    }
+
+    return SP_EstimatePhaseU16(
+            &ADC12_getBuffer(channel0)[ADC_DISCARD_LEN],
+            &ADC12_getBuffer(channel1)[ADC_DISCARD_LEN], ADC_VALID_LEN,
+            frequencyHz, (float) ADC12_GetSampleRateHz(), phaseDeg);
 }
 
 void ADC12_UpFrame(uint8_t channelSize, uint8_t channel)
@@ -574,7 +660,7 @@ void ADC12_FFTSHOW(uint8_t channel)
         FFT_LEN;
     ADC12_updateFFTBins(fundamentalBin);
     SP_myFFT_CalcMagAngle(gADC12FFTData, gADC12FFTBins, ADC12_FFT_HARMONIC_COUNT,
-        ADC12_FFT_ADC_VREF, gADC12FFTMag, gADC12FFTAngle);
+        ADC12_GetReferenceVoltage(), gADC12FFTMag, gADC12FFTAngle);
 
     USR_UART_printf("ADC%u_FFT_FUND:bin=%u,freq_hz=%lu\r\n",
         channel,
@@ -595,9 +681,39 @@ void ADC12_FFTSHOW(uint8_t channel)
     }
 }
 
-float ADC12_GetAVCC_Voltage(void)
+float ADC12_GetReferenceVoltage(void)
 {
-    return ADC12_0_ADCMEM_0_REF_VOLTAGE_V;
+    return (float) ADC12_0_ADCMEM_0_REF_VOLTAGE_V;
+}
+
+bool ADC12_CaptureFrameHighRate(uint8_t channel, uint32_t rateHz,
+    uint16_t *outValidCount)
+{
+    uint32_t previousRate;
+    uint8_t channelMask;
+    bool ok;
+
+    if ((channel != ADC12_CHANNEL_0) && (channel != ADC12_CHANNEL_1)) {
+        return false;
+    }
+    if ((rateHz == 0U) || (rateHz > ADC_SAMPLE_RATE_MAX_HZ)) {
+        return false;
+    }
+
+    previousRate = ADC12_GetSampleRateHz();
+    ADC12_SetSampleRateHz(rateHz);
+
+    channelMask = (channel == ADC12_CHANNEL_0) ? ADC12_MASK_ADC0
+                                               : ADC12_MASK_ADC1;
+    ok = ADC12_sample(channelMask, "HIGH_RATE");
+
+    /* Restore the configured default rate. */
+    ADC12_SetSampleRateHz(previousRate);
+
+    if (outValidCount != NULL) {
+        *outValidCount = ok ? ADC_VALID_LEN : 0U;
+    }
+    return ok;
 }
 
 void ADC12_0_INST_IRQHandler(void)

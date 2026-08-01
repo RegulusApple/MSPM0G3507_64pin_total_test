@@ -4,16 +4,15 @@
 #include "ti_msp_dl_config.h"
 #include "adc2chSample.h"
 #include "addr_code.h"
+#include "board_config.h"
 #include "serial_protocol.h"
+#include "system_time.h"
 #include "usr_uart.h"
 
-#define LP_ANALOG_SETTLE_CYCLES         (CPUCLK_FREQ / 50U)   /* about 20 ms */
-#define LP_WIRELESS_READY_CYCLES        (CPUCLK_FREQ / 100U)  /* about 10 ms */
-#define LP_WIRELESS_PA13_HIGH_CYCLES    ((CPUCLK_FREQ * 35U) / 10U) /* about 800 ms */
-#define LP_UART_TX_TIMEOUT_CYCLES       (CPUCLK_FREQ / 10U)   /* about 100 ms */
-#define LP_WIRELESS_SLEEP_CMD           "ATON\r\nAT+SLEEP=1\r\n"
-#define LP_WIRELESS_WAKE_CMD            "AT+RST\r\n"
-#define LP_WIRELESS_AT_SLEEP_ENABLE     (1U)
+#define LP_ANALOG_SETTLE_MS              (20U)
+#define LP_WIRELESS_READY_MS             (10U)
+#define LP_WIRELESS_POWER_ON_MS          (800U)
+#define LP_UART_TX_TIMEOUT_MS            (100U)
 
 static volatile WakeReason gWakeReason = WAKE_REASON_NONE;
 static volatile uint32_t gWakeTimerTicks = 0U;
@@ -21,48 +20,24 @@ static LowPowerMeasurement gLatestMeasurement;
 static bool gWakeTimerRunning = false;
 static bool gKey2Configured = false;
 
-static void LowPower_ConfigWakeTimer1s(bool forceReload)
+static void LowPower_ConfigWakeTimer500ms(bool forceReload)
 {
-    static const DL_TimerG_ClockConfig wakeClockConfig = {
-        .clockSel = DL_TIMER_CLOCK_LFCLK,
-        .divideRatio = DL_TIMER_CLOCK_DIVIDE_1,
-        .prescale = 0U,
-    };
-
-    static const DL_TimerG_TimerConfig wakeTimerConfig = {
-        .timerMode = DL_TIMER_TIMER_MODE_PERIODIC,
-        .period = LP_WAKE_TIMER_PERIOD_TICKS,
-        .startTimer = DL_TIMER_STOP,
-    };
-
     if ((gWakeTimerRunning == true) && (forceReload == false)) {
         DL_TimerG_enableInterrupt(LP_WAKE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
         NVIC_EnableIRQ(LP_WAKE_TIMER_INST_INT_IRQN);
         return;
     }
 
-    /*
-     * SYSCTL clock stability is checked during system clock initialization.
-     * Do not wait forever here: this function is also called after every
-     * measurement before re-entering STANDBY1. If the LFOSC status flag is
-     * temporarily not reported as GOOD during the run/standby handoff, an
-     * infinite wait here would stop all later 1 s wakeups after the first send.
-     */
-
     DL_TimerG_enablePower(LP_WAKE_TIMER_INST);
+    delay_cycles(POWER_STARTUP_DELAY);
     DL_TimerG_stopCounter(LP_WAKE_TIMER_INST);
     DL_TimerG_disableInterrupt(LP_WAKE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
     DL_TimerG_clearInterruptStatus(LP_WAKE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
     NVIC_ClearPendingIRQ(LP_WAKE_TIMER_INST_INT_IRQN);
 
-    DL_TimerG_setClockConfig(LP_WAKE_TIMER_INST,
-        (DL_TimerG_ClockConfig *) &wakeClockConfig);
-    DL_TimerG_initTimerMode(LP_WAKE_TIMER_INST,
-        (DL_TimerG_TimerConfig *) &wakeTimerConfig);
-    DL_TimerG_setLoadValue(LP_WAKE_TIMER_INST, LP_WAKE_TIMER_PERIOD_TICKS);
-    DL_TimerG_setTimerCount(LP_WAKE_TIMER_INST, LP_WAKE_TIMER_PERIOD_TICKS);
-    DL_TimerG_enableClock(LP_WAKE_TIMER_INST);
-    DL_TimerG_enableInterrupt(LP_WAKE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
+    SYSCFG_DL_LP_WAKE_TIMER_init();
+    DL_TimerG_setTimerCount(LP_WAKE_TIMER_INST,
+        LP_WAKE_TIMER_INST_LOAD_VALUE);
 
     NVIC_EnableIRQ(LP_WAKE_TIMER_INST_INT_IRQN);
     DL_TimerG_startCounter(LP_WAKE_TIMER_INST);
@@ -95,18 +70,22 @@ static bool LowPower_IsKey2Pressed(void)
 static void LowPower_SetAdcMosSwitch(bool enabled)
 {
     if (enabled == true) {
-        DL_GPIO_setPins(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
+        DL_GPIO_setPins(BOARD_ADC_MOS_SWITCH_PORT,
+            BOARD_ADC_MOS_SWITCH_PIN);
     } else {
-        DL_GPIO_clearPins(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
+        DL_GPIO_clearPins(BOARD_ADC_MOS_SWITCH_PORT,
+            BOARD_ADC_MOS_SWITCH_PIN);
     }
 }
 
 static void LowPower_SetWirelessPower(bool enabled)
 {
     if (enabled == true) {
-        DL_GPIO_setPins(WIRELESS_POWER_PORT, WIRELESS_POWER_PIN);
+        DL_GPIO_setPins(BOARD_WIRELESS_POWER_PORT,
+            BOARD_WIRELESS_POWER_PIN);
     } else {
-        DL_GPIO_clearPins(WIRELESS_POWER_PORT, WIRELESS_POWER_PIN);
+        DL_GPIO_clearPins(BOARD_WIRELESS_POWER_PORT,
+            BOARD_WIRELESS_POWER_PIN);
     }
 }
 
@@ -144,13 +123,12 @@ static void LowPower_EnableMeasurementPeripherals(void)
     SYSCFG_DL_ADC12_0_init();
     SYSCFG_DL_DMA_init();
     LowPower_RestoreAdcTimer();
-    delay_cycles(LP_ANALOG_SETTLE_CYCLES);
+    SystemTime_DelayMs(LP_ANALOG_SETTLE_MS);
 }
 
 static void LowPower_DisableMeasurementPeripherals(void)
 {
     DL_TimerG_stopCounter(ADC_SAMPLE_TIMER_INST);
-    DL_TimerG_stopCounter(ADC1_STAGGER_TIMER_INST);
     DL_TimerG_disableInterrupt(ADC_SAMPLE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
     DL_TimerG_clearInterruptStatus(ADC_SAMPLE_TIMER_INST, DL_TIMERG_INTERRUPT_ZERO_EVENT);
     DL_TimerG_disablePower(ADC_SAMPLE_TIMER_INST);
@@ -171,8 +149,16 @@ static void LowPower_DisableMeasurementPeripherals(void)
     NVIC_ClearPendingIRQ(ADC12_0_INST_INT_IRQN);
     DL_ADC12_reset(ADC12_0_INST);
     DL_ADC12_disablePower(ADC12_0_INST);
+
+    DL_ADC12_disableDMA(ADC12_1_INST);
+    DL_ADC12_disableDMATrigger(ADC12_1_INST,
+        DL_ADC12_DMA_MEM0_RESULT_LOADED);
+    DL_ADC12_disableInterrupt(ADC12_1_INST, DL_ADC12_INTERRUPT_DMA_DONE);
+    DL_ADC12_clearInterruptStatus(ADC12_1_INST, 0xFFFFFFFFU);
+    NVIC_DisableIRQ(ADC12_1_INST_INT_IRQN);
+    NVIC_ClearPendingIRQ(ADC12_1_INST_INT_IRQN);
+    DL_ADC12_reset(ADC12_1_INST);
     DL_ADC12_disablePower(ADC12_1_INST);
-    DL_TimerG_disablePower(ADC1_STAGGER_TIMER_INST);
 }
 
 static void LowPower_EnableUart(void)
@@ -185,7 +171,7 @@ static void LowPower_EnableUart(void)
 
 static void LowPower_WaitUartTxDone(void)
 {
-    uint32_t timeout = LP_UART_TX_TIMEOUT_CYCLES;
+    uint32_t timeout = SystemTime_CyclesFromMs(LP_UART_TX_TIMEOUT_MS);
 
     while ((DL_UART_Main_isBusy(UART_DEBUG_INST) == true) && (timeout > 0U)) {
         timeout--;
@@ -196,12 +182,7 @@ static void LowPower_DisableUnusedPeripheralsBeforeStandby(void)
 {
     LowPower_WaitUartTxDone();
 
-    DL_SPI_disablePower(AD9833_SPI_INST);
-    DL_DAC12_disablePower(DAC0);
-    DL_TimerA_stopCounter(DAC_TIMER_INST);
-    DL_TimerA_disablePower(DAC_TIMER_INST);
-    DL_TimerA_stopCounter(PWM_0_INST);
-    DL_TimerA_disablePower(PWM_0_INST);
+    DL_DAC12_disablePower(BOARD_DAC_INST);
     DL_UART_Main_disablePower(UART_DEBUG_INST);
 }
 
@@ -209,13 +190,13 @@ static void LowPower_WirelessWake(void)
 {
     LowPower_SetWirelessPower(true);
     LowPower_EnableUart();
-    delay_cycles(LP_WIRELESS_PA13_HIGH_CYCLES);
+    SystemTime_DelayMs(LP_WIRELESS_POWER_ON_MS);
     
 }
 
 static void LowPower_WirelessSleep(void)
 {
-    delay_cycles(LP_WIRELESS_READY_CYCLES);
+    SystemTime_DelayMs(LP_WIRELESS_READY_MS);
     LowPower_WaitUartTxDone();
     LowPower_SetWirelessPower(false);
 }
@@ -304,8 +285,13 @@ void LowPower_Init(void)
     gWakeTimerRunning = false;
     gKey2Configured = false;
 
+    LowPower_SetAdcMosSwitch(false);
+    LowPower_SetWirelessPower(false);
+    LowPower_DisableMeasurementPeripherals();
+    LowPower_DisableVref();
+    LowPower_DisableUnusedPeripheralsBeforeStandby();
     LowPower_ConfigKey2Wake();
-    LowPower_ConfigWakeTimer1s(true);
+    LowPower_ConfigWakeTimer500ms(true);
 }
 
 WakeReason LowPower_GetWakeReason(void)
@@ -355,7 +341,7 @@ void LowPower_EnterStandby1(void)
 {
     __disable_irq();
     LowPower_ConfigKey2Wake();
-    LowPower_ConfigWakeTimer1s(false);
+    LowPower_ConfigWakeTimer500ms(false);
     LowPower_DisableUnusedPeripheralsBeforeStandby();
     LowPower_ServiceWakeTimerPending();
     LowPower_ServiceKey2Pending();

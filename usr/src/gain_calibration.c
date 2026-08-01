@@ -11,9 +11,11 @@
 
 #define GAIN_FLASH_MAGIC          (0x4741494EUL) /* "GAIN" */
 #define GAIN_FLASH_VERSION        (1U)
+#include "system_time.h"
+
 #define GAIN_FLASH_STORAGE_BASE   (0x0001F800UL)
 #define GAIN_FLASH_WORDS          (8U)
-#define GAIN_KEY_DELAY_CYCLES     (CPUCLK_FREQ / 20U)
+#define GAIN_KEY_DELAY_MS         (50U)
 
 typedef struct {
     uint32_t magic;
@@ -234,7 +236,7 @@ void GainCalibration_BootSelect(void)
     bool saved = false;
 
     GainCalibration_InitKeys();
-    delay_cycles(GAIN_KEY_DELAY_CYCLES);
+    SystemTime_DelayMs(GAIN_KEY_DELAY_MS);
 
     if (GainCalibration_IsKeyDown(KEY_KEY1_PORT, KEY_KEY1_PIN) == false) {
         gainX100 = GainCalibration_LoadX100();
@@ -277,6 +279,6 @@ void GainCalibration_BootSelect(void)
             GainCalibration_ShowValue(gainX100, saved);
         }
 
-        delay_cycles(GAIN_KEY_DELAY_CYCLES);
+        SystemTime_DelayMs(GAIN_KEY_DELAY_MS);
     }
 }
