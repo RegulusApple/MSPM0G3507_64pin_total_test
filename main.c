@@ -1,6 +1,7 @@
 #include "ti_msp_dl_config.h"
 #include "low_power.h"
 #include "OLED.h"
+#include "gain_calibration.h"
 
 #define APP_OLED_MIN_SECONDS 5U
 #define APP_OLED_HOLD_TICKS  (APP_OLED_MIN_SECONDS + 1U)
@@ -98,6 +99,7 @@ int main(void)
     SYSCFG_DL_ADC12_0_init();
     SYSCFG_DL_DMA_init();
     OLED_Init();
+    GainCalibration_BootSelect();
     OLED_ShowString(1, 1, "LP Ready");
     OLED_DisplayOff();
     LowPower_Init();

@@ -604,6 +604,11 @@
               <FileType>1</FileType>
               <FilePath>..\usr\src\serial_protocol.c</FilePath>
             </File>
+            <File>
+              <FileName>gain_calibration.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usr\src\gain_calibration.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

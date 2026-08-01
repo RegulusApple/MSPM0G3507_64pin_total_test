@@ -15,7 +15,8 @@
 #define ADC_POINTS_PER_50HZ_CYCLE   (256U)
 #define ADC_WINDOW_CYCLES_50HZ      (4U)
 #define ADC_WINDOW_TIME_MS          (80U)
-#define ADC_FRONTEND_GAIN           (5.56f)
+#define ADC_FRONTEND_GAIN_DEFAULT   (5.56f)
+#define ADC_FRONTEND_GAIN           ADC_FRONTEND_GAIN_DEFAULT
 #define CHANNEL_SIZE                (2U)
 #define INT_VREF_1_5_REAL           (1.501f)
 
@@ -52,6 +53,8 @@ void ADC12_SetSampleRateHz(uint32_t sampleRateHz);
 uint32_t ADC12_GetSampleRateHz(void);
 uint16_t ADC12_GetSampleTimerPeriod(void);
 uint8_t ADC12_GetSampleTimerPrescaler(void);
+void ADC12_SetFrontendGain(float gain);
+float ADC12_GetFrontendGain(void);
 ADC12_DebugInfo ADC12_GetDebugInfo(void);
 
 void ADC12_Init(void);

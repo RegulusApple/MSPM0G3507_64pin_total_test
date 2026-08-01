@@ -41,6 +41,7 @@ static volatile bool gADC1DMADone;
 static uint32_t gADCSampleRateHz = ADC_SAMPLE_RATE_DEFAULT_HZ;
 static uint16_t gADCSampleTimerPeriod = ADC_SAMPLE_TIMER_DEFAULT_LOAD_VALUE;
 static uint8_t gADCSampleTimerPrescaler = ADC_SAMPLE_TIMER_DEFAULT_PRESCALE;
+static float gADCFrontendGain = ADC_FRONTEND_GAIN_DEFAULT;
 static ADC12_DebugInfo gADC12DebugInfo;
 
 static void ADC12_printNode(const char *node)
@@ -153,6 +154,19 @@ uint16_t ADC12_GetSampleTimerPeriod(void)
 uint8_t ADC12_GetSampleTimerPrescaler(void)
 {
     return gADCSampleTimerPrescaler;
+}
+
+void ADC12_SetFrontendGain(float gain)
+{
+    if (gain < 0.01f) {
+        gain = ADC_FRONTEND_GAIN_DEFAULT;
+    }
+    gADCFrontendGain = gain;
+}
+
+float ADC12_GetFrontendGain(void)
+{
+    return gADCFrontendGain;
 }
 
 ADC12_DebugInfo ADC12_GetDebugInfo(void)
@@ -443,7 +457,7 @@ bool ADC12_CalcRms(uint8_t channel, ADC12_RmsResult *result)
     result->dcCode = (float) mean;
     result->rmsCode = (float) rmsCode;
     result->rmsMv = (float) ((rmsCode * (double) ADC12_GetAVCC_Voltage() * 1000.0) /
-        ((double) ADC12_ADC_CODE_MAX * (double) ADC_FRONTEND_GAIN));
+        ((double) ADC12_ADC_CODE_MAX * (double) ADC12_GetFrontendGain()));
 
     return true;
 }
