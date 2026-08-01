@@ -261,6 +261,11 @@ extern "C" {
 #define AD9833_FSYNC_FSYNC_PIN                                  (DL_GPIO_PIN_13)
 #define AD9833_FSYNC_FSYNC_IOMUX                                 (IOMUX_PINCM35)
 
+/* PA13 controls the wireless module power/enable MOS. */
+#define WIRELESS_POWER_PORT                                                GPIOA
+#define WIRELESS_POWER_PIN                                         DL_GPIO_PIN_13
+#define WIRELESS_POWER_IOMUX                                      (IOMUX_PINCM35)
+
 /* Port definitions for Pin Group KEY */
 #define KEY_PORTA                                                        (GPIOA)
 #define KEY_PORTB                                                        (GPIOB)

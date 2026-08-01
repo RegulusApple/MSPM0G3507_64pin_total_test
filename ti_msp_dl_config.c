@@ -198,6 +198,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_clearPins(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
     DL_GPIO_enableOutput(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
 
+    DL_GPIO_initDigitalOutput(WIRELESS_POWER_IOMUX);
+    DL_GPIO_clearPins(WIRELESS_POWER_PORT, WIRELESS_POWER_PIN);
+    DL_GPIO_enableOutput(WIRELESS_POWER_PORT, WIRELESS_POWER_PIN);
+
     DL_GPIO_initPeripheralAnalogFunction(GPIO_ADC12_0_C0_IOMUX);
     // DL_GPIO_initPeripheralAnalogFunction(GPIO_ADC12_1_C1_IOMUX);
     // DL_GPIO_initPeripheralAnalogFunction(GPIO_DAC12_IOMUX_OUT);

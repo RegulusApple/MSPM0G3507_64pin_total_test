@@ -9,6 +9,7 @@
 
 #define LP_ANALOG_SETTLE_CYCLES         (CPUCLK_FREQ / 50U)   /* about 20 ms */
 #define LP_WIRELESS_READY_CYCLES        (CPUCLK_FREQ / 100U)  /* about 10 ms */
+#define LP_WIRELESS_PA13_HIGH_CYCLES    ((CPUCLK_FREQ * 35U) / 10U) /* about 800 ms */
 #define LP_UART_TX_TIMEOUT_CYCLES       (CPUCLK_FREQ / 10U)   /* about 100 ms */
 #define LP_WIRELESS_SLEEP_CMD           "ATON\r\nAT+SLEEP=1\r\n"
 #define LP_WIRELESS_WAKE_CMD            "AT+RST\r\n"
@@ -97,6 +98,15 @@ static void LowPower_SetAdcMosSwitch(bool enabled)
         DL_GPIO_setPins(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
     } else {
         DL_GPIO_clearPins(ADC_MOS_SWITCH_PORT, ADC_MOS_SWITCH_PIN);
+    }
+}
+
+static void LowPower_SetWirelessPower(bool enabled)
+{
+    if (enabled == true) {
+        DL_GPIO_setPins(WIRELESS_POWER_PORT, WIRELESS_POWER_PIN);
+    } else {
+        DL_GPIO_clearPins(WIRELESS_POWER_PORT, WIRELESS_POWER_PIN);
     }
 }
 
@@ -192,40 +202,21 @@ static void LowPower_DisableUnusedPeripheralsBeforeStandby(void)
     DL_TimerA_disablePower(DAC_TIMER_INST);
     DL_TimerA_stopCounter(PWM_0_INST);
     DL_TimerA_disablePower(PWM_0_INST);
-    DL_UART_Main_disablePower(UART_DEBUG_INST);
 }
 
 static void LowPower_WirelessWake(void)
 {
+    LowPower_SetWirelessPower(true);
     LowPower_EnableUart();
-    delay_cycles(LP_WIRELESS_READY_CYCLES);
-    USR_UART_sendByte(0x00U);
-    LowPower_WaitUartTxDone();
-    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
-    USR_UART_sendByte(0x00U);
-    LowPower_WaitUartTxDone();
-    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
-    USR_UART_sendByte(0x00U);
-    LowPower_WaitUartTxDone();
-    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
-    USR_UART_sendByte(0x00U);
-    LowPower_WaitUartTxDone();
-    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
-    USR_UART_sendByte(0x00U);
-    LowPower_WaitUartTxDone();
-    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
+    delay_cycles(LP_WIRELESS_PA13_HIGH_CYCLES);
     
-    
-    // delay_cycles(LP_WIRELESS_READY_CYCLES);
-
 }
 
 static void LowPower_WirelessSleep(void)
 {
-    delay_cycles(LP_WIRELESS_READY_CYCLES);
+    delay_cycles(LP_WIRELESS_READY_CYCLES*5);
     LowPower_WaitUartTxDone();
-    USR_UART_sendString(LP_WIRELESS_SLEEP_CMD);
-    LowPower_WaitUartTxDone(); 
+    LowPower_SetWirelessPower(false);
 }
 
 static void LowPower_SendMeasurement(const char *tag, const LowPowerMeasurement *m)
